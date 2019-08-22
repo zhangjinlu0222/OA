@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#eeeeee"
+    tools:context="zjl.com.oa.Evaluation.View.Evaluation">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#74a9ed">
+
+        <ImageView
+            android:id="@+id/ig_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="4dp"
+            android:contentDescription="@null"
+            android:src="@mipmap/visitor_return" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical"
+            android:text="@string/evaluationreport"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:focusableInTouchMode="true"
+            android:focusable="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#ffffff">
+
+                <TextView
+                    android:id="@+id/evaluation_car_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/evaluationcarage"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/evaluation_et_car_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_toEndOf="@+id/evaluation_car_age"
+                    android:layout_toLeftOf="@+id/evaluation_car_age"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="@string/evaluation_input_car_age"
+                    android:inputType="number"
+                    android:maxEms="4"
+                    android:singleLine="true"
+                    android:textColor="#999999"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#dddddd" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#ffffff">
+
+                <TextView
+                    android:id="@+id/evaluation_car_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/evaluationcartype"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/evaluation_et_car_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_toEndOf="@+id/evaluation_car_type"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="@string/evaluation_input_car_type"
+                    android:inputType="text"
+                    android:maxEms="15"
+                    android:singleLine="true"
+                    android:textColor="#999999"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#dddddd" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#ffffff">
+
+                <TextView
+                    android:id="@+id/evaluation_car_model"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/evaluationcarmodel"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/evaluation_et_car_model"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_toEndOf="@+id/evaluation_car_model"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="@string/evaluation_input_car_model"
+                    android:inputType="text"
+                    android:maxEms="15"
+                    android:singleLine="true"
+                    android:textColor="#999999"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#dddddd" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#ffffff">
+
+                <TextView
+                    android:id="@+id/evaluation_car_milage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/st_appraisal_car_milage"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/evaluation_et_car_milage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@+id/evaluation_tv_milage_unit"
+                    android:layout_marginRight="5dp"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="@string/evaluation_input_car_milage"
+                    android:inputType="number"
+                    android:maxEms="15"
+                    android:singleLine="true"
+                    android:textColor="#999999"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/evaluation_tv_milage_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="20dp"
+                    android:gravity="right|center_vertical"
+                    android:text="@string/milage"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#dddddd" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_market_value"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#ffffff">
+
+                <TextView
+                    android:id="@+id/evaluation_market_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/evaluationmarketvalue"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/evaluation_et_market_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+                    android:layout_toEndOf="@+id/evaluation_market_value"
+                    android:layout_toStartOf="@+id/market_value_part"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="@string/evaluation_input_market_value"
+                    android:inputType="number|numberDecimal"
+                    android:maxEms="15"
+                    android:singleLine="true"
+                    android:textColor="#999999"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/market_value_part"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="20dp"
+                    android:gravity="right|center_vertical"
+                    android:inputType="number"
+                    android:singleLine="false"
+                    android:text="@string/wanyuan"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#dddddd" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_real_value"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#ffffff">
+
+                <TextView
+                    android:id="@+id/evaluation_real_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/evaluationrealvalue"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/evaluation_et_real_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+                    android:layout_toEndOf="@+id/evaluation_real_value"
+                    android:layout_toStartOf="@+id/real_value_part"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="@string/evaluation_input_real_value"
+                    android:inputType="number|numberDecimal"
+                    android:maxEms="15"
+                    android:singleLine="true"
+                    android:textColor="#999999"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/real_value_part"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="20dp"
+                    android:gravity="right|center_vertical"
+                    android:inputType="number"
+                    android:singleLine="false"
+                    android:text="@string/wanyuan"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#dddddd" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="#ffffff">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/evaluationsubmitinfo"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+                <com.kyleduo.switchbutton.SwitchButton
+                    android:id="@+id/uploadtype"
+                    android:layout_width="@dimen/x75"
+                    android:layout_height="@dimen/y47"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:checked="false" />
+                <TextView
+                    android:id="@+id/uploadtypehint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/uploadtype"
+                    android:text="追加 : "/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/photos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="#ffffff">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/beizhu"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/evaluation_beizhu_words_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:text="@string/beizhu_words_left"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#dddddd" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:background="#ffffff">
+
+                <EditText
+                    android:id="@+id/evaluation_et_beizhu"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="#eeeeee"
+                    android:gravity="top|left"
+                    android:hint="@string/action_beizhu"
+                    android:inputType="textMultiLine"
+                    android:maxLength="100"
+                    android:paddingLeft="14dp"
+                    android:textColor="#b0b0b0"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/evaluationBtnNext"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="false"
+                    android:layout_marginBottom="40dp"
+                    android:layout_marginLeft="68dp"
+                    android:layout_marginRight="68dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@mipmap/info_bg_next"
+                    android:text="@string/next"
+                    android:textColor="#ffffff"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

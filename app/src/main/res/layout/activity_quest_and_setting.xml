@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="zjl.com.oa.QuestAndSetting.View.QuestAndSetting">
+
+    <FrameLayout
+        android:layout_above="@+id/nav"
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+    <LinearLayout
+        android:id="@+id/nav"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="50dp"
+        android:background="#ffffff"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/quests"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"            >
+
+            <ImageView
+                android:id="@+id/ig_project_list"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="3dp"
+                android:src="@mipmap/project_list_selected" />
+
+            <TextView
+                android:id="@+id/tv_project_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ig_project_list"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="3dp"
+                android:gravity="center_horizontal"
+                android:text="@string/project_list"
+                android:textColor="#74a9ed"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/appraisal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"            >
+
+            <ImageView
+                android:id="@+id/ig_appraisal_list"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="3dp"
+                android:src="@mipmap/appraisal_unselected" />
+
+            <TextView
+                android:id="@+id/tv_appraisal_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ig_appraisal_list"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="3dp"
+                android:gravity="center_horizontal"
+                android:text="@string/appraisal"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/setting"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"            >
+
+            <ImageView
+                android:id="@+id/ig_setting"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="3dp"
+                android:src="@mipmap/project_setting_unselected" />
+
+            <TextView
+                android:id="@+id/tv_setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ig_setting"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="3dp"
+                android:gravity="center_horizontal"
+                android:text="@string/setting" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:background="#ffffff"
+        android:visibility="gone"
+        app:menu="@menu/navigation" />
+
+</RelativeLayout>

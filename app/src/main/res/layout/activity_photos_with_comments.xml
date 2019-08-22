@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="#eeeeee"
+android:orientation="vertical"
+tools:context="zjl.com.oa.UploadPhotos.View.UploadPhotosActivity">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#74a9ed">
+
+    <ImageView
+        android:id="@+id/ig_back"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="4dp"
+        android:contentDescription="@null"
+        android:src="@mipmap/visitor_return" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_vertical"
+        android:text="@string/eg_title"
+        android:textColor="#ffffff"
+        android:textSize="18sp" />
+</RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#ffffff">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/photossubmit"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+                <com.kyleduo.switchbutton.SwitchButton
+                    android:id="@+id/uploadtype"
+                    android:layout_width="@dimen/x75"
+                    android:layout_height="@dimen/y47"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:checked="false" />
+                <TextView
+                    android:id="@+id/uploadtypehint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/uploadtype"
+                    android:text="追加 : "/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#dddddd" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff">
+
+                <android.support.v7.widget.RecyclerView xmlns:ptr="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/pull_refresh_grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"
+                    android:columnWidth="100dp"
+                    android:gravity="fill"
+                    android:horizontalSpacing="1dp"
+                    android:numColumns="auto_fit"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="1dp"
+                    ptr:ptrDrawable="@mipmap/ic_launcher"
+                    ptr:ptrMode="both" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="#ffffff">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/beizhu"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/evaluation_beizhu_words_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:text="@string/beizhu_words_left"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#dddddd" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:background="#ffffff">
+
+                <EditText
+                    android:id="@+id/etBakInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="#eeeeee"
+                    android:gravity="top|left"
+                    android:hint="@string/action_beizhu"
+                    android:inputType="textMultiLine"
+                    android:maxLength="100"
+                    android:paddingLeft="14dp"
+                    android:paddingTop="10dp"
+                    android:textColor="#b0b0b0"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/Btnnext"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="false"
+                    android:layout_marginBottom="40dp"
+                    android:layout_marginLeft="68dp"
+                    android:layout_marginRight="68dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@mipmap/info_bg_next"
+                    android:text="@string/next"
+                    android:textColor="#ffffff"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

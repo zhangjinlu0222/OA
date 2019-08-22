@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="zjl.com.oa.WorkFlow.View.VideoPlay2Activity"
+    android:orientation="vertical">
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="#74a9ed"-->
+        <!--android:visibility="gone">-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/ig_back"-->
+            <!--android:layout_width="25dp"-->
+            <!--android:layout_height="25dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginStart="4dp"-->
+            <!--android:contentDescription="@null"-->
+            <!--android:src="@mipmap/visitor_return" />-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:text="@string/videoplay"-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:textSize="18sp" />-->
+    <!--</RelativeLayout>-->
+    <!--<VideoView-->
+        <!--android:id="@+id/player"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+    <zjl.com.oa.WorkFlow.View.SampleVideo
+        android:id="@+id/video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </zjl.com.oa.WorkFlow.View.SampleVideo>
+
+
+    <!--<include-->
+        <!--layout="@layout/simple_player_view_player"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
+</LinearLayout>

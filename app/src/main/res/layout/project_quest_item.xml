@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:background="#eeeeee"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        android:background="#ffffff">
+
+        <ImageView
+            android:id="@+id/project_ig_icon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:contentDescription="@null"
+            android:src="@mipmap/project_ig_time" />
+
+        <TextView
+            android:id="@+id/project_time"
+            android:layout_width="75dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/project_ig_icon"
+            android:gravity="center_vertical"
+            android:text="@string/eg_time"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/project_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_toRightOf="@+id/project_time"
+            android:gravity="center_vertical"
+            android:text="@string/seeDetail"
+            android:textColor="#f7b732"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/project_workflow"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_toLeftOf="@+id/project_tv_customer_name"
+            android:layout_toRightOf="@+id/project_detail"
+            android:gravity="center"
+            android:text="@string/seeWorkFlow"
+            android:textColor="#f7b732"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/project_tv_customer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_toLeftOf="@+id/project_customer_name"
+            android:gravity="center"
+            android:text="@string/project_customer"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/project_customer_name"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp"
+            android:ellipsize="end"
+            android:gravity="right|center_vertical"
+            android:maxEms="3"
+            android:singleLine="true"
+            android:text="@string/eg_name"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#eeeeee"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_center"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#ffffff"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_project_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/project_tv_state"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_proc_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_project_type"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:text="业务类型"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_finance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_proc_type"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="3dp"
+                android:text="续贷"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/project_rl_point1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/project_tv_point1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                android:text="@string/project_tableWord"
+                android:textColor="#74a9ed"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/project_ig_point1"
+                android:layout_width="33dp"
+                android:layout_height="25dp"
+                android:layout_below="@+id/project_tv_point1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/project_ig_finished" />
+
+            <TextView
+                android:id="@+id/project_tv_point1_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/project_ig_point1"
+                android:gravity="center_horizontal"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/project_rl_point2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/project_tv_point2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                android:text="@string/project_carPhotos"
+                android:textColor="#74a9ed"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/project_ig_point2"
+                android:layout_width="33dp"
+                android:layout_height="25dp"
+                android:layout_below="@+id/project_tv_point2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/project_ig_finished" />
+
+            <TextView
+                android:id="@+id/project_tv_point2_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/project_ig_point2"
+                android:gravity="center_horizontal"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/project_rl_point3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/project_tv_point3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                android:text="@string/project_estPaper"
+                android:textColor="#74a9ed"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/project_ig_point3"
+                android:layout_width="33dp"
+                android:layout_height="25dp"
+                android:layout_below="@+id/project_tv_point3"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="false"
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/project_ig_finished" />
+
+            <TextView
+                android:id="@+id/project_tv_point3_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/project_ig_point3"
+                android:gravity="center_horizontal"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="#ffffff">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentTop="true"
+            android:background="#eeeeee"></View>
+
+        <ImageView
+            android:id="@+id/project_ig_customer"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="@null"
+            android:src="@mipmap/project_ig_manager" />
+
+        <TextView
+            android:id="@+id/project_tv_manager"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/project_ig_customer"
+            android:gravity="center_vertical"
+            android:text="@string/customer"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/project_manager"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/project_tv_manager"
+            android:gravity="center_vertical"
+            android:text="@string/eg_name"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/project_car"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/project_state"
+            android:layout_toRightOf="@+id/project_manager"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxEms="15"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:text="@string/eg_car"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/project_state"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:gravity="center_vertical"
+            android:text="@string/project_state"
+            android:textColor="#e55b5b"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+</LinearLayout>

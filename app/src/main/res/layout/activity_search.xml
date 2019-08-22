@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    tools:context="zjl.com.oa.QuestAndSetting.View.SearchActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#74a9ed">
+
+        <ImageView
+            android:id="@+id/ig_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="4dp"
+            android:contentDescription="@null"
+            android:src="@mipmap/visitor_return" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical"
+            android:text="@string/searchlist"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/quicksearch"
+        android:textColor="#000000"
+        android:textSize="14sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:background="@mipmap/search_input_bg">
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="@string/inputname"
+            android:paddingStart="15dp"
+            android:textColor="#aaaaaa"
+            android:textColorHint="#aaaaaa"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="17dp"
+            android:layout_marginTop="15dp"
+            android:src="@mipmap/search_icon" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/datesearch"
+        android:textColor="#000000"
+        android:textSize="14sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
+        <RelativeLayout
+            android:id="@+id/rl_start_date"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:background="@mipmap/search_input_bg">
+
+            <TextView
+                android:id="@+id/startdate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="false"
+                android:gravity="center_vertical"
+                android:hint="@string/startdatehint"
+                android:paddingStart="30dp"
+                android:textColor="#aaaaaa"
+                android:textColorHint="#aaaaaa"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="15dp"
+                android:src="@mipmap/search_calendar_icon" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_end_date"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="false"
+            android:layout_marginEnd="12dp"
+            android:background="@mipmap/search_input_bg">
+
+            <TextView
+                android:id="@+id/enddate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="false"
+                android:gravity="center_vertical"
+                android:hint="@string/enddatehint"
+                android:paddingStart="30dp"
+                android:textColor="#aaaaaa"
+                android:textColorHint="#aaaaaa"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="15dp"
+                android:src="@mipmap/search_calendar_icon" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/bustype"
+        android:textColor="#000000"
+        android:textSize="14sp" />
+
+    <org.angmarch.views.NiceSpinner
+        android:id="@+id/ns_SearchTypes"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="10dp"
+        app:backgroundSelector="@drawable/ns_bgselector" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="15dp"
+        android:background="@mipmap/dashed_grey" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/busstate"
+        android:textColor="#000000"
+        android:textSize="14sp" />
+
+    <org.angmarch.views.NiceSpinner
+        android:id="@+id/ns_SearchStatus"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="10dp"
+        app:backgroundSelector="@drawable/ns_bgselector" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="15dp"
+        android:background="@mipmap/dashed_grey" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="75dp">
+
+        <Button
+            android:id="@+id/btn_reset"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="false"
+            android:layout_centerInParent="false"
+            android:layout_marginStart="40dp"
+            android:background="#dddddd"
+            android:gravity="center"
+            android:text="@string/reset"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="40dp"
+            android:background="@mipmap/visitor_bg_next"
+            android:gravity="center"
+            android:text="@string/search"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+</LinearLayout>

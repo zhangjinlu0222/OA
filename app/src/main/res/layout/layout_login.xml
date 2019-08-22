@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/login_background"
+    android:orientation="vertical"
+    tools:context="zjl.com.oa.Login.View.LoginActivity">
+
+    <ImageView
+        android:id="@+id/login_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="135dp"
+        android:contentDescription="@string/app_name"
+        android:src="@mipmap/login_logo" />
+
+    <TextView
+        android:id="@+id/project_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="@string/app_name"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/login_account"
+        android:layout_width="276dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="42dp"
+        android:background="@mipmap/login_roundedrectangle"
+        android:hint="@string/account"
+        android:inputType="phone"
+        android:maxLength="11"
+        android:maxLines="1"
+        android:paddingEnd="22dp"
+        android:paddingStart="22dp"
+        android:singleLine="true"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/login_password"
+        android:layout_width="276dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="18dp"
+        android:background="@mipmap/login_roundedrectangle"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:paddingEnd="22dp"
+        android:paddingStart="22dp"
+        android:singleLine="true"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="276dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="@mipmap/login_loginbox"
+        android:text="@string/login"
+        android:textColor="#ffffff"
+        android:textSize="18sp" />
+
+</LinearLayout>
