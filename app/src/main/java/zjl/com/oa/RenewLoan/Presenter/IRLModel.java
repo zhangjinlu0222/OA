@@ -2,6 +2,7 @@ package zjl.com.oa.RenewLoan.Presenter;
 
 import com.luck.picture.lib.entity.LocalMedia;
 
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.MultipartBody;
@@ -20,6 +21,7 @@ import zjl.com.oa.UploadPhotos.Presenter.IPhotoUploadListener;
  */
 
 public interface IRLModel{
+    void Coming(HashMap<String ,Object> map, IRLListener listener);
     void ApplyforRefinance(String token, String w_con_id, String w_pot_id,
                          String loan_length, String remark,IRLListener listener);
     void CarPhoto(String request_end_flag,String uploadType,

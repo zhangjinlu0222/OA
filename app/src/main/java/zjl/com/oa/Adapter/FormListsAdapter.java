@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -23,10 +24,15 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.kyleduo.switchbutton.SwitchButton;
 
+import org.angmarch.views.NiceSpinner;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import zjl.com.oa.Base.BaseActivity;
 import zjl.com.oa.Base.FullyGridLayoutManager;
 import zjl.com.oa.R;
 import zjl.com.oa.RenewLoan.View.RenewLoanActivity;
@@ -120,6 +126,7 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
         Form3 form3 = null;
         Form6 form6 = null;
         Form7 form7 = null;
+        Form8 form8 = null;
         Form9 form9 = null;
         Form10 form10 = null;
         Form11 form11 = null;
@@ -189,6 +196,14 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
                     form7.position = position;
                     convertView.setTag(form7);
                     break;
+                case 8:
+                    convertView = inflater.inflate(R.layout.form_item_8, null);
+                    form8 = new Form8(convertView);
+                    form8.nsSelector = convertView.findViewById(R.id.ns_selector);
+                    form8.title = convertView.findViewById(R.id.title);
+                    form8.position = position;
+                    convertView.setTag(form8);
+                    break;
                 case 9:
                     convertView = inflater.inflate(R.layout.form_item_9, null);
                     form9 = new Form9(convertView);
@@ -249,6 +264,9 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
                 case 7:
                     form7 = (Form7) convertView.getTag();
                     break;
+                case 8:
+                    form8 = (Form8) convertView.getTag();
+                    break;
                 case 9:
                     form9 = (Form9) convertView.getTag();
                     break;
@@ -276,6 +294,8 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
             setContentValue(form6,position);
         }else if (type == 7){
             setContentValue(form7,position);
+        }else if (type == 8){
+            setContentValue(form8,position);
         }else if (type == 9){
             setContentValue(form9,position);
         }else if (type == 10){
@@ -359,12 +379,14 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
             String url = formLists.get(pos).getTitle_img();
             if (url != null && url.length() > 0){
                 Glide.with(context).load(formLists.get(pos).getTitle_img()).into(viewHolder.img);
+            }else{
+                viewHolder.img.setVisibility(View.GONE);
             }
         }
 
-        viewHolder.title.setText(formLists.get(pos).getControl_title().toString().trim());
+        viewHolder.title.setText(formLists.get(pos).getControl_title().trim());
 
-        viewHolder.content.setHint(formLists.get(pos).getPlace_holder().toString().trim());
+        viewHolder.content.setHint(formLists.get(pos).getPlace_holder().trim());
         String data = formLists.get(pos).getData_con();
         if (data != null && data.length() >0){
             viewHolder.content.setText(data);
@@ -447,6 +469,26 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
         if (bg_color != null && bg_color.length() > 0){
             viewHolder.head.setBackgroundColor(Color.parseColor(bg_color));
         }
+    }
+    private void setContentValue(Form8 viewHolder,int pos){
+        viewHolder.position = pos;
+        viewHolder.title.setText(formLists.get(pos).getControl_title().trim());
+        viewHolder.datasource = new ArrayList(Arrays.asList(formLists.get(pos).getUnit().split(",")));
+        viewHolder.nsSelector.attachDataSource(viewHolder.datasource);
+        viewHolder.nsSelector.setArrowTintColor(Color.rgb(0, 0, 0));
+        viewHolder.nsSelector.postInvalidate();
+        formLists.get(pos).setData_con("1");
+        viewHolder.nsSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                formLists.get(pos).setData_con(position +1 +"");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void setContentValue(Form9 viewHolder,int pos){
@@ -626,6 +668,17 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
             img = convertView.findViewById(R.id.title_img);
             title = convertView.findViewById(R.id.title);
             head = convertView.findViewById(R.id.rl_head_bg);
+        }
+    }
+    class Form8 {
+        TextView title;
+        NiceSpinner nsSelector;
+        int position;
+        ArrayList datasource;
+
+        public Form8(View convertView) {
+            title = convertView.findViewById(R.id.title);
+            nsSelector = convertView.findViewById(R.id.ns_selector);
         }
     }
     class Form9 {

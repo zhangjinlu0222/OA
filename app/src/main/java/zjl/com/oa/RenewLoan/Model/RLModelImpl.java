@@ -40,6 +40,40 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
     private static final String TAG = "RLEvaluationModelImpl";
 
     @Override
+    public void Coming(HashMap<String, Object> map, IRLListener listener) {
+        IRL service = retrofit.create(IRL.class);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), new Gson().toJson(map));
+
+        Call<ResponseWithNoData> call = service.Coming(body);
+
+        call.enqueue(new Callback<ResponseWithNoData>() {
+            @Override
+            public void onResponse(Call<ResponseWithNoData> call, Response<ResponseWithNoData> response) {
+                if (response.isSuccessful()){
+                    ResponseWithNoData result = response.body();
+                    if (result != null){
+                        if (result.getCode() == Constant.Succeed){
+                            listener.onSucceed();
+                        }else if (result.getCode() == Constant.LoginAnotherPhone){
+                            listener.relogin();
+                        }else{
+                            listener.onFail(result.getMessage());
+                        }
+                    }
+                }else{
+                    listener.onFail();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWithNoData> call, Throwable t) {
+                t.printStackTrace();
+                listener.onFail("网络异常，操作失败");
+            }
+        });
+    }
+
+    @Override
     public void ApplyforRefinance(String token, String w_con_id, String w_pot_id,
                                   String loan_length, String remark, IRLListener listener) {
         IRL service = retrofit.create(IRL.class);

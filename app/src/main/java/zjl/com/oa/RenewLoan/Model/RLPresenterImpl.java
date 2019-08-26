@@ -3,6 +3,7 @@ package zjl.com.oa.RenewLoan.Model;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import zjl.com.oa.RenewLoan.Presenter.IRLListener;
@@ -88,6 +89,14 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
     @Override
     public void onFail() {
         this.onFail("操作失败，请重试");
+    }
+
+    @Override
+    public void Coming(HashMap<String, Object> map) {
+        if (irlModel != null){
+            irlModel.Coming(map,this );
+            irlView.showProgress();
+        }
     }
 
     @Override

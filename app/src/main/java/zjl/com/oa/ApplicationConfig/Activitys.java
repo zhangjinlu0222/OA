@@ -30,7 +30,8 @@ public class Activitys {
         Class destClass = null;
             switch (arg){
                 case "1":
-                    destClass =  Visitor.class;//来访
+//                    destClass =  Visitor.class;//来访
+                    destClass =  RenewLoanActivity.class;//来访
                     break;
                 case "2":
                     destClass =  EnteringOrderActivity.class;//面谈
@@ -44,7 +45,8 @@ public class Activitys {
                     destClass =  RenewLoanActivity.class;//车辆照片
                     break;
                 case "5":
-                    destClass =  Evaluation.class;//评估报告
+//                    destClass =  Evaluation.class;//评估报告
+                    destClass =  RenewLoanActivity.class;//评估报告
                     break;
                 case "6":
 //                    destClass =  EvaluationQuotaActivity.class;//初步定额

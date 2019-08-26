@@ -46,6 +46,7 @@ public class FormResponse extends BaseResponse{
             public boolean read_only;
             public int con_lenth;
             public String data_con;
+            public String submit_field;
             public int status;
             public List<String> imgs;
 
@@ -147,6 +148,12 @@ public class FormResponse extends BaseResponse{
             }
             public String getData_con() {
                 return data_con;
+            }
+            public void setSubmit_field(String submit_field) {
+                this.submit_field = submit_field;
+            }
+            public String getSubmit_field() {
+                return submit_field;
             }
 
             public void setStatus(int status) {

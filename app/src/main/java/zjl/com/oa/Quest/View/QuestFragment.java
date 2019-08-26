@@ -384,7 +384,8 @@ public class QuestFragment extends Fragment implements IQuestListView, PullToRef
     public void toVisitorAcvitity(Context context) {
         Intent intent = new Intent(context, Activitys.getClass("1"));
         intent.putExtra("workflow_content_id", "0");
-        intent.putExtra("wk_point_id", "0");
+        intent.putExtra("wk_point_id", "1");
+        intent.putExtra("workflow_name", "来访");
         startActivity(intent);
     }
 

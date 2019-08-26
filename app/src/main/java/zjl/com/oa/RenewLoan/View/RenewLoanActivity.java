@@ -26,6 +26,7 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -261,6 +262,26 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
             return;
         }
         switch (wk_point_id) {
+            case 1:
+                HashMap<String ,Object > map = new HashMap<>();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
+                }
+
+                if (iRLPresenter != null){
+                    iRLPresenter.Coming(map);
+                }
+
+                break;
             case 3:
                 if (iRLPresenter != null) {
                     iRLPresenter.FirstSureAmount(
@@ -284,6 +305,26 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                             "1",
                             getData_Con("借款周期"));
                 }
+                break;
+            case 5:
+                HashMap<String ,Object > map1 = new HashMap<>();
+                map1.put("token",token );
+                map1.put("w_con_id", workflow_content_id);
+                map1.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map1.put(submit_field,value);
+                    }
+                }
+
+                if (iRLPresenter != null){
+                    iRLPresenter.Coming(map1);
+                }
+
                 break;
             case 6:
                 if (iRLPresenter != null) {

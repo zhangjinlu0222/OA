@@ -39,10 +39,6 @@ public class EvaluationModelImpl extends ModelImpl implements IEvaluationModel {
                           String remark,String market_amount, String take_amount,
                           int workflow_content_id, int wk_point_id,
                           List<LocalMedia> files, IEvaluationListener listener) {
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(Constant.BASE_URL)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
 
         IEvaluation service = retrofit.create(IEvaluation.class);
         // 创建RequestBody，传入参数："multipart/form-data"，String

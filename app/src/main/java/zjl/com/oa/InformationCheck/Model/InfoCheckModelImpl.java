@@ -128,25 +128,6 @@ public class InfoCheckModelImpl extends ModelImpl implements IInfoCheckModel {
             }
             size += file.length();
             RequestBody imgFile = RequestBody.create(MediaType.parse("image/png"), file);
-//            final int  index = i;
-//            RequestBody imgFile = new ProgressRequestBody(file, new ProgressRequestBody.UploadCallbacks() {
-//                @Override
-//                public void onProgressUpdate(int percentage) {
-//                    Log.e("TAG",index + " / " + percentage+"");
-//                    if (percentage == 100){
-//                        listener.updateUploadProgress(index,files.size());
-//                    }
-//                }
-//
-//                @Override
-//                public void onError() {
-//
-//                }
-//
-//                @Override
-//                public void onFinish() {
-//                }
-//            });
             String subfix = file.getName().toString().trim().substring(
                     file.getName().toString().trim().lastIndexOf("."),
                     file.getName().toString().trim().length());

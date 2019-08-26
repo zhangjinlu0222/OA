@@ -2,6 +2,7 @@ package zjl.com.oa.RenewLoan.Presenter;
 
 import com.luck.picture.lib.entity.LocalMedia;
 
+import java.util.HashMap;
 import java.util.List;
 
 import zjl.com.oa.InformationCheck.Presenter.IInfoCheck;
@@ -12,6 +13,7 @@ import zjl.com.oa.Meeting.Presenter.IMettingListener;
  */
 
 public interface IRLPresenter{
+    void Coming(HashMap<String ,Object > map);
     void ApplyforRefinance(String token, String w_con_id, String w_pot_id,
                            String loan_length, String remark);
     void CarPhoto(String request_end_flag,String uploadType,

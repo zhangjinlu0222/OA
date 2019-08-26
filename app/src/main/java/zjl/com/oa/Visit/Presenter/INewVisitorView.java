@@ -1,6 +1,7 @@
 package zjl.com.oa.Visit.Presenter;
 
 import zjl.com.oa.Base.IBaseView;
+import zjl.com.oa.Response.FormResponse;
 import zjl.com.oa.Response.LookInterviewResponse;
 
 /**
@@ -8,12 +9,7 @@ import zjl.com.oa.Response.LookInterviewResponse;
  */
 
 public interface INewVisitorView extends IBaseView{
-    String getCustomerName();
-    int getCustormerSource();
-    int getProductType();
-    String getPointNotice();
-    String getBakInfo();
-    void showProgressBar();
-    void hideProgressBar();
-    void refreshData(LookInterviewResponse.Result result);
+    void showProgress();
+    void hideProgress();
+    void loadForms(FormResponse.Result result);
 }

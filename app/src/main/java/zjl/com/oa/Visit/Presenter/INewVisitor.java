@@ -1,10 +1,11 @@
-package zjl.com.oa.Interface;
+package zjl.com.oa.Visit.Presenter;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import zjl.com.oa.ApplicationConfig.Constant;
+import zjl.com.oa.Response.FormResponse;
 import zjl.com.oa.Response.LogoutResponse;
 import zjl.com.oa.Response.LookInterviewResponse;
 
@@ -14,7 +15,7 @@ import zjl.com.oa.Response.LookInterviewResponse;
 
 public interface INewVisitor {
     @POST(Constant.Coming)
-    Call<LogoutResponse> post(@Body RequestBody body);
-    @POST(Constant.LookInterview)
-    Call<LookInterviewResponse> LookInterview(@Body RequestBody body);
+    Call<LogoutResponse> Coming(@Body RequestBody body);
+    @POST(Constant.Form)
+    Call<FormResponse> Form(@Body RequestBody body);
 }
