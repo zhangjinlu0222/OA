@@ -53,10 +53,12 @@ public class Activitys {
                     destClass =  RenewLoanActivity.class;//初步定额
                     break;
                 case "7":
-                    destClass =  BusinessFeedBackActivity.class;//初步反馈
+//                    destClass =  BusinessFeedBackActivity.class;//初步反馈
+                    destClass =  RenewLoanActivity.class;//初步反馈
                     break;
                 case "8":
-                    destClass =  OTSInvestActivity.class;//实地考察
+//                    destClass =  OTSInvestActivity.class;//实地考察
+                    destClass =  RenewLoanActivity.class;//最终定额
                     break;
                 case "9":
                     destClass =  FeedBackActivity.class;//初步反馈结果

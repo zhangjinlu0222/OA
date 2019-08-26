@@ -30,6 +30,9 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
     private List<LocalMedia> files = new ArrayList<>();
     private boolean isUploading = false;
     private String loan_length;
+    //评估报告需要字段
+    private int car_year;
+    private String car_type,car_style,milage,market_amount,take_amount;
 
     public RLPresenterImpl(IRLView view) {
         this.irlView = view;
@@ -51,6 +54,12 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
                             workflow_content_id, wk_point_id ,
                             files.subList(files.size() / 2,files.size()),
                             type_id,loan_length,this);//车辆照片
+                    break;
+                case 5:
+                    irlModel.PleDgeAssess( request_end_flag, UPLOAD_TYPE_ADD,
+                            token,car_year,car_type,car_style,milage,
+                            remark,market_amount,take_amount,workflow_content_id,wk_point_id,
+                            files.subList(files.size() / 2,files.size()),this);//评估报告
                     break;
                 case 26:
                     irlModel.UploadCarPhoto( request_end_flag, UPLOAD_TYPE_ADD, token,  workflow_content_id,  remark,  wk_point_id,
@@ -89,6 +98,116 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
     @Override
     public void onFail() {
         this.onFail("操作失败，请重试");
+    }
+
+    @Override
+    public void BusFeedback(String token, String w_con_id, String w_pot_id, int loan_length, float loan_rate, String return_amount_method, String remark) {
+        if (loan_length == 0){
+            this.onFail("请输入贷款期限");
+            return;
+        }
+        if (loan_rate <= 0){
+            this.onFail("请输入贷款利率");
+            return;
+        }
+        if (return_amount_method == null || "".equals(return_amount_method)){
+            this.onFail("请选择还款方式");
+            return;
+        }
+
+        if (irlModel != null){
+            irlModel.BusFeedback( token,  w_con_id,  w_pot_id,  loan_length,  loan_rate,
+                    return_amount_method, remark,this);
+        }
+        if (irlView != null){
+            irlView.showProgress();
+        }
+    }
+
+    @Override
+    public void FirstFeedback(String token, String w_con_id, String w_pot_id, String remark) {
+        if (irlModel != null){
+            irlModel.FirstFeedback(token,w_con_id,w_pot_id,remark,this);
+        }
+        if (irlView != null){
+            irlView.showProgress();
+        }
+    }
+
+    @Override
+    public void PleDgeAssess(String request_end_flag, String uploadType, String token, int car_year,
+                             String car_type, String car_style, String milage, String remark,
+                             String market_amount, String take_amount, int workflow_content_id,
+                             int wk_point_id, List<LocalMedia> files) {
+
+        if (files.size() <=0 && !irlView.isUploadTypeAdd()){
+            irlView.showFailureMsg("请选择上传文件");
+            return;
+        }
+
+        if (car_year <= 0){
+            irlView.showFailureMsg("请输入车辆年份");
+            return;
+        }
+
+        if ("".equals(car_type)){
+            irlView.showFailureMsg("请输入车辆品牌");
+            return;
+        }
+
+        if ("".equals(car_style)){
+            irlView.showFailureMsg("请输入车辆型号");
+            return;
+        }
+        if ("".equals(milage)){
+            irlView.showFailureMsg("请输入公里数");
+            return;
+        }
+
+        if ("".equals(take_amount)){
+            irlView.showFailureMsg("请输入收车价");
+            return;
+        }
+
+        if ("".equals(market_amount)){
+            irlView.showFailureMsg("请输入市场价");
+            return;
+        }
+
+        if (irlModel != null){
+            if (files.size() <= 1){
+                irlModel.PleDgeAssess( request_end_flag, uploadType,
+                        token,car_year,car_type,car_style,milage,
+                        remark,market_amount,take_amount,
+                        workflow_content_id,wk_point_id,files,this);
+
+                this.isUploading = false;
+            }else{
+                irlModel.PleDgeAssess( request_end_flag, uploadType,
+                        token,car_year,car_type,car_style,milage,
+                        remark,market_amount,take_amount,
+                        workflow_content_id,wk_point_id,files.subList(0,files.size() / 2),this);
+
+                this.isUploading = true;
+
+            }
+        }
+
+        if (irlView != null){
+            irlView.showProgress();
+        }
+
+        this.token = token;
+        this.car_year = car_year;
+        this.car_type = car_type;
+        this.car_style = car_style;
+        this.milage = milage;
+        this.remark = remark;
+        this.market_amount = market_amount;
+        this.take_amount = take_amount;
+        this.workflow_content_id = workflow_content_id;
+        this.wk_point_id = wk_point_id;
+        this.files.addAll(files);
     }
 
     @Override

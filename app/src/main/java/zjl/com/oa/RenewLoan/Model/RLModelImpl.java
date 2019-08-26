@@ -19,6 +19,8 @@ import retrofit2.Response;
 import zjl.com.oa.ApplicationConfig.Constant;
 import zjl.com.oa.Base.ModelImpl;
 import zjl.com.oa.Base.ResponseWithNoData;
+import zjl.com.oa.BusinessFeedBack.Presenter.IBusFeedBack;
+import zjl.com.oa.Evaluation.Presenter.IEvaluation;
 import zjl.com.oa.EvaluationQuota.Presenter.IEvaluationQuota;
 import zjl.com.oa.EvaluationQuota.Presenter.IEvaluationQuotaListener;
 import zjl.com.oa.InformationCheck.Presenter.IInfoCheck;
@@ -38,6 +40,160 @@ import zjl.com.oa.UploadPhotos.Presenter.IPhotoUploadListener;
 
 public class RLModelImpl extends ModelImpl implements IRLModel {
     private static final String TAG = "RLEvaluationModelImpl";
+
+    @Override
+    public void BusFeedback(String token, String w_con_id, String w_pot_id, int loan_length, float loan_rate, String return_amount_method, String remark, IRLListener listener) {
+        IRL service = retrofit.create(IRL.class);
+        // 创建RequestBody，传入参数："multipart/form-data"，String
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("token",token);
+        map.put("w_con_id",w_con_id);
+        map.put("w_pot_id",w_pot_id);
+        map.put("loan_length",loan_length);
+        map.put("loan_rate",loan_rate);
+        map.put("return_amount_method",return_amount_method);
+        map.put("remark",remark);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), new Gson().toJson(map));
+
+        Call<ResponseWithNoData> call = service.BusFeedback(body);
+
+        call.enqueue(new Callback<ResponseWithNoData>() {
+            @Override
+            public void onResponse(Call<ResponseWithNoData> call, Response<ResponseWithNoData> response) {
+                if(response.isSuccessful()){
+                    ResponseWithNoData result = response.body();
+                    if (result != null){
+                        if (result.getCode() == Constant.Succeed){
+                            listener.onSucceed();
+                        }else if (result.getCode() == Constant.LoginAnotherPhone){
+                            listener.relogin();
+                        }else{
+                            listener.onFail(result.getMessage());
+                        }
+                    }
+                }else{
+                    listener.onFail();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWithNoData> call, Throwable t) {
+//                listListener.onFail(t.getMessage());
+                Log.e(TAG,"网络异常");
+                t.printStackTrace();
+                listener.onFail();
+            }
+        });
+    }
+
+    @Override
+    public void FirstFeedback(String token, String w_con_id, String w_pot_id, String remark, IRLListener listener) {
+        IRL service = retrofit.create(IRL.class);
+        // 创建RequestBody，传入参数："multipart/form-data"，String
+        HashMap<String,String> map = new HashMap<>();
+        map.put("token",token);
+        map.put("w_con_id",w_con_id);
+        map.put("w_pot_id",w_pot_id);
+        map.put("remark",remark);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), new Gson().toJson(map));
+
+        Call<ResponseWithNoData> call = service.FirstFeedback(body);
+
+        call.enqueue(new Callback<ResponseWithNoData>() {
+            @Override
+            public void onResponse(Call<ResponseWithNoData> call, Response<ResponseWithNoData> response) {
+                if(response.isSuccessful()){
+                    ResponseWithNoData result = response.body();
+                    if (result != null){
+                        if (result.getCode() == Constant.Succeed){
+                            listener.onSucceed();
+                        }else if (result.getCode() == Constant.LoginAnotherPhone){
+                            listener.relogin();
+                        }else{
+                            listener.onFail(result.getMessage());
+                        }
+                    }
+                }else{
+                    listener.onFail();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWithNoData> call, Throwable t) {
+//                listListener.onFail(t.getMessage());
+                Log.e(TAG,"网络异常");
+                t.printStackTrace();
+                listener.onFail();
+            }
+        });
+    }
+
+    @Override
+    public void PleDgeAssess(String request_end_flag, String uploadType, String token, int car_year,
+                             String car_type, String car_style, String milage, String remark,
+                             String market_amount, String take_amount, int workflow_content_id,
+                             int wk_point_id, List<LocalMedia> files, IRLListener listener) {
+        IRL service = retrofit.create(IRL.class);
+        // 创建RequestBody，传入参数："multipart/form-data"，String
+        RequestBody tokenbody = RequestBody.create(MediaType.parse("multipart/form-data"), token);
+        RequestBody car_year_body = RequestBody.create(MediaType.parse("multipart/form-data"), Integer.toString(car_year));
+        RequestBody car_typebody = RequestBody.create(MediaType.parse("multipart/form-data"), car_type);
+        RequestBody car_stylebody = RequestBody.create(MediaType.parse("multipart/form-data"), car_style);
+        RequestBody milagebody = RequestBody.create(MediaType.parse("multipart/form-data"), milage);
+        RequestBody remarkbody = RequestBody.create(MediaType.parse("multipart/form-data"), remark);
+        RequestBody workflow_content_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), Integer.toString(workflow_content_id));
+        RequestBody wk_point_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), Integer.toString(wk_point_id));
+        RequestBody market_amount_body = RequestBody.create(MediaType.parse("multipart/form-data"), market_amount);
+        RequestBody take_amount_body = RequestBody.create(MediaType.parse("multipart/form-data"), take_amount);
+        RequestBody typebody = RequestBody.create(MediaType.parse("multipart/form-data"), uploadType);
+
+        List<MultipartBody.Part> filesBody = new ArrayList<>();
+
+        for (int i=0; i< files.size();i++){
+            File file = new File(files.get(i).getPath());
+            RequestBody imgFile = RequestBody.create(MediaType.parse("image/png"), file);
+
+            String subfix = file.getName().trim().substring(
+                    file.getName().trim().lastIndexOf("."),
+                    file.getName().trim().length());
+            MultipartBody.Part requestImgPart =
+                    MultipartBody.Part.createFormData( file.getName(),i+""+System.currentTimeMillis() + subfix, imgFile);
+            filesBody.add(requestImgPart);
+        }
+
+        Call<ResponseWithNoData> call = service.PleDgeAssess(request_end_flag,
+                typebody,tokenbody,car_year_body,car_typebody,car_stylebody, milagebody,
+                remarkbody,market_amount_body,take_amount_body,
+                workflow_content_idbody,wk_point_idbody,filesBody);
+
+        call.enqueue(new Callback<ResponseWithNoData>() {
+            @Override
+            public void onResponse(Call<ResponseWithNoData> call, Response<ResponseWithNoData> response) {
+                if (response.isSuccessful()){
+                    ResponseWithNoData result = response.body();
+                    if (result != null){
+                        if (result.getCode() == Constant.Succeed){
+                            listener.onSucceed();
+                        }else if (result.getCode() == Constant.LoginAnotherPhone){
+                            listener.relogin();
+                        }else{
+                            listener.onFail(result.getMessage());
+                        }
+                    }
+                }else{
+                    listener.onFail();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWithNoData> call, Throwable t) {
+//                listListener.onFail(t.getMessage());
+                Log.e(TAG,"网络异常");
+                listener.onFail();
+                t.printStackTrace();
+            }
+        });
+    }
 
     @Override
     public void Coming(HashMap<String, Object> map, IRLListener listener) {

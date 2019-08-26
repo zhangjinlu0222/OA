@@ -2,9 +2,11 @@ package zjl.com.oa.RenewLoan.Presenter;
 
 import com.luck.picture.lib.entity.LocalMedia;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
+import zjl.com.oa.BusinessFeedBack.Presenter.IBusFeedBackListener;
 import zjl.com.oa.InformationCheck.Presenter.IInfoCheck;
 import zjl.com.oa.Meeting.Presenter.IMettingListener;
 
@@ -13,6 +15,18 @@ import zjl.com.oa.Meeting.Presenter.IMettingListener;
  */
 
 public interface IRLPresenter{
+
+    void BusFeedback(String token, String w_con_id, String w_pot_id, int loan_length, float loan_rate,
+                     String return_amount_method,String remark);
+    //业务反馈 下一步 不传remark，提交反馈信息的时候传remark
+
+    void FirstFeedback(String token, String w_con_id, String w_pot_id, String remark);
+    //初步反馈 下一步 不传remark，提交反馈信息的时候传remark
+
+    void PleDgeAssess(String request_end_flag,String uploadType,String token,
+                         int  car_year, String car_type,String car_style,String milage,
+                         String remark, String market_amount, String take_amount,
+                      int workflow_content_id,int wk_point_id,List<LocalMedia> files);
     void Coming(HashMap<String ,Object > map);
     void ApplyforRefinance(String token, String w_con_id, String w_pot_id,
                            String loan_length, String remark);

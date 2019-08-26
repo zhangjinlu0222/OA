@@ -21,6 +21,27 @@ import zjl.com.oa.Response.FormResponse;
 
 public interface IRL {
 
+    @POST(Constant.BusFeedback)
+    Call<ResponseWithNoData> BusFeedback(@Body RequestBody body);
+
+    @POST(Constant.BusFirstFeedback)
+    Call<ResponseWithNoData> FirstFeedback(@Body RequestBody body);
+    @POST(Constant.PleDgeAssessTwo)
+    @Multipart
+    Call<ResponseWithNoData> PleDgeAssess(
+            @Header("request_end_flag") String request_end_flag ,
+            @Part("type") RequestBody typebody,
+            @Part("token") RequestBody token,
+            @Part("car_year") RequestBody car_year,
+            @Part("car_type") RequestBody car_type,
+            @Part("car_style") RequestBody car_style,
+            @Part("milage") RequestBody milage,
+            @Part("remark") RequestBody remark,
+            @Part("market_amount") RequestBody market_amount,
+            @Part("take_amount") RequestBody take_amount,
+            @Part("workflow_content_id") RequestBody workflow_content_id,
+            @Part("wk_point_id") RequestBody wk_point_id,
+            @Part List<MultipartBody.Part> files);
     @POST(Constant.Coming)
     Call<ResponseWithNoData> Coming(@Body RequestBody body);
     @POST(Constant.ApplyforRefinance)

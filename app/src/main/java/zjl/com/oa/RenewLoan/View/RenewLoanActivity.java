@@ -1,5 +1,6 @@
 package zjl.com.oa.RenewLoan.View;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,9 +8,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -124,6 +127,16 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 renewloanBtnUpload.setEnabled(true);
                 renewloanBtnUpload.setBackgroundResource(R.mipmap.info_bg_next);
             }
+        } else if (workflow_name.contains("反馈")) {//初步反馈与业务反馈节点反馈操作
+            rlrenewloanRlUpload.setVisibility(View.VISIBLE);
+            renewloanBtnUpload.setText("反馈");
+            if (type != null && type.equals("bohui")){
+                renewloanBtnUpload.setEnabled(false);
+                renewloanBtnUpload.setBackgroundColor(Color.LTGRAY);
+            }else{
+                renewloanBtnUpload.setEnabled(true);
+                renewloanBtnUpload.setBackgroundResource(R.mipmap.info_bg_next);
+            }
         } else {
             rlrenewloanRlUpload.setVisibility(View.GONE);
         }
@@ -184,7 +197,13 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 submitMsg();
                 break;
             case R.id.renewloan_btn_upload:
-                    ReUploadReportOrPhoto(reportFlag,photoFlag);
+                switch (wk_point_id){
+                    case 7: //初步反馈
+                        submitMsgAlert();
+                        break;
+                    default:
+                        ReUploadReportOrPhoto(reportFlag,photoFlag);
+                }
                 break;
         }
     }
@@ -241,17 +260,17 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
     @Override
     public String getData_Con(String arg) {
         for (FormResponse.Result.Form form : formLists) {
-            if (arg != null && arg.equals(form.getControl_title().toString().trim())) {
-                return form.getData_con().toString().trim();
+            if (arg != null && arg.equals(form.getControl_title().trim())) {
+                return form.getData_con().trim();
             }
         }
         return null;
     }
     public String getData_Con(String arg ,int control_style) {
         for (FormResponse.Result.Form form : formLists) {
-            if (arg != null && arg.equals(form.getControl_title().toString().trim()) &&
+            if (arg != null && arg.equals(form.getControl_title().trim()) &&
                     (form.getControl_style() == control_style)) {
-                return form.getData_con().toString().trim();
+                return form.getData_con().trim();
             }
         }
         return null;
@@ -307,24 +326,22 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 }
                 break;
             case 5:
-                HashMap<String ,Object > map1 = new HashMap<>();
-                map1.put("token",token );
-                map1.put("w_con_id", workflow_content_id);
-                map1.put("w_pot_id", wk_point_id);
-
-                for (int i=0;i< formLists.size();i++){
-                    String submit_field = formLists.get(i).getSubmit_field();
-
-                    if (submit_field != null && submit_field.length() >0){
-                        String value = formLists.get(i).getData_con();
-                        map1.put(submit_field,value);
-                    }
+                if (iRLPresenter != null) {
+                    iRLPresenter.PleDgeAssess(
+                            request_start_flag,
+                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+                            token,
+                            getData_Con("车辆年份").equals("")?0:Integer.parseInt(getData_Con("车辆年份")),
+                            getData_Con("车辆品牌"),
+                            getData_Con("车辆型号"),
+                            getData_Con("里程数"),
+                            getData_Con("备注"),
+                            getData_Con("市场价"),
+                            getData_Con("收车价"),
+                            workflow_content_id,
+                            wk_point_id,
+                            selectList);
                 }
-
-                if (iRLPresenter != null){
-                    iRLPresenter.Coming(map1);
-                }
-
                 break;
             case 6:
                 if (iRLPresenter != null) {
@@ -334,6 +351,15 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                             Integer.toString(wk_point_id),
                             getData_Con("初步定额"),
                             getData_Con("备注",12));
+                }
+                break;
+            case 7:
+                if (iRLPresenter != null) {
+                    iRLPresenter.FirstFeedback(
+                            token,
+                            Integer.toString(workflow_content_id),
+                            Integer.toString(wk_point_id),
+                            "");
                 }
                 break;
             case 10:
@@ -548,6 +574,8 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
         for (FormResponse.Result.Form form : formLists) {
             if (form.getControl_title().toString().trim().contains("上传照片")) {
                 form.setImgs(imgs);
+            }else if (wk_point_id == 5){ //评估报告节点
+                form.setImgs(imgs);
             }
         }
     }
@@ -640,4 +668,41 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
             }
         }
     }
+
+    public void submitMsgAlert() {
+        AlertDialog dialog = new AlertDialog.Builder(this).create();
+        View view = View.inflate(context, R.layout.alertdialog, null);
+        dialog.setView(view);
+        EditText et = view.findViewById(R.id.et_feedback);
+        TextView cancel = view.findViewById(R.id.tv_cancel);
+        TextView confirm = view.findViewById(R.id.tv_confirm);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if ("".equals(et.getText().toString().trim())) {
+                    showFailureMsg("请输入反馈信息");
+                    return;
+                } else {
+
+                    if (!netConnected) {
+                        showNetError();
+                    } else if (isFastDoubleClick(v.getId())) {
+                        return;
+                    } else {
+                        iRLPresenter.FirstFeedback(token,Integer.toString(workflow_content_id),
+                                Integer.toString(wk_point_id),et.getText().toString());
+                    }
+                }
+            }
+        });
+        dialog.show();
+    }
+
 }
