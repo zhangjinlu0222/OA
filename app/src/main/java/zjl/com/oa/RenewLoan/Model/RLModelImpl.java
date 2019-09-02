@@ -569,7 +569,7 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
             RequestBody imgFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
             if ("7".equals(type_id) && i ==0){
                 MultipartBody.Part requestImgPart =
-                        MultipartBody.Part.createFormData(file.getName(), "0"+"zheshubiao"+System.currentTimeMillis(), imgFile);
+                        MultipartBody.Part.createFormData(file.getName(), "0"+"zheshubiao"+System.currentTimeMillis() + subfix, imgFile);
                 filesBody.add(requestImgPart);
             }else{
                 MultipartBody.Part requestImgPart =

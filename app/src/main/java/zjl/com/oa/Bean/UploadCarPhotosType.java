@@ -5,7 +5,7 @@ package zjl.com.oa.Bean;
  */
 
 public class UploadCarPhotosType {
-    private int type_id;
+    private static int type_id;
     //1=上传车照片
     //2=收车
     //3=装GPS
@@ -15,11 +15,11 @@ public class UploadCarPhotosType {
     //7=实地考察
     //8=抵押登记
     //9=风控审核（不传照片，备注给空格）
-    //110=展期费（不传照片，备注给空格）
+    //11=展期费（不传照片，备注给空格）
     //11=等待签约续贷（不传照片，备注给空格）
     //12=签约续贷
 
-    public  int getType_id(int wk_point_id) {
+    public static int getType_id(int wk_point_id) {
         switch (wk_point_id){
             case 4://上传照片
                 type_id = 1;

@@ -22,6 +22,7 @@ import com.dou361.dialogui.DialogUIUtils;
 import com.dou361.dialogui.bean.BuildBean;
 import com.dou361.dialogui.listener.DialogUIDateTimeSaveListener;
 import com.dou361.dialogui.widget.DateSelectorWheelView;
+import com.luck.picture.lib.PictureSelectionModel;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.compress.Luban;
 import com.luck.picture.lib.config.PictureConfig;
@@ -38,6 +39,7 @@ import butterknife.OnClick;
 import zjl.com.oa.Adapter.FormListsAdapter;
 import zjl.com.oa.ApplicationConfig.Constant;
 import zjl.com.oa.Base.BaseActivity;
+import zjl.com.oa.Bean.UploadCarPhotosType;
 import zjl.com.oa.Bean.UserInfo;
 import zjl.com.oa.CustomView.ActionSheetDialog;
 import zjl.com.oa.CustomView.MyListView;
@@ -78,12 +80,19 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
     private FormListsAdapter formListsAdapter;
 
     private List<LocalMedia> selectList = new ArrayList<>();
+    private List<LocalMedia> zheshubiao = new ArrayList<>();
+    private List<LocalMedia> photos = new ArrayList<>();
     private BroadcastReceiver receiver;
     private BuildBean submitDialog;
 
     public boolean reportFlag = false;
     public boolean photoFlag = false;
     private String way;
+
+    //实地考察节点图片类型，折数表或者实地图片
+    public String photoType;
+    private static final int CHOOSE_ZHESHUBIAO = 10001;
+    private static final int CHOOSE_PHOTO = 10002;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -362,6 +371,29 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                             "");
                 }
                 break;
+            case 8:
+                if (zheshubiao.size() < 1){
+                    showFailureMsg("请选择折数表");
+                    return;
+                }
+                if (photos.size() < 1){
+                    showFailureMsg("请选择实地图片");
+                    return;
+                }
+                selectList.addAll(zheshubiao);
+                selectList.addAll(photos);
+                if (iRLPresenter != null) {
+                    iRLPresenter.UploadCarPhoto(
+                            request_start_flag,
+                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+                            token,
+                            workflow_content_id,
+                            getData_Con("备注"),
+                            wk_point_id,
+                            UploadCarPhotosType.getType_id(wk_point_id)+"",
+                            selectList);
+                }
+                break;
             case 10:
                 if (iRLPresenter != null) {
                     iRLPresenter.SureAmount(
@@ -505,10 +537,10 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 1:
-                                getFileWithType(PictureMimeType.ofImage());
+                                getFileWithType(PictureMimeType.ofImage(),photoType);
                                 break;
                             case 0:
-                                getFileWithType(PictureMimeType.ofVideo());
+                                getFileWithType(PictureMimeType.ofVideo(),photoType);
                                 break;
                         }
                         dialog.dismiss();
@@ -526,21 +558,33 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
         dialog.show();
     }
 
-    private void getFileWithType(int type) {
-
+    private void getFileWithType(int type,String photoType) {
+        PictureSelectionModel model =
         PictureSelector.create(RenewLoanActivity.this)
                 .openGallery(type)// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()
-                .maxSelectNum(Constant.MAXCOUNT)// 最大图片选择数量
-                .minSelectNum(Constant.MINCOUNT)// 最小选择数量
+                .minSelectNum(Constant.MINCOUNT)// 最小选择数量;
                 .imageSpanCount(4)// 每行显示个数
                 .selectionMode(PictureConfig.MULTIPLE)// 多选 or 单选
                 .compressGrade(Luban.THIRD_GEAR)// luban压缩档次，默认3档 Luban.FIRST_GEAR、Luban.CUSTOM_GEAR
                 .isCamera(true)// 是否显示拍照按钮
                 .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
                 .compress(false)// 是否压缩
-                .glideOverride(160, 160)// glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
-                .selectionMedia(selectList)// 是否传入已选图片
-                .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
+                .glideOverride(160, 160);// glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
+
+        //结果回调onActivityResult code
+        if ("上传折数表".equals(photoType)){
+            model.selectionMedia(zheshubiao)// 是否传入已选图片
+                .maxSelectNum(Constant.MINCOUNT)
+                .forResult(CHOOSE_ZHESHUBIAO);
+        }else if ("上传实地图片".equals(photoType)){
+            model.selectionMedia(photos)// 是否传入已选图片
+                    .maxSelectNum(Constant.MAXCOUNT)
+                    .forResult(CHOOSE_PHOTO);
+        }else{
+            model.selectionMedia(selectList)// 是否传入已选图片
+             .maxSelectNum(Constant.MAXCOUNT)
+                    .forResult(PictureConfig.CHOOSE_REQUEST);
+        }
     }
 
 
@@ -554,6 +598,20 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                     selectList.clear();
                     selectList.addAll(PictureSelector.obtainMultipleResult(data));
                     addImgs(selectList);
+                    formListsAdapter.notifyDataSetChanged();
+                    break;
+                case CHOOSE_ZHESHUBIAO:
+                    // 图片选择结果
+                    zheshubiao.clear();
+                    zheshubiao.addAll(PictureSelector.obtainMultipleResult(data));
+                    addImgs(zheshubiao);
+                    formListsAdapter.notifyDataSetChanged();
+                    break;
+                case CHOOSE_PHOTO:
+                    // 图片选择结果
+                    photos.clear();
+                    photos.addAll(PictureSelector.obtainMultipleResult(data));
+                    addImgs(photos);
                     formListsAdapter.notifyDataSetChanged();
                     break;
             }
@@ -572,9 +630,11 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
         }
 
         for (FormResponse.Result.Form form : formLists) {
-            if (form.getControl_title().toString().trim().contains("上传照片")) {
+            if (form.getControl_title().trim().contains("上传照片")) {
                 form.setImgs(imgs);
             }else if (wk_point_id == 5){ //评估报告节点
+                form.setImgs(imgs);
+            }else if (form.getControl_title().trim().contains(photoType)){
                 form.setImgs(imgs);
             }
         }

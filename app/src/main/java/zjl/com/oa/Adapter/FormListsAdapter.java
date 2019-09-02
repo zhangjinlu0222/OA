@@ -43,7 +43,7 @@ import zjl.com.oa.Utils.LocalMediaUtil;
  * Created by Administrator on 2017/5/26.
  */
 
-public class FormListsAdapter extends BaseAdapter implements View.OnClickListener, GridImageAdapter.onAddPicClickListener, GridImageAdapter.OnItemClickListener {
+public class FormListsAdapter extends BaseAdapter implements View.OnClickListener {
     private final int contro_style_count = 14;
     public List<FormResponse.Result.Form> formLists;
     private RenewLoanActivity context;
@@ -57,16 +57,6 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
      * Form3*/
     private GridImageAdapter adapter;
     private FullyGridLayoutManager manager;
-
-    @Override
-    public void onAddPicClick() {
-        context.showSheetDialog();
-    }
-
-    @Override
-    public void onItemClick(int position, View v) {
-        context.onClickPic(position);
-    }
 
     /**时间选择
      * Form9*/
@@ -401,16 +391,41 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
 
     private void setContentValue(Form3 viewHolder,int pos){
         viewHolder.position = pos;
-        viewHolder.title.setText(formLists.get(pos).getControl_title().toString().trim());
+        viewHolder.title.setText(formLists.get(pos).getControl_title().trim());
         manager = new FullyGridLayoutManager(context, 4,
                 GridLayoutManager.VERTICAL, false);
 
         viewHolder.recyclerView.setLayoutManager(manager);
-        adapter = new GridImageAdapter(context, this);
-        adapter.setList(LocalMediaUtil.getMediaList(formLists.get(pos).getImgs()));
+        adapter = new GridImageAdapter(context, new GridImageAdapter.onAddPicClickListener() {
+            @Override
+            public void onAddPicClick() {
+
+                if (formLists.get(pos).getControl_title().equals("上传折数表")){
+                    context.photoType = "上传折数表";
+                }
+
+                if (formLists.get(pos).getControl_title().equals("上传实地图片")){
+                    context.photoType = "上传实地图片";
+                }
+
+                context.showSheetDialog();
+            }
+        });
+
+        if (formLists.get(pos).getImgs().size() > 0){
+            adapter.setList(LocalMediaUtil.getMediaList(formLists.get(pos).getImgs()));
+        }
+
         adapter.setShowDel(true);
+
         viewHolder.recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(this);
+        adapter.setOnItemClickListener(new GridImageAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+
+                context.onClickPic(position);
+            }
+        });
         adapter.notifyDataSetChanged();
     }
     private void setContentValue(Form6 viewHolder,int pos){
@@ -443,7 +458,13 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
         });
 
         viewHolder.recyclerView.setLayoutManager(manager);
-        adapter = new GridImageAdapter(context, this);
+        adapter = new GridImageAdapter(context, new GridImageAdapter.onAddPicClickListener() {
+            @Override
+            public void onAddPicClick() {
+
+                context.showSheetDialog();
+            }
+        });
         adapter.setList(LocalMediaUtil.getMediaList(formLists.get(pos).getImgs()));
         adapter.setShowDel(false);
         adapter.setSelectMax(formLists.get(pos).getImgs().size());

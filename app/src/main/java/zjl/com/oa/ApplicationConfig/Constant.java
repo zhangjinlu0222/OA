@@ -19,10 +19,10 @@ public class Constant {
     public static String WordsLeft = "/100字";
 
 //   本地环境
-//    public static final String BASE_URL = "http://192.168.1.119:4806/";
+    public static final String BASE_URL = "http://192.168.1.144:8200/";
 //    public static final String BASE_URL = "http://192.168.1.200:9000/";
 //   测试环境
-    public static final String BASE_URL = "https://api.clxchina.cn:8200/";
+//    public static final String BASE_URL = "https://api.clxchina.cn:8200/";
 //   正式环境
 //    public static final String BASE_URL = "https://api.clxchina.cn:8100/";
 
