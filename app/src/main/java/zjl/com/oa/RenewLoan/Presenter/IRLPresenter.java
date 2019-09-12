@@ -16,6 +16,12 @@ import zjl.com.oa.Meeting.Presenter.IMettingListener;
 
 public interface IRLPresenter{
 
+    void loanApplication(String token,int w_con_id,int w_pot_id,String remark);
+
+    void InformSigned(String token,String workflow_content_id,String wk_point_id,
+                        String service_fee,String pontage,
+                        String contract_date,String remark);
+
     void BusFeedback(String token, String w_con_id, String w_pot_id, int loan_length, float loan_rate,
                      String return_amount_method,String remark);
     //业务反馈 下一步 不传remark，提交反馈信息的时候传remark

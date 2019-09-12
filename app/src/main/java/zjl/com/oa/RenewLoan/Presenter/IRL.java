@@ -21,6 +21,12 @@ import zjl.com.oa.Response.FormResponse;
 
 public interface IRL {
 
+    @POST(Constant.LoanApplication)
+    Call<ResponseWithNoData> loanApplication(@Body RequestBody body);
+
+    @POST(Constant.InformSigned)
+    Call<ResponseWithNoData> InformSigned(@Body RequestBody body);
+
     @POST(Constant.BusFeedback)
     Call<ResponseWithNoData> BusFeedback(@Body RequestBody body);
 

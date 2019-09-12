@@ -53,10 +53,10 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
     Map<Integer, String> mMapContent = new HashMap<>();
     ViewGroup.LayoutParams bakLayoutParams = null;
 
-    /**文件上传
+    /**图片上传
      * Form3*/
-    private GridImageAdapter adapter;
-    private FullyGridLayoutManager manager;
+    public GridImageAdapter adapter;
+    public FullyGridLayoutManager manager;
 
     /**时间选择
      * Form9*/
@@ -146,6 +146,8 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
                     convertView.setTag(form2);
                     break;
                 case 3:
+                case 4:
+                case 5:
                     convertView = inflater.inflate(R.layout.form_item_3, null);
                     form3 = new Form3(convertView);
                     form3.title = convertView.findViewById(R.id.title);
@@ -246,6 +248,8 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
                     form2 = (Form2) convertView.getTag();
                     break;
                 case 3:
+                case 4:
+                case 5:
                     form3 = (Form3) convertView.getTag();
                     break;
                 case 6:
@@ -278,7 +282,7 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
             setContentValue(form1,position);
         }else if (type == 2){
             setContentValue(form2,position);
-        }else if (type == 3){
+        }else if (type == 3 || type == 4  ||type == 5 ){
             setContentValue(form3,position);
         }else if (type == 6){
             setContentValue(form6,position);
@@ -396,19 +400,14 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
                 GridLayoutManager.VERTICAL, false);
 
         viewHolder.recyclerView.setLayoutManager(manager);
-        adapter = new GridImageAdapter(context, new GridImageAdapter.onAddPicClickListener() {
+        adapter = new GridImageAdapter(context,formLists.get(pos).getControl_title().trim(),
+                new GridImageAdapter.onAddPicClickListener() {
             @Override
             public void onAddPicClick() {
 
-                if (formLists.get(pos).getControl_title().equals("上传折数表")){
-                    context.photoType = "上传折数表";
-                }
+                context.photoType = formLists.get(pos).getControl_title();
 
-                if (formLists.get(pos).getControl_title().equals("上传实地图片")){
-                    context.photoType = "上传实地图片";
-                }
-
-                context.showSheetDialog();
+                context.showSheetDialog(formLists.get(pos).getControl_style());
             }
         });
 
@@ -423,7 +422,7 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
             @Override
             public void onItemClick(int position, View v) {
 
-                context.onClickPic(position);
+                context.onClickPic(position,pos);
             }
         });
         adapter.notifyDataSetChanged();
@@ -462,7 +461,7 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
             @Override
             public void onAddPicClick() {
 
-                context.showSheetDialog();
+                context.showSheetDialog(formLists.get(pos).getControl_style());
             }
         });
         adapter.setList(LocalMediaUtil.getMediaList(formLists.get(pos).getImgs()));
@@ -480,24 +479,22 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
 
     private void setContentValue(Form7 viewHolder,int pos){
         viewHolder.position = pos;
-        viewHolder.title.setText(formLists.get(pos).getControl_title().toString().trim());
+        viewHolder.title.setText(formLists.get(pos).getControl_title().trim());
         if (viewHolder.img != null && formLists.get(pos).getTitle_img().length() > 0){
             Glide.with(context).load(formLists.get(pos).getTitle_img()).into(viewHolder.img);
             viewHolder.img.setVisibility(View.VISIBLE);
         }else{
             viewHolder.img.setVisibility(View.GONE);
         }        String bg_color = formLists.get(pos).getBg_color().toString().trim();
-        if (bg_color != null && bg_color.length() > 0){
+        if (bg_color.length() > 0){
             viewHolder.head.setBackgroundColor(Color.parseColor(bg_color));
         }
     }
     private void setContentValue(Form8 viewHolder,int pos){
         viewHolder.position = pos;
         viewHolder.title.setText(formLists.get(pos).getControl_title().trim());
-        viewHolder.datasource = new ArrayList(Arrays.asList(formLists.get(pos).getUnit().split(",")));
+        viewHolder.datasource = Arrays.asList(formLists.get(pos).getUnit().split(","));
         viewHolder.nsSelector.attachDataSource(viewHolder.datasource);
-        viewHolder.nsSelector.setArrowTintColor(Color.rgb(0, 0, 0));
-        viewHolder.nsSelector.postInvalidate();
         formLists.get(pos).setData_con("1");
         viewHolder.nsSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -514,19 +511,25 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
 
     private void setContentValue(Form9 viewHolder,int pos){
         viewHolder.position = pos;
-        viewHolder.title.setText(formLists.get(pos).getControl_title().toString().trim());
+        viewHolder.title.setText(formLists.get(pos).getControl_title().trim());
+        String img = formLists.get(pos).getTitle_img().trim();
         if (viewHolder.img != null){
-            Glide.with(context).load(formLists.get(pos).getTitle_img()).into(viewHolder.img);
+            if (img.length() > 0){
+                viewHolder.img.setVisibility(View.VISIBLE);
+                Glide.with(context).load(formLists.get(pos).getTitle_img()).into(viewHolder.img);
+            }else{
+                viewHolder.img.setVisibility(View.GONE);
+            }
         }
-        viewHolder.time.setHint(formLists.get(pos).getPlace_holder().toString().trim());
-        viewHolder.time.setText(formLists.get(pos).getData_con().toString().trim());
+        viewHolder.time.setHint(formLists.get(pos).getPlace_holder().trim());
+        viewHolder.time.setText(formLists.get(pos).getData_con().trim());
         viewHolder.time.setTag(pos);
         viewHolder.time.setOnClickListener(this);
     }
     private void setContentValue(Form10 viewHolder,int pos){
         viewHolder.position = pos;
-        viewHolder.title.setText(formLists.get(pos).getControl_title().toString().trim());
-        viewHolder.content.setText(formLists.get(pos).getData_con().toString().trim());
+        viewHolder.title.setText(formLists.get(pos).getControl_title().trim());
+        viewHolder.content.setText(formLists.get(pos).getData_con().trim());
 
         String unit = formLists.get(pos).getUnit();
         if (unit != null && unit.length() > 0){
@@ -540,7 +543,7 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
         String data = formLists.get(pos).getData_con().toString().trim();
         String hint = formLists.get(pos).getPlace_holder().toString().trim();
         boolean readonly = formLists.get(pos).isRead_only();
-        if (data != null && data.length() > 0){
+        if (data.length() > 0){
             viewHolder.content.setText(data);
         }else{
             viewHolder.content.setHint(hint);
@@ -554,9 +557,11 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
 
     private void setContentValue(Form12 viewHolder,int pos){
         viewHolder.position = pos;
-        String data = formLists.get(pos).getData_con().toString().trim();
-        String hint = formLists.get(pos).getPlace_holder().toString().trim();
-        if (data != null && data.length() > 0){
+        String data = formLists.get(pos).getData_con().trim();
+        String hint = formLists.get(pos).getPlace_holder().trim();
+        String title = formLists.get(pos).getControl_title().trim();
+        viewHolder.title.setText(title);
+        if (data.length() > 0){
             viewHolder.content.setText(data);
         }else{
             viewHolder.content.setHint(hint);
@@ -695,11 +700,12 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
         TextView title;
         NiceSpinner nsSelector;
         int position;
-        ArrayList datasource;
+        List datasource;
 
         public Form8(View convertView) {
             title = convertView.findViewById(R.id.title);
             nsSelector = convertView.findViewById(R.id.ns_selector);
+            nsSelector.setArrowDrawable(R.drawable.ic_arrow_drop_down_black_24dp);
         }
     }
     class Form9 {
@@ -751,11 +757,13 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
         }
     }
     class Form12 {
+        TextView title;
         EditText content;
         TextView tvRemarkWordsLeft;
         int position;
 
         public Form12(View convertView) {
+            title = convertView.findViewById(R.id.title);
             content = convertView.findViewById(R.id.content);
             tvRemarkWordsLeft = convertView.findViewById(R.id.remark_words_left);
             content.addTextChangedListener(new TextWatcher() {

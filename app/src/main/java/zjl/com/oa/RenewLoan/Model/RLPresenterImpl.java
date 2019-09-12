@@ -16,6 +16,7 @@ import zjl.com.oa.Response.FormResponse;
 import static zjl.com.oa.Base.BaseActivity.UPLOAD_TYPE_ADD;
 import static zjl.com.oa.Base.BaseActivity.UPLOAD_TYPE_NORMAL;
 import static zjl.com.oa.Base.BaseActivity.request_end_flag;
+import static zjl.com.oa.Utils.DateCheck.isValidDate;
 
 /**
  * Created by Administrator on 2018/3/5.
@@ -62,6 +63,8 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
                             files.subList(files.size() / 2,files.size()),this);//评估报告
                     break;
                 case 8://实地考察
+                case 15:
+                case 18:
                 case 26:
                     irlModel.UploadCarPhoto( request_end_flag, UPLOAD_TYPE_ADD, token,  workflow_content_id,  remark,  wk_point_id,
                             type_id,files.subList(files.size() / 2,files.size()),this);//展期费续贷
@@ -99,6 +102,58 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
     @Override
     public void onFail() {
         this.onFail("操作失败，请重试");
+    }
+
+
+    @Override
+    public void loanApplication(String token, int w_con_id, int w_pot_id, String remark) {
+
+        if (irlModel != null){
+            irlModel.loanApplication(token,w_con_id,w_pot_id,remark,this);
+        }
+        if (irlView != null){
+            irlView.showProgress();
+        }
+    }
+
+    @Override
+    public void InformSigned(String token,String workflow_content_id,String wk_point_id,
+                               String service_fee,String pontage,
+                               String contract_date,String remark) {
+        if ("".equals(service_fee.trim())){
+            if (irlView != null){
+                irlView.showFailureMsg("请输入服务费");
+            }
+            return;
+        }
+        if ("".equals(pontage.trim())){
+            if (irlView != null){
+                irlView.showFailureMsg("请输入过桥费");
+            }
+            return;
+        }
+        if ("".equals(contract_date.trim())){
+            if (irlView != null){
+                irlView.showFailureMsg("请输入合同日期");
+            }
+            return;
+        }else if (!isValidDate(contract_date)){
+            if (irlView != null){
+                irlView.showFailureMsg("合同日期格式为YYYY-MM-DD");
+            }
+            return;
+        }
+
+        if (irlModel != null ){
+            this.wk_point_id = Integer.parseInt(wk_point_id);
+            irlModel.InformSigned( token, workflow_content_id, wk_point_id,
+                    service_fee, pontage,
+                    contract_date, remark,this);
+        }
+
+        if (irlView != null){
+            irlView.showProgress();
+        }
     }
 
     @Override

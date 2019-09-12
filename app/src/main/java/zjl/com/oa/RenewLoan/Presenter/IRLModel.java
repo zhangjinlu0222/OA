@@ -16,6 +16,7 @@ import zjl.com.oa.EvaluationQuota.Presenter.IEvaluationQuotaListener;
 import zjl.com.oa.InformationCheck.Presenter.IInfoCheck;
 import zjl.com.oa.InformationCheck.Presenter.IInfoCheckListener;
 import zjl.com.oa.InformationCheck.Presenter.IInfoCheckModel;
+import zjl.com.oa.LoanRequest.Presenter.ILoanRequestListener;
 import zjl.com.oa.Meeting.Presenter.IMettingListener;
 import zjl.com.oa.UploadPhotos.Presenter.IPhotoUploadListener;
 
@@ -24,6 +25,12 @@ import zjl.com.oa.UploadPhotos.Presenter.IPhotoUploadListener;
  */
 
 public interface IRLModel{
+
+    void loanApplication(String token,int w_con_id,int w_pot_id,String remark,
+                         IRLListener listener);
+    void InformSigned(String token,String workflow_content_id,String wk_point_id,
+                      String service_fee,String pontage,
+                      String contract_date,String remark, IRLListener listener);
 
     void BusFeedback(String token, String w_con_id, String w_pot_id, int loan_length, float loan_rate,
                      String return_amount_method,String remark, IRLListener listener);

@@ -81,6 +81,7 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
 
     private List<LocalMedia> selectList = new ArrayList<>();
     private List<LocalMedia> zheshubiao = new ArrayList<>();
+    private List<LocalMedia> videos = new ArrayList<>();
     private List<LocalMedia> photos = new ArrayList<>();
     private BroadcastReceiver receiver;
     private BuildBean submitDialog;
@@ -93,6 +94,8 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
     public String photoType;
     private static final int CHOOSE_ZHESHUBIAO = 10001;
     private static final int CHOOSE_PHOTO = 10002;
+    //上传视频
+    private static final int CHOOSE_VIDEO = 10003;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,7 +211,8 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
             case R.id.renewloan_btn_upload:
                 switch (wk_point_id){
                     case 7: //初步反馈
-                        submitMsgAlert();
+                    case 11: //业务反馈
+                        submitMsgAlert(wk_point_id);
                         break;
                     default:
                         ReUploadReportOrPhoto(reportFlag,photoFlag);
@@ -270,6 +274,10 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
     public String getData_Con(String arg) {
         for (FormResponse.Result.Form form : formLists) {
             if (arg != null && arg.equals(form.getControl_title().trim())) {
+                //业务反馈节点，还款方式内容需要转换
+                if (wk_point_id == 11){
+                    return form.getData_con().trim().equals("")?"0":form.getData_con().trim();
+                }
                 return form.getData_con().trim();
             }
         }
@@ -406,6 +414,90 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                             getData_Con("备注"));
                 }
                 break;
+            case 11:
+                iRLPresenter.BusFeedback(token,
+                        Integer.toString(workflow_content_id) ,
+                        Integer.toString(wk_point_id) ,
+                        Integer.parseInt(getData_Con("借款期限")) ,
+                        Float.parseFloat(getData_Con("借款利率")),
+                        getData_Con("还款方式"),
+                        getData_Con("备注"));
+                break;
+            case 13:
+                iRLPresenter.InformSigned(token,
+                        Integer.toString(workflow_content_id) ,
+                        Integer.toString(wk_point_id) ,
+                        getData_Con("服务费") ,
+                        getData_Con("展期费/过桥费"),
+                        getData_Con("合同日期"),
+                        getData_Con("备注"));
+                break;
+            case 15:
+                if (selectList.size() < 1){
+                    showFailureMsg("请选择照片");
+                    return;
+                }
+                if (videos.size() < 1){
+                    showFailureMsg("请选择视频");
+                    return;
+                }
+                selectList.addAll(videos);
+                int type_id = new UploadCarPhotosType().getType_id(wk_point_id);
+
+                iRLPresenter.UploadCarPhoto(
+                        request_start_flag,
+                        !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+                        token,
+                        workflow_content_id,
+                        getData_Con("备注"),
+                        wk_point_id,
+                        type_id+"",
+                        selectList);
+                break;
+            case 17:
+                if (selectList.size() < 1){
+                    showFailureMsg("请选择照片");
+                    return;
+                }
+                selectList.addAll(videos);
+                type_id = new UploadCarPhotosType().getType_id(wk_point_id);
+
+                iRLPresenter.UploadCarPhoto(
+                        request_start_flag,
+                        !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+                        token,
+                        workflow_content_id,
+                        getData_Con("备注"),
+                        wk_point_id,
+                        type_id+"",
+                        selectList);
+                break;
+            case 18:
+                if (selectList.size() < 1){
+                    showFailureMsg("请选择照片");
+                    return;
+                }
+                type_id = new UploadCarPhotosType().getType_id(wk_point_id);
+
+                iRLPresenter.UploadCarPhoto(
+                        request_start_flag,
+                        !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+                        token,
+                        workflow_content_id,
+                        getData_Con("备注"),
+                        wk_point_id,
+                        type_id+"",
+                        selectList);
+                break;
+            case 20:
+                if (iRLPresenter != null) {
+                    iRLPresenter.loanApplication(
+                            token,
+                            workflow_content_id,
+                            wk_point_id,
+                            getData_Con("备注"));
+                }
+                break;
             case 23:
                 if (iRLPresenter != null) {
                     iRLPresenter.InfoCheckRefinance(
@@ -508,7 +600,41 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
         }
     }
 
-    public void onClickPic(int position) {
+    public void onClickPic(int position,int parentPosition) {
+        List<LocalMedia> formDataSource;
+        switch (photoType){
+            case "上传折数表":
+                formDataSource = zheshubiao;
+                break;
+            case "上传实地图片":
+                formDataSource = photos;
+                break;
+            case "上传视频":
+                formDataSource = videos;
+                break;
+            default:
+                formDataSource = selectList;
+
+        }
+        if (formDataSource.size() > 0){
+            LocalMedia media = formDataSource.get(position);
+            String pictureType = media.getPictureType();
+            int mediaType = PictureMimeType.pictureToVideo(pictureType);
+            switch (mediaType) {
+                case 1:
+                    // 预览图片 可自定长按保存路径
+                    PictureSelector.create(RenewLoanActivity.this).externalPicturePreview(position, selectList);
+                    break;
+                case 2:
+                    // 预览视频
+                    PictureSelector.create(RenewLoanActivity.this).externalPictureVideo(media.getPath());
+                    break;
+                case 3:
+                    // 预览音频
+                    PictureSelector.create(RenewLoanActivity.this).externalPictureAudio(media.getPath());
+                    break;
+            }
+        }
         if (selectList.size() > 0) {
             LocalMedia media = selectList.get(position);
             String pictureType = media.getPictureType();
@@ -530,9 +656,56 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
         }
     }
 
-    public void showSheetDialog() {
-        ActionSheetDialog dialog = new ActionSheetDialog.ActionSheetBuilder(RenewLoanActivity.this, R.style.ActionSheetDialogBase)
-                .setItems(new CharSequence[]{"选择视频", "选择照片"}, new DialogInterface.OnClickListener() {
+    /**
+     *
+     * @param controlStyle
+     * 3表示图片选择
+     * 4表示视频选择
+     * 5表示混合选择
+     * 6表示图片显示
+     */
+    public void showSheetDialog(int controlStyle) {
+        ActionSheetDialog dialog = null;
+        ActionSheetDialog.ActionSheetBuilder builder = new ActionSheetDialog.ActionSheetBuilder(RenewLoanActivity.this, R.style.ActionSheetDialogBase)
+                .setTitle("上传")
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(RenewLoanActivity.this, "取消操作", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setCancelable(true);
+
+        switch (controlStyle){
+            case 3:
+                dialog = builder.setItems(new CharSequence[]{"选择照片"}, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                getFileWithType(PictureMimeType.ofImage(),photoType);
+                                break;
+                        }
+                        dialog.dismiss();
+                    }
+                }).create();
+                break;
+            case 4:
+                dialog = builder.setItems(new CharSequence[]{"选择视频"}, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case 0:
+                            getFileWithType(PictureMimeType.ofVideo(),photoType);
+                            break;
+                    }
+                    dialog.dismiss();
+                }
+                }).create();
+                break;
+            case 5:
+            case 6:
+                dialog = builder.setItems(new CharSequence[]{"选择视频", "选择照片"}, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
@@ -545,16 +718,9 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                         }
                         dialog.dismiss();
                     }
-                })
-                .setTitle("上传")
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(RenewLoanActivity.this, "取消操作", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .setCancelable(true)
-                .create();
+                }).create();
+                break;
+        }
         dialog.show();
     }
 
@@ -580,6 +746,10 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
             model.selectionMedia(photos)// 是否传入已选图片
                     .maxSelectNum(Constant.MAXCOUNT)
                     .forResult(CHOOSE_PHOTO);
+        }else if ("上传视频".equals(photoType)){
+            model.selectionMedia(videos)// 是否传入已选图片
+                    .maxSelectNum(Constant.MAXCOUNT)
+                    .forResult(CHOOSE_VIDEO);
         }else{
             model.selectionMedia(selectList)// 是否传入已选图片
              .maxSelectNum(Constant.MAXCOUNT)
@@ -614,6 +784,12 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                     addImgs(photos);
                     formListsAdapter.notifyDataSetChanged();
                     break;
+                case CHOOSE_VIDEO:
+                    // 图片选择结果
+                    videos.clear();
+                    videos.addAll(PictureSelector.obtainMultipleResult(data));
+                    addVideos(videos);
+                    break;
             }
         }
     }
@@ -634,10 +810,30 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 form.setImgs(imgs);
             }else if (wk_point_id == 5){ //评估报告节点
                 form.setImgs(imgs);
-            }else if (form.getControl_title().trim().contains(photoType)){
+            }else if (photoType != null && form.getControl_title().trim().contains(photoType)){
                 form.setImgs(imgs);
             }
         }
+    }
+
+    private void addVideos(List<LocalMedia> arg) {
+
+        List<String> imgs = new ArrayList<>();
+        for (LocalMedia media : arg) {
+            if (media.getCompressPath() != null && media.getCompressPath().length() > 0) {
+                imgs.add(media.getCompressPath());
+            } else {
+                imgs.add(media.getPath());
+            }
+        }
+
+        for (int i = 0 ; i < formLists.size() ; i++) {
+            FormResponse.Result.Form form  = formLists.get(i);
+            if (photoType != null && form.getControl_title().trim().contains(photoType)){
+                form.setImgs(imgs);
+            }
+        }
+        formListsAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -722,14 +918,47 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
         public void onReceive(Context context, Intent intent) {
             if (intent != null) {
                 int delPos = intent.getIntExtra("deleteIndex", -1);
-                if (delPos != -1 && delPos <= selectList.size()) {
-                    selectList.remove(delPos);
+                String title = intent.getStringExtra("title");
+                switch (title){
+                    case "上传折数表":
+                        if (delPos >= 0 && delPos < zheshubiao.size()) {
+                            zheshubiao.remove(delPos);
+                            removeFormImg(title,delPos);
+                        }
+                        break;
+                    case "上传实地图片":
+                        if (delPos >= 0 && delPos < photos.size()) {
+                            photos.remove(delPos);
+                            removeFormImg(title,delPos);
+                        }
+                        break;
+                    case "上传视频":
+                        if (delPos >= 0 && delPos < videos.size()) {
+                            videos.remove(delPos);
+                            removeFormImg(title,delPos);
+                        }
+                        break;
+                    default:
+                        if (delPos >= 0 && delPos < selectList.size()) {
+                            selectList.remove(delPos);
+                            removeFormImg(title,delPos);
+                        }
                 }
             }
         }
     }
 
-    public void submitMsgAlert() {
+    private void removeFormImg(String title,int delPos){
+        for(FormResponse.Result.Form form:formListsAdapter.formLists){
+            if (title .equals(form.getControl_title())){
+
+                form.getImgs().remove(delPos);
+                formListsAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    public void submitMsgAlert(int wk_point_id) {
         AlertDialog dialog = new AlertDialog.Builder(this).create();
         View view = View.inflate(context, R.layout.alertdialog, null);
         dialog.setView(view);
@@ -748,7 +977,6 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
 
                 if ("".equals(et.getText().toString().trim())) {
                     showFailureMsg("请输入反馈信息");
-                    return;
                 } else {
 
                     if (!netConnected) {
@@ -756,9 +984,23 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                     } else if (isFastDoubleClick(v.getId())) {
                         return;
                     } else {
-                        iRLPresenter.FirstFeedback(token,Integer.toString(workflow_content_id),
-                                Integer.toString(wk_point_id),et.getText().toString());
+                        switch (wk_point_id){
+                            case 7:
+                                iRLPresenter.FirstFeedback(token,Integer.toString(workflow_content_id),
+                                        Integer.toString(wk_point_id),et.getText().toString());
+                                break;
+                            case 11:
+                                iRLPresenter.BusFeedback(token,
+                                        Integer.toString(workflow_content_id) ,
+                                        Integer.toString(wk_point_id) ,
+                                        Integer.parseInt(getData_Con("借款期限")) ,
+                                        Float.parseFloat(getData_Con("借款利率")),
+                                        getData_Con("还款方式"),
+                                        et.getText().toString());
+                                break;
+                        }
                     }
+                    dialog.dismiss();
                 }
             }
         });

@@ -75,28 +75,33 @@ public class Activitys {
                     destClass =  FeedBackActivity.class;//反馈结果
                     break;
                 case "13":
-                    destClass =  InformSignActivity.class;//通知签约
+//                    destClass =  InformSignActivity.class;//通知签约
+                    destClass =  RenewLoanActivity.class;//通知签约
                     break;
                 case "14":
                     destClass =  BeginSignActivity.class;//开始签约
                     break;
                 case "15":
-                    destClass =  SignActivity.class;//签约
+//                    destClass =  SignActivity.class;//签约
+                    destClass =  RenewLoanActivity.class;//签约
                     break;
                 case "16":
                     destClass =  UploadPhotosActivity.class;//收车
                     break;
                 case "17":
-                    destClass =  UploadPhotosActivity.class;//GPS，钥匙
+//                    destClass =  UploadPhotosActivity.class;//GPS，钥匙
+                    destClass =  RenewLoanActivity.class;//GPS，钥匙
                     break;
                 case "18":
-                    destClass =  UploadPhotosActivity.class;//抵押登记
+//                    destClass =  UploadPhotosActivity.class;//抵押登记
+                    destClass =  RenewLoanActivity.class;//抵押登记
                     break;
                 case "19":
                     destClass =  RiskManagerActivity.class;//风控审核
                     break;
                 case "20":
-                    destClass =  LoanRequestActivity.class;//通知财务
+//                    destClass =  LoanRequestActivity.class;//通知财务
+                    destClass =  RenewLoanActivity.class;//通知财务
                     break;
                 case "21":
                     destClass =  TransferVoucherActivity.class;//首扣通知

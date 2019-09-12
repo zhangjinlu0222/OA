@@ -45,6 +45,7 @@ public class GridImageAdapter extends
     private int selectMax = 50;
     private Context context;
     private boolean showDel;
+    private String title;
     /**
      * 点击添加图片跳转
      */
@@ -56,6 +57,13 @@ public class GridImageAdapter extends
 
     public GridImageAdapter(Context context, onAddPicClickListener mOnAddPicClickListener) {
         this.context = context;
+        mInflater = LayoutInflater.from(context);
+        this.mOnAddPicClickListener = mOnAddPicClickListener;
+    }
+
+    public GridImageAdapter(Context context,String title, onAddPicClickListener mOnAddPicClickListener) {
+        this.context = context;
+        this.title = title;
         mInflater = LayoutInflater.from(context);
         this.mOnAddPicClickListener = mOnAddPicClickListener;
     }
@@ -163,6 +171,7 @@ public class GridImageAdapter extends
                         Intent intent = new Intent();
                         intent.setAction("picUpdate");
                         intent.putExtra("deleteIndex",index);
+                        intent.putExtra("title",title );
                         context.sendBroadcast(intent);
                     }
                 }

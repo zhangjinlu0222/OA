@@ -25,12 +25,16 @@ import zjl.com.oa.EvaluationQuota.Presenter.IEvaluationQuota;
 import zjl.com.oa.EvaluationQuota.Presenter.IEvaluationQuotaListener;
 import zjl.com.oa.InformationCheck.Presenter.IInfoCheck;
 import zjl.com.oa.InformationCheck.Presenter.IInfoCheckListener;
+import zjl.com.oa.LoanRequest.Presenter.ILoanRequest;
+import zjl.com.oa.LoanRequest.Presenter.ILoanRequestListener;
 import zjl.com.oa.Meeting.Presenter.IMetting;
 import zjl.com.oa.Meeting.Presenter.IMettingListener;
 import zjl.com.oa.RenewLoan.Presenter.IRL;
 import zjl.com.oa.RenewLoan.Presenter.IRLListener;
 import zjl.com.oa.RenewLoan.Presenter.IRLModel;
 import zjl.com.oa.Response.FormResponse;
+import zjl.com.oa.Sign.Presenter.IInformSign;
+import zjl.com.oa.Sign.Presenter.IInformSignListener;
 import zjl.com.oa.UploadPhotos.Presenter.IPhotoUpload;
 import zjl.com.oa.UploadPhotos.Presenter.IPhotoUploadListener;
 
@@ -41,6 +45,96 @@ import zjl.com.oa.UploadPhotos.Presenter.IPhotoUploadListener;
 public class RLModelImpl extends ModelImpl implements IRLModel {
     private static final String TAG = "RLEvaluationModelImpl";
 
+    @Override
+    public void loanApplication(String token, int w_con_id, int w_pot_id,String remark, IRLListener listener) {
+
+        IRL service = retrofit.create(IRL.class);
+
+        HashMap<String,String> map = new HashMap<>();
+        map.put("token",token);
+        map.put("w_con_id",w_con_id+"");
+        map.put("w_pot_id",w_pot_id+"");
+        map.put("remark",remark);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), new Gson().toJson(map));
+
+        Call<ResponseWithNoData> call = service.loanApplication(body);
+
+        call.enqueue(new Callback<ResponseWithNoData>() {
+            @Override
+            public void onResponse(Call<ResponseWithNoData> call, Response<ResponseWithNoData> response) {
+                if (response.isSuccessful()){
+                    ResponseWithNoData result = response.body();
+                    if (result != null){
+                        if (result.getCode() == Constant.Succeed){
+                            listener.onSucceed();
+                        }else if (result.getCode() == Constant.LoginAnotherPhone){
+                            listener.relogin();
+                        }else{
+                            listener.onFail(result.getMessage());
+                        }
+                    }
+                }else{
+                    listener.onFail();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWithNoData> call, Throwable t) {
+                Log.e(TAG,"网络异常");
+                t.printStackTrace();
+                listener.onFail();
+            }
+        });
+    }
+    @Override
+    public void InformSigned(String token,String workflow_content_id,String wk_point_id,
+                               String service_fee,String pontage,
+                               String contract_date,String remark,IRLListener listener) {
+
+        IInformSign service = retrofit.create(IInformSign.class);
+
+
+        HashMap<String,String> map = new HashMap<>();
+        map.put("token",token);
+        map.put("w_con_id",workflow_content_id);
+        map.put("w_pot_id",wk_point_id);
+        map.put("service_fee",service_fee);
+        map.put("pontage",pontage);
+        map.put("contract_date",contract_date);
+        map.put("remark",remark);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), new Gson().toJson(map));
+
+        Call<ResponseWithNoData> call = service.postInformSign(body);
+
+        call.enqueue(new Callback<ResponseWithNoData>() {
+            @Override
+            public void onResponse(Call<ResponseWithNoData> call, Response<ResponseWithNoData> response) {
+                if (response.isSuccessful()){
+                    ResponseWithNoData result = response.body();
+                    if (result != null){
+                        if (result.getCode() == Constant.Succeed){
+                            listener.onSucceed();
+                        }else if (result.getCode() == Constant.LoginAnotherPhone){
+                            listener.relogin();
+                        }else{
+                            listener.onFail(result.getMessage());
+                        }
+                    }
+
+                }else{
+                    listener.onFail();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWithNoData> call, Throwable t) {
+//                listListener.onFail(t.getMessage());
+                Log.e(TAG,"网络异常");
+                t.printStackTrace();
+                listener.onFail();
+            }
+        });
+    }
     @Override
     public void BusFeedback(String token, String w_con_id, String w_pot_id, int loan_length, float loan_rate, String return_amount_method, String remark, IRLListener listener) {
         IRL service = retrofit.create(IRL.class);
@@ -567,7 +661,7 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
                     file.getName().trim().lastIndexOf("."),
                     file.getName().trim().length());
             RequestBody imgFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            if ("7".equals(type_id) && i ==0){
+            if ("7".equals(type_id) && i ==0 && "1" ==request_end_flag){
                 MultipartBody.Part requestImgPart =
                         MultipartBody.Part.createFormData(file.getName(), "0"+"zheshubiao"+System.currentTimeMillis() + subfix, imgFile);
                 filesBody.add(requestImgPart);
