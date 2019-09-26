@@ -104,7 +104,8 @@ public class Activitys {
                     destClass =  RenewLoanActivity.class;//通知财务
                     break;
                 case "21":
-                    destClass =  TransferVoucherActivity.class;//首扣通知
+//                    destClass =  TransferVoucherActivity.class;//首扣通知
+                    destClass =  RenewLoanActivity.class;//首扣通知
                     break;
                 case "22":
                     destClass =  TransferFinishActivity.class;//放款结束

@@ -63,8 +63,9 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
                             files.subList(files.size() / 2,files.size()),this);//评估报告
                     break;
                 case 8://实地考察
-                case 15:
-                case 18:
+                case 15://签约
+                case 18://抵押登记
+                case 21://首扣通知
                 case 26:
                     irlModel.UploadCarPhoto( request_end_flag, UPLOAD_TYPE_ADD, token,  workflow_content_id,  remark,  wk_point_id,
                             type_id,files.subList(files.size() / 2,files.size()),this);//展期费续贷

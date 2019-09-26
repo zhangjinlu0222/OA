@@ -82,13 +82,14 @@
 
         <ImageView
             android:id="@+id/setting_ig_right5"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="8dp"
             android:contentDescription="@null"
-            android:src="@mipmap/setting_ig_next" />
+            android:src="@mipmap/setting_ig_next"
+            android:visibility="invisible" />
 
         <View
             android:layout_width="match_parent"
@@ -126,13 +127,14 @@
 
         <ImageView
             android:id="@+id/setting_ig_right"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="8dp"
             android:contentDescription="@null"
-            android:src="@mipmap/setting_ig_next" />
+            android:src="@mipmap/setting_ig_next"
+            android:visibility="invisible" />
 
         <View
             android:layout_width="match_parent"
@@ -170,13 +172,14 @@
 
         <ImageView
             android:id="@+id/setting_ig_right2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="8dp"
             android:contentDescription="@null"
-            android:src="@mipmap/setting_ig_next" />
+            android:src="@mipmap/setting_ig_next"
+            android:visibility="invisible" />
 
         <View
             android:layout_width="match_parent"
@@ -214,13 +217,14 @@
 
         <ImageView
             android:id="@+id/setting_ig_right3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="8dp"
             android:contentDescription="@null"
-            android:src="@mipmap/setting_ig_next" />
+            android:src="@mipmap/setting_ig_next"
+            android:visibility="invisible" />
 
         <View
             android:layout_width="match_parent"
@@ -248,10 +252,21 @@
             android:id="@+id/sb_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_toLeftOf="@+id/setting_ig_right4"
             android:layout_centerVertical="true"
             android:layout_marginEnd="8dp"
             android:checked="false" />
+
+        <ImageView
+            android:id="@+id/setting_ig_right4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:contentDescription="@null"
+            android:src="@mipmap/setting_ig_next"
+            android:visibility="invisible" />
 
         <View
             android:layout_width="match_parent"
@@ -273,14 +288,14 @@
             android:layout_centerVertical="false"
             android:layout_marginLeft="22dp"
             android:layout_marginRight="8dp"
-            android:layout_toLeftOf="@+id/setting_ig_right4"
+            android:layout_toLeftOf="@+id/setting_ig_right6"
             android:gravity="center_vertical"
             android:text="@string/fixLoginPwd"
             android:textColor="#000000"
             android:textSize="16sp" />
 
         <ImageView
-            android:id="@+id/setting_ig_right4"
+            android:id="@+id/setting_ig_right6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

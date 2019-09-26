@@ -421,7 +421,7 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                         Integer.parseInt(getData_Con("借款期限")) ,
                         Float.parseFloat(getData_Con("借款利率")),
                         getData_Con("还款方式"),
-                        getData_Con("备注"));
+                        "");
                 break;
             case 13:
                 iRLPresenter.InformSigned(token,
@@ -497,6 +497,23 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                             wk_point_id,
                             getData_Con("备注"));
                 }
+                break;
+            case 21:
+                if (selectList.size() < 1){
+                    showFailureMsg("请选择照片");
+                    return;
+                }
+                type_id = new UploadCarPhotosType().getType_id(wk_point_id);
+
+                iRLPresenter.UploadCarPhoto(
+                        request_start_flag,
+                        !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+                        token,
+                        workflow_content_id,
+                        getData_Con("备注"),
+                        wk_point_id,
+                        type_id+"",
+                        selectList);
                 break;
             case 23:
                 if (iRLPresenter != null) {
