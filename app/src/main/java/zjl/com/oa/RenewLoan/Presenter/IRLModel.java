@@ -32,7 +32,7 @@ public interface IRLModel{
                       String service_fee,String pontage,
                       String contract_date,String remark, IRLListener listener);
 
-    void BusFeedback(String token, String w_con_id, String w_pot_id, int loan_length, float loan_rate,
+    void BusFeedback(String token, String w_con_id, String w_pot_id, int loan_length, String loan_rate,
                      String return_amount_method,String remark, IRLListener listener);
     //业务反馈 下一步 不传remark，提交反馈信息的时候传remark
 

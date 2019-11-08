@@ -495,11 +495,11 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
         viewHolder.title.setText(formLists.get(pos).getControl_title().trim());
         viewHolder.datasource = Arrays.asList(formLists.get(pos).getUnit().split(","));
         viewHolder.nsSelector.attachDataSource(viewHolder.datasource);
-        formLists.get(pos).setData_con("1");
+        formLists.get(pos).setData_con(formLists.get(pos).getUnit().split(",")[0]);
         viewHolder.nsSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                formLists.get(pos).setData_con(position +1 +"");
+                formLists.get(pos).setData_con(formLists.get(pos).getUnit().split(",")[position] +"");
             }
 
             @Override

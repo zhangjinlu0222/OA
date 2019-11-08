@@ -136,7 +136,7 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
         });
     }
     @Override
-    public void BusFeedback(String token, String w_con_id, String w_pot_id, int loan_length, float loan_rate, String return_amount_method, String remark, IRLListener listener) {
+    public void BusFeedback(String token, String w_con_id, String w_pot_id, int loan_length, String loan_rate, String return_amount_method, String remark, IRLListener listener) {
         IRL service = retrofit.create(IRL.class);
         // 创建RequestBody，传入参数："multipart/form-data"，String
         HashMap<String,Object> map = new HashMap<>();

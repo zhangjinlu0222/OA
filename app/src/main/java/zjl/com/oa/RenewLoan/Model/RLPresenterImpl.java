@@ -158,12 +158,12 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
     }
 
     @Override
-    public void BusFeedback(String token, String w_con_id, String w_pot_id, int loan_length, float loan_rate, String return_amount_method, String remark) {
+    public void BusFeedback(String token, String w_con_id, String w_pot_id, int loan_length, String  loan_rate, String return_amount_method, String remark) {
         if (loan_length == 0){
             this.onFail("请输入贷款期限");
             return;
         }
-        if (loan_rate <= 0){
+        if (loan_rate.length() <= 0){
             this.onFail("请输入贷款利率");
             return;
         }

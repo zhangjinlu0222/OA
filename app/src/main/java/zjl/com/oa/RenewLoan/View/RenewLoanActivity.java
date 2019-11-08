@@ -418,8 +418,8 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 iRLPresenter.BusFeedback(token,
                         Integer.toString(workflow_content_id) ,
                         Integer.toString(wk_point_id) ,
-                        Integer.parseInt(getData_Con("借款期限")) ,
-                        Float.parseFloat(getData_Con("借款利率")),
+                        Integer.parseInt(getData_Con("借款期限")),
+                        getData_Con("借款利率"),
                         getData_Con("还款方式"),
                         "");
                 break;
@@ -500,7 +500,7 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 }
                 break;
             case 21:
-                if (selectList.size() < 1){
+                if (selectList.size() < 1 && (getInType().length() > 0 && !getInType().equals("bohui"))){
                     showFailureMsg("请选择照片");
                     return;
                 }
@@ -1012,7 +1012,7 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                                         Integer.toString(workflow_content_id) ,
                                         Integer.toString(wk_point_id) ,
                                         Integer.parseInt(getData_Con("借款期限")) ,
-                                        Float.parseFloat(getData_Con("借款利率")),
+                                        getData_Con("借款利率"),
                                         getData_Con("还款方式"),
                                         et.getText().toString());
                                 break;
