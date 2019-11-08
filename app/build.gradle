@@ -32,8 +32,8 @@ android {
         applicationId "zjl.com.oa"
         minSdkVersion 18
         targetSdkVersion 26
-        versionCode 10
-        versionName "1.0.1.0"
+        versionCode 11
+        versionName "1.0.1.1"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
@@ -58,12 +58,13 @@ android {
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
-    buildToolsVersion '29.0.1'
+    buildToolsVersion '28.0.3'
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:support-v4:25.4.0'
+//    implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support:support-vector-drawable:26.1.0'
