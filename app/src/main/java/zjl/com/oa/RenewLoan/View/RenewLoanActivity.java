@@ -437,10 +437,11 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                     showFailureMsg("请选择照片");
                     return;
                 }
-                if (videos.size() < 1){
-                    showFailureMsg("请选择视频");
-                    return;
-                }
+                //签约的时候视频可以不提交
+//                if (videos.size() < 1){
+//                    showFailureMsg("请选择视频");
+//                    return;
+//                }
                 selectList.addAll(videos);
                 int type_id = new UploadCarPhotosType().getType_id(wk_point_id);
 
