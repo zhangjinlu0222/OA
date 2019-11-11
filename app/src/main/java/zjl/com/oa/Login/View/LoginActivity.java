@@ -197,7 +197,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
                 .setCustomDownloadActivityClass(VersionUpdateDialog.class)
                 .setService(VersionService.class);
 
-        AllenChecker.startVersionCheck(this, builder.build());
+        AllenChecker.startVersionCheck(getApplication(), builder.build());
         activity = this;
     }
 }

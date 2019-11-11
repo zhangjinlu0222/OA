@@ -457,7 +457,7 @@ public class InfoCheckAdapter extends BaseAdapter implements View.OnClickListene
 
         viewHolder.datasource = new ArrayList(Arrays.asList(formLists.get(pos).getUnit().split(",")));
         viewHolder.nsSelector.attachDataSource(viewHolder.datasource);
-        viewHolder.nsSelector.setArrowTintColor(Color.rgb(0, 0, 0));
+//        viewHolder.nsSelector.setArrowTintColor(Color.rgb(0, 0, 0));
         viewHolder.nsSelector.postInvalidate();
         viewHolder.nsSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
