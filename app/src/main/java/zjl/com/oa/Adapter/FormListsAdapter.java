@@ -493,9 +493,21 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
     private void setContentValue(Form8 viewHolder,int pos){
         viewHolder.position = pos;
         viewHolder.title.setText(formLists.get(pos).getControl_title().trim());
-        viewHolder.datasource = Arrays.asList(formLists.get(pos).getUnit().split(","));
+        List<String> units = Arrays.asList(formLists.get(pos).getUnit().split(","));
+        viewHolder.datasource = units;
         viewHolder.nsSelector.attachDataSource(viewHolder.datasource);
-        formLists.get(pos).setData_con(formLists.get(pos).getUnit().split(",")[0]);
+
+        //初始值如果为空，即没有选择的情况下,设置选中第一个
+        String value = formLists.get(pos).getData_con();
+        if (formLists.get(pos).getData_con().equals("")){
+            formLists.get(pos).setData_con(units.get(0));
+            viewHolder.nsSelector.setSelectedIndex(1);
+        }else{
+        //初始值不为空，则显示初始值内容
+            int index =  units.indexOf(value);
+            viewHolder.nsSelector.setSelectedIndex(index > 0 ? index:0);
+        }
+
         viewHolder.nsSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -505,6 +517,7 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+                formLists.get(pos).setData_con(formLists.get(pos).getUnit().split(",")[0] +"");
             }
         });
     }

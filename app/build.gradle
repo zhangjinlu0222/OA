@@ -32,8 +32,8 @@ android {
         applicationId "zjl.com.oa"
         minSdkVersion 18
         targetSdkVersion 26
-        versionCode 11
-        versionName "1.0.1.1"
+        versionCode 12
+        versionName "1.0.1.2"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
