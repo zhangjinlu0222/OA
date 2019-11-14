@@ -22,9 +22,9 @@ public class Constant {
 //    public static final String BASE_URL = "http://192.168.1.144:8200/";
 //    public static final String BASE_URL = "http://192.168.1.200:9000/";
 //   测试环境
-//    public static final String BASE_URL = "https://api.clxchina.cn:8200/";
+    public static final String BASE_URL = "https://api.clxchina.cn:8200/";
 //   正式环境
-    public static final String BASE_URL = "https://api.clxchina.cn:8100/";
+//    public static final String BASE_URL = "https://api.clxchina.cn:8100/";
 
     public static final int MAXCOUNT = 50;
     public static final int MINCOUNT = 1;

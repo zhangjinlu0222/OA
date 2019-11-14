@@ -419,7 +419,7 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                         Integer.toString(workflow_content_id) ,
                         Integer.toString(wk_point_id) ,
                         Integer.parseInt(getData_Con("借款期限")),
-                        getData_Con("借款利率"),
+                        getData_Con("借款 利率"),
                         getData_Con("还款方式"),
                         "");
                 break;

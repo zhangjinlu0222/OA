@@ -163,7 +163,7 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
             this.onFail("请输入贷款期限");
             return;
         }
-        if (loan_rate.length() <= 0){
+        if ( loan_rate != null && loan_rate.length() <= 0){
             this.onFail("请输入贷款利率");
             return;
         }
