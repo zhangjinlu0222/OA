@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONPObject;
 import com.dou361.dialogui.DialogUIUtils;
 import com.dou361.dialogui.bean.BuildBean;
 import com.dou361.dialogui.listener.DialogUIDateTimeSaveListener;
@@ -297,9 +298,10 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
         if (iRLPresenter == null) {
             return;
         }
+        HashMap<String ,Object > map = new HashMap<>();
         switch (wk_point_id) {
             case 1:
-                HashMap<String ,Object > map = new HashMap<>();
+                map.clear();
                 map.put("token",token );
                 map.put("w_con_id", workflow_content_id);
                 map.put("w_pot_id", wk_point_id);
@@ -319,28 +321,54 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
 
                 break;
             case 3:
-                if (iRLPresenter != null) {
-                    iRLPresenter.FirstSureAmount(
-                            token,
-                            Integer.toString(workflow_content_id),
-                            Integer.toString(wk_point_id),
-                            getData_Con("初步定额"),
-                            getData_Con("备注",12));
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
+                }
+
+                if (iRLPresenter != null){
+                    iRLPresenter.FirstSureAmount(map);
                 }
                 break;
             case 4:
-                if (iRLPresenter != null) {
-                    iRLPresenter.CarPhoto(
-                            request_start_flag,
-                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
-                            token,
-                            getData_Con("备注"),
-                            workflow_content_id,
-                            wk_point_id,
-                            selectList,
-                            "1",
-                            getData_Con("借款周期"));
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
                 }
+
+                if (iRLPresenter != null){
+                    iRLPresenter.CarPhoto(request_start_flag,!uploadType?UPLOAD_TYPE_NORMAL:UPLOAD_TYPE_ADD,map,"1",selectList);
+                }
+//                if (iRLPresenter != null) {
+//                    iRLPresenter.CarPhoto(
+//                            request_start_flag,
+//                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+//                            token,
+//                            getData_Con("备注"),
+//                            workflow_content_id,
+//                            wk_point_id,
+//                            selectList,
+//                            "1",
+//                            getData_Con("借款周期"));
+//                }
                 break;
             case 5:
                 if (iRLPresenter != null) {
@@ -361,13 +389,22 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 }
                 break;
             case 6:
-                if (iRLPresenter != null) {
-                    iRLPresenter.FirstSureAmount(
-                            token,
-                            Integer.toString(workflow_content_id),
-                            Integer.toString(wk_point_id),
-                            getData_Con("初步定额"),
-                            getData_Con("备注",12));
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
+                }
+
+                if (iRLPresenter != null){
+                    iRLPresenter.FirstSureAmount(map);
                 }
                 break;
             case 7:
@@ -415,13 +452,31 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 }
                 break;
             case 11:
-                iRLPresenter.BusFeedback(token,
-                        Integer.toString(workflow_content_id) ,
-                        Integer.toString(wk_point_id) ,
-                        Integer.parseInt(getData_Con("借款期限")),
-                        getData_Con("借款 利率"),
-                        getData_Con("还款方式"),
-                        "");
+                map.clear();
+
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
+                }
+
+                if (iRLPresenter != null){
+                    iRLPresenter.BusFeedback(map);
+                }
+//                iRLPresenter.BusFeedback(token,
+//                        Integer.toString(workflow_content_id) ,
+//                        Integer.toString(wk_point_id) ,
+//                        Integer.parseInt(getData_Con("借款期限")),
+//                        getData_Con("借款 利率"),
+//                        getData_Con("还款方式"),
+//                        "");
                 break;
             case 13:
                 iRLPresenter.InformSigned(token,
@@ -1008,13 +1063,34 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                                         Integer.toString(wk_point_id),et.getText().toString());
                                 break;
                             case 11:
-                                iRLPresenter.BusFeedback(token,
-                                        Integer.toString(workflow_content_id) ,
-                                        Integer.toString(wk_point_id) ,
-                                        Integer.parseInt(getData_Con("借款期限")) ,
-                                        getData_Con("借款利率"),
-                                        getData_Con("还款方式"),
-                                        et.getText().toString());
+
+                                HashMap<String ,Object> map = new HashMap<>();
+                                map.put("token",token );
+                                map.put("w_con_id", workflow_content_id);
+                                map.put("w_pot_id", wk_point_id);
+
+                                for (int i=0;i< formLists.size();i++){
+                                    String submit_field = formLists.get(i).getSubmit_field();
+
+                                    if (submit_field != null && submit_field.length() >0){
+                                        String value = formLists.get(i).getData_con();
+                                        map.put(submit_field,value);
+                                    }
+                                }
+
+                                map.put("remark", et.getText().toString());
+
+                                if (iRLPresenter != null){
+                                    iRLPresenter.BusFeedback(map);
+                                }
+
+//                                iRLPresenter.BusFeedback(token,
+//                                        Integer.toString(workflow_content_id) ,
+//                                        Integer.toString(wk_point_id) ,
+//                                        Integer.parseInt(getData_Con("借款期限")) ,
+//                                        getData_Con("借款利率"),
+//                                        getData_Con("还款方式"),
+//                                        et.getText().toString());
                                 break;
                         }
                     }

@@ -27,13 +27,14 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
     private IRLView irlView;
     private IRLModel irlModel;
     private String token, type_id , remark,persion_court,car_break_rules,insurance;
-    private int wk_point_id,workflow_content_id;
+    private String  wk_point_id,workflow_content_id;
     private List<LocalMedia> files = new ArrayList<>();
     private boolean isUploading = false;
     private String loan_length;
     //评估报告需要字段
     private int car_year;
     private String car_type,car_style,milage,market_amount,take_amount;
+    private HashMap<String, Object> map = new HashMap<>();
 
     public RLPresenterImpl(IRLView view) {
         this.irlView = view;
@@ -45,32 +46,30 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
         if (irlView != null && !isUploading){
             irlView.hideProgress();
             irlView.toMainActivity();
-            if (wk_point_id == 27){
+            if (wk_point_id != null && wk_point_id.equals("27")){
                 irlView.saveOperationState("1");
             }
         }else{
             switch (wk_point_id){
-                case 4:
-                    irlModel.CarPhoto( request_end_flag, UPLOAD_TYPE_ADD,token,remark,
-                            workflow_content_id, wk_point_id ,
-                            files.subList(files.size() / 2,files.size()),
-                            type_id,loan_length,this);//车辆照片
+                case "4":
+                    irlModel.CarPhoto( request_end_flag, UPLOAD_TYPE_ADD,map,
+                            type_id,files.subList(files.size() / 2,files.size()),this);//车辆照片
                     break;
-                case 5:
+                case "5":
                     irlModel.PleDgeAssess( request_end_flag, UPLOAD_TYPE_ADD,
                             token,car_year,car_type,car_style,milage,
                             remark,market_amount,take_amount,workflow_content_id,wk_point_id,
                             files.subList(files.size() / 2,files.size()),this);//评估报告
                     break;
-                case 8://实地考察
-                case 15://签约
-                case 18://抵押登记
-                case 21://首扣通知
-                case 26:
+                case "8"://实地考察
+                case "15"://签约
+                case "18"://抵押登记
+                case "21"://首扣通知
+                case "26":
                     irlModel.UploadCarPhoto( request_end_flag, UPLOAD_TYPE_ADD, token,  workflow_content_id,  remark,  wk_point_id,
                             type_id,files.subList(files.size() / 2,files.size()),this);//展期费续贷
                     break;
-                case 23:
+                case "23":
                     irlModel.InfoCheckRefinance( request_end_flag , UPLOAD_TYPE_ADD, token,  workflow_content_id,
                             wk_point_id, persion_court,  car_break_rules,
                             insurance, remark,files.subList(files.size() / 2,files.size()),this);
@@ -146,7 +145,7 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
         }
 
         if (irlModel != null ){
-            this.wk_point_id = Integer.parseInt(wk_point_id);
+            this.wk_point_id = wk_point_id;
             irlModel.InformSigned( token, workflow_content_id, wk_point_id,
                     service_fee, pontage,
                     contract_date, remark,this);
@@ -158,25 +157,9 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
     }
 
     @Override
-    public void BusFeedback(String token, String w_con_id, String w_pot_id, int loan_length, String  loan_rate, String return_amount_method, String remark) {
-        if (loan_length == 0){
-            this.onFail("请输入贷款期限");
-            return;
-        }
-        if ( loan_rate != null && loan_rate.length() <= 0){
-            this.onFail("请输入贷款利率");
-            return;
-        }
-        if (return_amount_method == null || "".equals(return_amount_method)){
-            this.onFail("请选择还款方式");
-            return;
-        }
-
+    public void BusFeedback(HashMap<String,Object> map) {
         if (irlModel != null){
-            irlModel.BusFeedback( token,  w_con_id,  w_pot_id,  loan_length,  loan_rate,
-                    return_amount_method, remark,this);
-        }
-        if (irlView != null){
+            irlModel.BusFeedback(map,this );
             irlView.showProgress();
         }
     }
@@ -236,14 +219,14 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
                 irlModel.PleDgeAssess( request_end_flag, uploadType,
                         token,car_year,car_type,car_style,milage,
                         remark,market_amount,take_amount,
-                        workflow_content_id,wk_point_id,files,this);
+                        workflow_content_id+"",wk_point_id+"",files,this);
 
                 this.isUploading = false;
             }else{
                 irlModel.PleDgeAssess( request_end_flag, uploadType,
                         token,car_year,car_type,car_style,milage,
                         remark,market_amount,take_amount,
-                        workflow_content_id,wk_point_id,files.subList(0,files.size() / 2),this);
+                        workflow_content_id+"",wk_point_id+"",files.subList(0,files.size() / 2),this);
 
                 this.isUploading = true;
 
@@ -262,8 +245,8 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
         this.remark = remark;
         this.market_amount = market_amount;
         this.take_amount = take_amount;
-        this.workflow_content_id = workflow_content_id;
-        this.wk_point_id = wk_point_id;
+        this.workflow_content_id = workflow_content_id+"";
+        this.wk_point_id = wk_point_id+"";
         this.files.addAll(files);
     }
 
@@ -300,39 +283,85 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
         }
     }
 
+//    @Override
+//    public void CarPhoto(String request_end_flag,String uploadType,String token, String remark,
+//                             int workflow_content_id, int wk_point_id, List<LocalMedia> files,
+//                             String type_id,String loan_length ) {
+//
+//        if (files.size() <=0 && irlView != null && uploadType.equals(UPLOAD_TYPE_NORMAL)){
+//            irlView.showFailureMsg("请选择文件");
+//            return;
+//        }
+//
+//        if (loan_length == null || loan_length.length() <= 0){
+//            irlView.showFailureMsg("请输入借款周期");
+//            return;
+//        }
+//
+////        if (remark == null || remark.length() <= 0){
+////            irlView.showFailureMsg("请输入备注");
+////            return;
+////        }
+//
+//        if (irlModel != null){
+//            if (files.size() <= 1){
+//                irlModel.CarPhoto( request_end_flag, uploadType,token,remark,
+//                        workflow_content_id, wk_point_id ,files,type_id,loan_length,this);
+//                this.isUploading = false;
+//            }else{
+//                irlModel.CarPhoto( request_end_flag, uploadType,token,remark,
+//                        workflow_content_id, wk_point_id ,files.subList(0,files.size() / 2),
+//                        type_id,loan_length,this);
+//                this.isUploading = true;
+//            }
+//            irlView.showProgress();
+//        }
+//
+//        this.token = token;
+//        this.remark = remark;
+//        this.workflow_content_id = workflow_content_id;
+//        this.wk_point_id = wk_point_id;
+//        this.files.addAll(files);
+//        this.type_id = type_id;
+//        this.loan_length = loan_length;
+//    }
     @Override
-    public void CarPhoto(String request_end_flag,String uploadType,String token, String remark,
-                             int workflow_content_id, int wk_point_id, List<LocalMedia> files,
-                             String type_id,String loan_length ) {
+    public void CarPhoto(String request_end_flag,String uploadType,HashMap<String ,Object> map,String type_id,List<LocalMedia> files) {
+        if (map == null){
+            irlView.showFailureMsg("请输入内容");
+            return;
+        }
+
+        String token = map.get("token").toString();
+        String remark = map.get("remark").toString();
+        String workflow_content_id = map.get("w_con_id").toString();
+        String wk_point_id = map.get("w_pot_id").toString();
+        String loan_length = map.get("loan_length").toString();
 
         if (files.size() <=0 && irlView != null && uploadType.equals(UPLOAD_TYPE_NORMAL)){
             irlView.showFailureMsg("请选择文件");
             return;
         }
 
-        if (loan_length == null || loan_length.length() <= 0){
+        if (irlView != null &&(loan_length == null || loan_length.length() <= 0)){
             irlView.showFailureMsg("请输入借款周期");
             return;
         }
 
-//        if (remark == null || remark.length() <= 0){
-//            irlView.showFailureMsg("请输入备注");
-//            return;
-//        }
-
         if (irlModel != null){
             if (files.size() <= 1){
-                irlModel.CarPhoto( request_end_flag, uploadType,token,remark,
-                        workflow_content_id, wk_point_id ,files,type_id,loan_length,this);
+                irlModel.CarPhoto( request_end_flag, uploadType,map,type_id,files,this);
                 this.isUploading = false;
             }else{
-                irlModel.CarPhoto( request_end_flag, uploadType,token,remark,
-                        workflow_content_id, wk_point_id ,files.subList(0,files.size() / 2),
-                        type_id,loan_length,this);
+                irlModel.CarPhoto( request_end_flag, uploadType,map,type_id,files.subList(0,files.size() / 2),
+                        this);
                 this.isUploading = true;
             }
             irlView.showProgress();
         }
+
+        this.map.clear();
+        this.map.putAll(map);
 
         this.token = token;
         this.remark = remark;
@@ -343,17 +372,16 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
         this.loan_length = loan_length;
     }
     @Override
-    public void FirstSureAmount(String token, String w_con_id, String w_pot_id,
-                                String amount, String remark) {
-        if ( amount == null || "".equals(amount)){
-            if (irlView != null){
-                irlView.showFailureMsg("请输入评估范围");
+    public void FirstSureAmount(HashMap<String ,Object> map) {
+        for (String key :map.keySet()){
+            if (map.get(key) == null || map.get(key).toString().length() <=0){
+                irlView.showFailureMsg("请输入内容");
+                return;
             }
-            return;
         }
 
         if (irlModel != null){
-            irlModel.FirstSureAmount(token,w_con_id,w_pot_id,amount,remark,this);
+            irlModel.FirstSureAmount(map,this );
         }
 
         if (irlView != null){
@@ -442,11 +470,11 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
         }
         if (irlModel != null){
             if (files.size() <= 1){
-                irlModel.UploadCarPhoto( request_end_flag, uploadType, token,  workflow_content_id,  remark,  wk_point_id,
+                irlModel.UploadCarPhoto( request_end_flag, uploadType, token,  workflow_content_id+"",  remark,  wk_point_id+"",
                         type_id,files,this);
                 this.isUploading = false;
             }else{
-                irlModel.UploadCarPhoto( request_end_flag, uploadType, token,  workflow_content_id,  remark,  wk_point_id,
+                irlModel.UploadCarPhoto( request_end_flag, uploadType, token,  workflow_content_id+"",  remark,  wk_point_id+"",
                         type_id,files.subList(0,files.size() / 2),this);
                 this.isUploading = true;
             }
@@ -457,9 +485,9 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
         }
 
         this.token = token;
-        this.workflow_content_id = workflow_content_id;
+        this.workflow_content_id = workflow_content_id+"";
         this.remark = remark;
-        this.wk_point_id = wk_point_id;
+        this.wk_point_id = wk_point_id+"";
         this.type_id = type_id;
         this.files.clear();
         this.files.addAll(files);
@@ -504,7 +532,7 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
         }
 
         if (irlModel != null){
-            this.wk_point_id = wk_point_id;
+            this.wk_point_id = wk_point_id+"";
             irlModel.ContractDetail( token,  workflow_content_id,  wk_point_id,  remark,
                      amount,  loan_rate,  loan_length,  pontage,
                      service_fee,  insurance,  car_break_rules, contract_date,this);
@@ -592,13 +620,13 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
         if (irlModel != null){
 
             if (files.size() <= 1){
-                irlModel.InfoCheckRefinance( request_end_flag , uploadType, token,  workflow_content_id,
-                        wk_point_id, persion_court,  car_break_rules,
+                irlModel.InfoCheckRefinance( request_end_flag , uploadType, token,  workflow_content_id+"",
+                        wk_point_id+"", persion_court,  car_break_rules,
                         insurance, remark,files,this);
                 this.isUploading = false;
             }else{
-                irlModel.InfoCheckRefinance( request_end_flag , uploadType, token,  workflow_content_id,
-                        wk_point_id, persion_court,  car_break_rules,
+                irlModel.InfoCheckRefinance( request_end_flag , uploadType, token,  workflow_content_id+"",
+                        wk_point_id+"", persion_court,  car_break_rules,
                         insurance, remark,files.subList(0,files.size() / 2),this);
                 this.isUploading = true;
             }
@@ -608,9 +636,9 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
         }
 
         this.token = token;
-        this.workflow_content_id = workflow_content_id;
+        this.workflow_content_id = workflow_content_id+"";
         this.remark = remark;
-        this.wk_point_id = wk_point_id;
+        this.wk_point_id = wk_point_id+"";
         this.persion_court = persion_court;
         this.car_break_rules = car_break_rules;
         this.insurance = insurance;

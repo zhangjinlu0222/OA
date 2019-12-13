@@ -32,8 +32,7 @@ public interface IRLModel{
                       String service_fee,String pontage,
                       String contract_date,String remark, IRLListener listener);
 
-    void BusFeedback(String token, String w_con_id, String w_pot_id, int loan_length, String loan_rate,
-                     String return_amount_method,String remark, IRLListener listener);
+    void BusFeedback(HashMap<String ,Object> map, IRLListener listener);
     //业务反馈 下一步 不传remark，提交反馈信息的时候传remark
 
     void FirstFeedback(String token, String w_con_id, String w_pot_id, String remark, IRLListener listener);
@@ -42,18 +41,21 @@ public interface IRLModel{
     void PleDgeAssess(String request_end_flag,String uploadType,String token,
                    int car_year, String car_type,String car_style,String milage,
                    String remark, String market_amount, String take_amount,
-                   int workflow_content_id,int wk_point_id,List<LocalMedia> files,
+                   String  workflow_content_id,String wk_point_id,List<LocalMedia> files,
                          IRLListener listener);
     void Coming(HashMap<String ,Object> map, IRLListener listener);
     void ApplyforRefinance(String token, String w_con_id, String w_pot_id,
                          String loan_length, String remark,IRLListener listener);
-    void CarPhoto(String request_end_flag,String uploadType,
-                  String token, String remark,
-                  int workflow_content_id, int wk_point_id,
-                  List<LocalMedia> files,String type_id,
-                  String loan_length, IRLListener listener);
-    void FirstSureAmount(String token, String w_con_id, String w_pot_id,
-                         String amount, String remark,IRLListener listener);
+//    void CarPhoto(String request_end_flag,String uploadType,
+//                  String token, String remark,
+//                  int workflow_content_id, int wk_point_id,
+//                  List<LocalMedia> files,String type_id,
+//                  String loan_length, IRLListener listener);
+    void CarPhoto(String request_end_flag,String uploadType,HashMap<String ,Object > map,String type_id,
+                  List<LocalMedia> files, IRLListener listener);
+
+    void FirstSureAmount(HashMap<String ,Object> map,IRLListener listener);
+
     void SureAmount(String token,String w_con_id,String w_pot_id,
                     String amount,String assure_amount,String derating_opinion,String remark,IRLListener listener);
     void SureAmountReturn(String token,String w_con_id,String w_pot_id,
@@ -68,7 +70,7 @@ public interface IRLModel{
 
                    String remark, IRLListener listener);
     void UploadCarPhoto(String request_end_flag,String uploadType,
-                        String token,  int workflow_content_id, String remark,int wk_point_id,
+                        String token,  String workflow_content_id, String remark,String wk_point_id,
                         String type_id, List<LocalMedia> files, IRLListener listener);
     void ContractDetail(String token, int workflow_content_id, int wk_point_id, String remark,
                         String amount,String loan_rate,String loan_length,String pontage,
@@ -78,8 +80,8 @@ public interface IRLModel{
                         IRLListener listener);
     void AssessRefinance(String token, int workflow_content_id, int wk_point_id, String file_info,
                          String derate_info, String remark, IRLListener listener);
-    void InfoCheckRefinance(String request_end_flag ,String uploadType,String token, int workflow_content_id,
-                            int wk_point_id,String persion_court, String car_break_rules,
+    void InfoCheckRefinance(String request_end_flag ,String uploadType,String token, String workflow_content_id,
+                            String wk_point_id,String persion_court, String car_break_rules,
                             String insurance,String remark,List<LocalMedia> files, IRLListener listener);
     void Form(String token, int workflow_content_id, int wk_point_id, IRLListener listener);
 

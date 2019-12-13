@@ -22,8 +22,7 @@ public interface IRLPresenter{
                         String service_fee,String pontage,
                         String contract_date,String remark);
 
-    void BusFeedback(String token, String w_con_id, String w_pot_id, int loan_length, String loan_rate,
-                     String return_amount_method,String remark);
+    void BusFeedback(HashMap<String ,Object> map);
     //业务反馈 下一步 不传remark，提交反馈信息的时候传remark
 
     void FirstFeedback(String token, String w_con_id, String w_pot_id, String remark);
@@ -36,14 +35,14 @@ public interface IRLPresenter{
     void Coming(HashMap<String ,Object > map);
     void ApplyforRefinance(String token, String w_con_id, String w_pot_id,
                            String loan_length, String remark);
-    void CarPhoto(String request_end_flag,String uploadType,
-                  String token, String remark,
-                  int workflow_content_id, int wk_point_id,
-                  List<LocalMedia> files,String type_id,
-                  String loan_length);
-
-    void FirstSureAmount(String token, String w_con_id, String w_pot_id,
-                         String amount, String remark);
+//    void CarPhoto(String request_end_flag,String uploadType,
+//                  String token, String remark,
+//                  int workflow_content_id, int wk_point_id,
+//                  List<LocalMedia> files,String type_id,
+//                  String loan_length);
+    void CarPhoto(String request_end_flag,String uploadType,HashMap<String ,Object > map,String type_id,
+                  List<LocalMedia> files);
+    void FirstSureAmount(HashMap<String ,Object> map);
     void SureAmount(String token, String w_con_id, String w_pot_id,
                     String  amount,String assure_amount, String derating_opinion,String remark);
     void SureAmountReturn(String token,String w_con_id,String w_pot_id,String type_id);

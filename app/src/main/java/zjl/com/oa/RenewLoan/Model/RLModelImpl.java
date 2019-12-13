@@ -136,17 +136,8 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
         });
     }
     @Override
-    public void BusFeedback(String token, String w_con_id, String w_pot_id, int loan_length, String loan_rate, String return_amount_method, String remark, IRLListener listener) {
+    public void BusFeedback(HashMap<String, Object> map, IRLListener listener) {
         IRL service = retrofit.create(IRL.class);
-        // 创建RequestBody，传入参数："multipart/form-data"，String
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("token",token);
-        map.put("w_con_id",w_con_id);
-        map.put("w_pot_id",w_pot_id);
-        map.put("loan_length",loan_length);
-        map.put("loan_rate",loan_rate);
-        map.put("return_amount_method",return_amount_method);
-        map.put("remark",remark);
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), new Gson().toJson(map));
 
         Call<ResponseWithNoData> call = service.BusFeedback(body);
@@ -154,7 +145,7 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
         call.enqueue(new Callback<ResponseWithNoData>() {
             @Override
             public void onResponse(Call<ResponseWithNoData> call, Response<ResponseWithNoData> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()){
                     ResponseWithNoData result = response.body();
                     if (result != null){
                         if (result.getCode() == Constant.Succeed){
@@ -172,10 +163,8 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
 
             @Override
             public void onFailure(Call<ResponseWithNoData> call, Throwable t) {
-//                listListener.onFail(t.getMessage());
-                Log.e(TAG,"网络异常");
                 t.printStackTrace();
-                listener.onFail();
+                listener.onFail("网络异常，操作失败");
             }
         });
     }
@@ -225,8 +214,8 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
     @Override
     public void PleDgeAssess(String request_end_flag, String uploadType, String token, int car_year,
                              String car_type, String car_style, String milage, String remark,
-                             String market_amount, String take_amount, int workflow_content_id,
-                             int wk_point_id, List<LocalMedia> files, IRLListener listener) {
+                             String market_amount, String take_amount, String workflow_content_id,
+                             String wk_point_id, List<LocalMedia> files, IRLListener listener) {
         IRL service = retrofit.create(IRL.class);
         // 创建RequestBody，传入参数："multipart/form-data"，String
         RequestBody tokenbody = RequestBody.create(MediaType.parse("multipart/form-data"), token);
@@ -235,8 +224,8 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
         RequestBody car_stylebody = RequestBody.create(MediaType.parse("multipart/form-data"), car_style);
         RequestBody milagebody = RequestBody.create(MediaType.parse("multipart/form-data"), milage);
         RequestBody remarkbody = RequestBody.create(MediaType.parse("multipart/form-data"), remark);
-        RequestBody workflow_content_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), Integer.toString(workflow_content_id));
-        RequestBody wk_point_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), Integer.toString(wk_point_id));
+        RequestBody workflow_content_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), workflow_content_id);
+        RequestBody wk_point_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), wk_point_id);
         RequestBody market_amount_body = RequestBody.create(MediaType.parse("multipart/form-data"), market_amount);
         RequestBody take_amount_body = RequestBody.create(MediaType.parse("multipart/form-data"), take_amount);
         RequestBody typebody = RequestBody.create(MediaType.parse("multipart/form-data"), uploadType);
@@ -365,21 +354,96 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
         });
     }
 
+//    @Override
+//    public void CarPhoto(String request_end_flag,String uploadType,String token, String remark,
+//                             int workflow_content_id, int wk_point_id, List<LocalMedia> files,
+//                             String type_id,String loan_length, IRLListener listener) {
+//
+//        IRL service = retrofit.create(IRL.class);
+//
+//        // 创建RequestBody，传入参数："multipart/form-data"，String
+//        RequestBody tokenbody = RequestBody.create(MediaType.parse("multipart/form-data"), token);
+//        RequestBody remark_courtbody = RequestBody.create(MediaType.parse("multipart/form-data"), remark);
+//        RequestBody workflow_content_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), Integer.toString(workflow_content_id));
+//        RequestBody wk_point_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), Integer.toString(wk_point_id));
+//        RequestBody type_id_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), type_id);
+//        RequestBody typebody = RequestBody.create(MediaType.parse("multipart/form-data"), uploadType);
+//        RequestBody loanLengthBody = RequestBody.create(MediaType.parse("multipart/form-data"), loan_length);
+//
+//        List<MultipartBody.Part> filesBody = new ArrayList<>();
+//
+//        for (int i=0; i< files.size();i++){
+//
+//            if (files.get(i) == null){
+//                continue;
+//            }
+//
+//            File file;
+//            if (files.get(i).getCompressPath() != null
+//                    && files.get(i).getCompressPath().length() >0){
+//
+//                file = new File(files.get(i).getCompressPath());
+//            }else{
+//
+//                file = new File(files.get(i).getPath());
+//            }
+//
+//            String subfix = file.getName().trim().substring(
+//                    file.getName().trim().lastIndexOf("."),
+//                    file.getName().trim().length());
+//
+//            RequestBody imgFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+//
+//            MultipartBody.Part requestImgPart =
+//                    MultipartBody.Part.createFormData(file.getName(), i + ""+System.currentTimeMillis() + subfix, imgFile);
+//            filesBody.add(requestImgPart);
+//
+//        }
+//
+//        Call<ResponseWithNoData> call = service.post( request_end_flag, typebody,
+//                tokenbody,remark_courtbody, workflow_content_idbody,
+//                wk_point_idbody,type_id_idbody,loanLengthBody,filesBody);
+//
+//        call.enqueue(new Callback<ResponseWithNoData>() {
+//            @Override
+//            public void onResponse(Call<ResponseWithNoData> call, Response<ResponseWithNoData> response) {
+//                if (response.isSuccessful()){
+//                    ResponseWithNoData result = response.body();
+//                    if (result != null ){
+//                        if (result.getCode() == Constant.Succeed){
+//                            listener.onSucceed();
+//                        }else if (result.getCode() == Constant.LoginAnotherPhone){
+//                            listener.relogin();
+//                        }else{
+//                            listener.onFail(result.getMessage());
+//                        }
+//                    }
+//                }else{
+//                    listener.onFail();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseWithNoData> call, Throwable t) {
+//                t.printStackTrace();
+//                listener.onFail();
+//            }
+//        });
+//    }
     @Override
-    public void CarPhoto(String request_end_flag,String uploadType,String token, String remark,
-                             int workflow_content_id, int wk_point_id, List<LocalMedia> files,
-                             String type_id,String loan_length, IRLListener listener) {
+    public void CarPhoto(String request_end_flag,String uploadType,HashMap<String ,Object> map,String type_id, List<LocalMedia> files,
+                             IRLListener listener) {
 
         IRL service = retrofit.create(IRL.class);
 
         // 创建RequestBody，传入参数："multipart/form-data"，String
-        RequestBody tokenbody = RequestBody.create(MediaType.parse("multipart/form-data"), token);
-        RequestBody remark_courtbody = RequestBody.create(MediaType.parse("multipart/form-data"), remark);
-        RequestBody workflow_content_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), Integer.toString(workflow_content_id));
-        RequestBody wk_point_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), Integer.toString(wk_point_id));
+        RequestBody tokenbody = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("token").toString());
+        RequestBody remark_courtbody = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("remark").toString());
+        RequestBody workflow_content_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("w_con_id").toString());
+        RequestBody wk_point_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("w_pot_id").toString());
         RequestBody type_id_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), type_id);
         RequestBody typebody = RequestBody.create(MediaType.parse("multipart/form-data"), uploadType);
-        RequestBody loanLengthBody = RequestBody.create(MediaType.parse("multipart/form-data"), loan_length);
+        RequestBody loanLengthBody = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("loan_length").toString());
 
         List<MultipartBody.Part> filesBody = new ArrayList<>();
 
@@ -442,15 +506,8 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
         });
     }
     @Override
-    public void FirstSureAmount(String token, String w_con_id, String w_pot_id, String amount, String remark, IRLListener listener) {
+    public void FirstSureAmount(HashMap<String, Object> map, IRLListener listener) {
         IRL service = retrofit.create(IRL.class);
-        // 创建RequestBody，传入参数："multipart/form-data"，String
-        HashMap<String,String> map = new HashMap<>();
-        map.put("token",token);
-        map.put("w_con_id",w_con_id);
-        map.put("w_pot_id",w_pot_id);
-        map.put("amount",amount);
-        map.put("remark",remark);
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), new Gson().toJson(map));
 
         Call<ResponseWithNoData> call = service.FirstSureAmount(body);
@@ -630,8 +687,8 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
         });
     }
     @Override
-    public void UploadCarPhoto(String request_end_flag,String uploadType,String token, int workflow_content_id, String remark,
-                               int wk_point_id, String type_id, List<LocalMedia> files,
+    public void UploadCarPhoto(String request_end_flag,String uploadType,String token, String workflow_content_id, String remark,
+                               String wk_point_id, String type_id, List<LocalMedia> files,
                                IRLListener listener) {
 
         IRL service = retrofit.create(IRL.class);
@@ -639,8 +696,8 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
         // 创建RequestBody，传入参数："multipart/form-data"，String
         RequestBody tokenbody = RequestBody.create(MediaType.parse("multipart/form-data"), token);
         RequestBody remark_body = RequestBody.create(MediaType.parse("multipart/form-data"), remark);
-        RequestBody workflow_content_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), Integer.toString(workflow_content_id));
-        RequestBody wk_point_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), Integer.toString(wk_point_id));
+        RequestBody workflow_content_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), workflow_content_id);
+        RequestBody wk_point_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), wk_point_id);
         RequestBody type_id_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), type_id);
         RequestBody type_body = RequestBody.create(MediaType.parse("multipart/form-data"), uploadType);
 
@@ -846,17 +903,17 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
     }
 
     @Override
-    public void InfoCheckRefinance(String request_end_flag ,String uploadType,String token, int workflow_content_id,
-                                   int wk_point_id,String persion_court, String car_break_rules,
+    public void InfoCheckRefinance(String request_end_flag ,String uploadType,String token, String workflow_content_id,
+                                   String wk_point_id,String persion_court, String car_break_rules,
                                    String insurance,String remark ,List<LocalMedia> files,IRLListener listener) {
         IRL service = retrofit.create(IRL.class);
 
         // 创建RequestBody，传入参数："multipart/form-data"，String
         RequestBody tokenbody = RequestBody.create(MediaType.parse("multipart/form-data"), token);
         RequestBody workflow_content_idbody = RequestBody.create(MediaType.parse("multipart/form-data"),
-                Integer.toString(workflow_content_id));
+                workflow_content_id);
         RequestBody wk_point_idbody = RequestBody.create(MediaType.parse("multipart/form-data"),
-                Integer.toString(wk_point_id));
+                wk_point_id);
         RequestBody persion_court_body = RequestBody.create(MediaType.parse("multipart/form-data"), persion_court);
         RequestBody car_break_rules_body = RequestBody.create(MediaType.parse("multipart/form-data"), car_break_rules);
         RequestBody insurance_body = RequestBody.create(MediaType.parse("multipart/form-data"), insurance);
