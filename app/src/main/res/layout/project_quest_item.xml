@@ -100,23 +100,13 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/tv_project_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:text="@string/project_tv_state"
-                android:textColor="#333333"
-                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_proc_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_project_type"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:text="业务类型"
                 android:textColor="#333333"
                 android:textSize="14sp" />
@@ -129,6 +119,17 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="3dp"
                 android:text="续贷"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_project_provider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_finance"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="3dp"
+                android:text="@string/project_tv_provider"
                 android:textColor="#333333"
                 android:textSize="14sp" />
         </RelativeLayout>

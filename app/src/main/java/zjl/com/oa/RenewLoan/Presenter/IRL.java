@@ -21,6 +21,9 @@ import zjl.com.oa.Response.FormResponse;
 
 public interface IRL {
 
+    @POST(Constant.FinishFlow)
+    Call<ResponseWithNoData> FinishFlow(@Body RequestBody body);
+
     @POST(Constant.LoanApplication)
     Call<ResponseWithNoData> loanApplication(@Body RequestBody body);
 

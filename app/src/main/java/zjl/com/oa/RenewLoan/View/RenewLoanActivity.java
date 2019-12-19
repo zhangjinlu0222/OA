@@ -371,22 +371,39 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
 //                }
                 break;
             case 5:
-                if (iRLPresenter != null) {
-                    iRLPresenter.PleDgeAssess(
-                            request_start_flag,
-                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
-                            token,
-                            getData_Con("车辆年份").equals("")?0:Integer.parseInt(getData_Con("车辆年份")),
-                            getData_Con("车辆品牌"),
-                            getData_Con("车辆型号"),
-                            getData_Con("里程数"),
-                            getData_Con("备注"),
-                            getData_Con("市场价"),
-                            getData_Con("收车价"),
-                            workflow_content_id,
-                            wk_point_id,
-                            selectList);
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
                 }
+
+                if (iRLPresenter != null){
+                    iRLPresenter.PleDgeAssess(request_start_flag,!uploadType?UPLOAD_TYPE_NORMAL:UPLOAD_TYPE_ADD,map,selectList);
+                }
+//                if (iRLPresenter != null) {
+//                    iRLPresenter.PleDgeAssess(
+//                            request_start_flag,
+//                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+//                            token,
+//                            getData_Con("车辆年份").equals("")?0:Integer.parseInt(getData_Con("车辆年份")),
+//                            getData_Con("车辆品牌"),
+//                            getData_Con("车辆型号"),
+//                            getData_Con("里程数"),
+//                            getData_Con("备注"),
+//                            getData_Con("市场价"),
+//                            getData_Con("收车价"),
+//                            workflow_content_id,
+//                            wk_point_id,
+//                            selectList);
+//                }
                 break;
             case 6:
                 map.clear();
@@ -408,13 +425,22 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 }
                 break;
             case 7:
-                if (iRLPresenter != null) {
-                    iRLPresenter.FirstFeedback(
-                            token,
-                            Integer.toString(workflow_content_id),
-                            Integer.toString(wk_point_id),
-                            "");
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+                map.put("remark", "");
+
+                if (iRLPresenter != null){
+                    iRLPresenter.FirstFeedback(map);
                 }
+//                if (iRLPresenter != null) {
+//                    iRLPresenter.FirstFeedback(
+//                            token,
+//                            Integer.toString(workflow_content_id),
+//                            Integer.toString(wk_point_id),
+//                            "");
+//                }
                 break;
             case 8:
                 if (zheshubiao.size() < 1){
@@ -427,29 +453,69 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 }
                 selectList.addAll(zheshubiao);
                 selectList.addAll(photos);
+
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
+                }
+
                 if (iRLPresenter != null) {
                     iRLPresenter.UploadCarPhoto(
                             request_start_flag,
                             !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
-                            token,
-                            workflow_content_id,
-                            getData_Con("备注"),
-                            wk_point_id,
+                            map,
                             UploadCarPhotosType.getType_id(wk_point_id)+"",
                             selectList);
                 }
+//                if (iRLPresenter != null) {
+//                    iRLPresenter.UploadCarPhoto(
+//                            request_start_flag,
+//                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+//                            token,
+//                            workflow_content_id,
+//                            getData_Con("备注"),
+//                            wk_point_id,
+//                            UploadCarPhotosType.getType_id(wk_point_id)+"",
+//                            selectList);
+//                }
                 break;
             case 10:
-                if (iRLPresenter != null) {
-                    iRLPresenter.SureAmount(
-                            token,
-                            Integer.toString(workflow_content_id),
-                            Integer.toString(wk_point_id),
-                            getData_Con("评估定额"),
-                            getData_Con("担保价"),
-                            getData_Con("降额意见"),
-                            getData_Con("备注"));
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
                 }
+
+                if (iRLPresenter != null) {
+                    iRLPresenter.SureAmount(map);
+                }
+//                if (iRLPresenter != null) {
+//                    iRLPresenter.SureAmount(
+//                            token,
+//                            Integer.toString(workflow_content_id),
+//                            Integer.toString(wk_point_id),
+//                            getData_Con("评估定额"),
+//                            getData_Con("担保价"),
+//                            getData_Con("降额意见"),
+//                            getData_Con("备注"));
+//                }
                 break;
             case 11:
                 map.clear();
@@ -479,13 +545,31 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
 //                        "");
                 break;
             case 13:
-                iRLPresenter.InformSigned(token,
-                        Integer.toString(workflow_content_id) ,
-                        Integer.toString(wk_point_id) ,
-                        getData_Con("服务费") ,
-                        getData_Con("展期费/过桥费"),
-                        getData_Con("合同日期"),
-                        getData_Con("备注"));
+                map.clear();
+
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
+                }
+
+                if (iRLPresenter != null){
+                    iRLPresenter.InformSigned(map);
+                }
+//                iRLPresenter.InformSigned(token,
+//                        Integer.toString(workflow_content_id) ,
+//                        Integer.toString(wk_point_id) ,
+//                        getData_Con("服务费") ,
+//                        getData_Con("展期费/过桥费"),
+//                        getData_Con("合同日期"),
+//                        getData_Con("备注"));
                 break;
             case 15:
                 if (selectList.size() < 1){
@@ -500,15 +584,35 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 selectList.addAll(videos);
                 int type_id = new UploadCarPhotosType().getType_id(wk_point_id);
 
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
+                }
+
                 iRLPresenter.UploadCarPhoto(
                         request_start_flag,
                         !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
-                        token,
-                        workflow_content_id,
-                        getData_Con("备注"),
-                        wk_point_id,
+                        map,
                         type_id+"",
                         selectList);
+//                iRLPresenter.UploadCarPhoto(
+//                        request_start_flag,
+//                        !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+//                        token,
+//                        workflow_content_id,
+//                        getData_Con("备注"),
+//                        wk_point_id,
+//                        type_id+"",
+//                        selectList);
                 break;
             case 17:
                 if (selectList.size() < 1){
@@ -518,15 +622,34 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 selectList.addAll(videos);
                 type_id = new UploadCarPhotosType().getType_id(wk_point_id);
 
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
+                }
                 iRLPresenter.UploadCarPhoto(
                         request_start_flag,
                         !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
-                        token,
-                        workflow_content_id,
-                        getData_Con("备注"),
-                        wk_point_id,
+                        map,
                         type_id+"",
                         selectList);
+//                iRLPresenter.UploadCarPhoto(
+//                        request_start_flag,
+//                        !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+//                        token,
+//                        workflow_content_id,
+//                        getData_Con("备注"),
+//                        wk_point_id,
+//                        type_id+"",
+//                        selectList);
                 break;
             case 18:
                 if (selectList.size() < 1){
@@ -535,24 +658,60 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 }
                 type_id = new UploadCarPhotosType().getType_id(wk_point_id);
 
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
+                }
                 iRLPresenter.UploadCarPhoto(
                         request_start_flag,
                         !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
-                        token,
-                        workflow_content_id,
-                        getData_Con("备注"),
-                        wk_point_id,
+                        map,
                         type_id+"",
                         selectList);
+//                iRLPresenter.UploadCarPhoto(
+//                        request_start_flag,
+//                        !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+//                        token,
+//                        workflow_content_id,
+//                        getData_Con("备注"),
+//                        wk_point_id,
+//                        type_id+"",
+//                        selectList);
                 break;
             case 20:
-                if (iRLPresenter != null) {
-                    iRLPresenter.loanApplication(
-                            token,
-                            workflow_content_id,
-                            wk_point_id,
-                            getData_Con("备注"));
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
                 }
+
+                if (iRLPresenter != null) {
+                    iRLPresenter.loanApplication(map);
+                }
+//                if (iRLPresenter != null) {
+//                    iRLPresenter.loanApplication(
+//                            token,
+//                            workflow_content_id,
+//                            wk_point_id,
+//                            getData_Con("备注"));
+//                }
                 break;
             case 21:
                 if (selectList.size() < 1 && (getInType().length() > 0 && !getInType().equals("bohui"))){
@@ -560,115 +719,264 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                     return;
                 }
                 type_id = new UploadCarPhotosType().getType_id(wk_point_id);
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
 
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
+                }
                 iRLPresenter.UploadCarPhoto(
                         request_start_flag,
                         !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
-                        token,
-                        workflow_content_id,
-                        getData_Con("备注"),
-                        wk_point_id,
+                        map,
                         type_id+"",
                         selectList);
+//                iRLPresenter.UploadCarPhoto(
+//                        request_start_flag,
+//                        !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+//                        token,
+//                        workflow_content_id,
+//                        getData_Con("备注"),
+//                        wk_point_id,
+//                        type_id+"",
+//                        selectList);
+                break;
+            case 22://放款结束
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
+                }
+                if (iRLPresenter != null){
+                    iRLPresenter.FinishFlow(map);
+                }
                 break;
             case 23:
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
+                }
                 if (iRLPresenter != null) {
                     iRLPresenter.InfoCheckRefinance(
                             request_start_flag,
                             !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
-                            token,
-                            workflow_content_id,
-                            wk_point_id,
-                            getData_Con("人法查询"),
-                            getData_Con("违章查询"),
-                            getData_Con("保险查询"),
-                            getData_Con("备注"),
+                            map,
                             selectList);
                 }
                 break;
             case 24:
-                if (iRLPresenter != null) {
-                    iRLPresenter.AssessRefinance(
-                            token,
-                            workflow_content_id,
-                            wk_point_id,
-                            getData_Con("档案信息"),
-                            getData_Con("降额意见"),
-                            getData_Con("备注")
-                    );
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
                 }
+
+                if (iRLPresenter != null) {
+                    iRLPresenter.AssessRefinance(map);
+                }
+//                if (iRLPresenter != null) {
+//                    iRLPresenter.AssessRefinance(
+//                            token,
+//                            workflow_content_id,
+//                            wk_point_id,
+//                            getData_Con("档案信息"),
+//                            getData_Con("降额意见"),
+//                            getData_Con("备注")
+//                    );
+//                }
                 break;
             case 25:
-                if (iRLPresenter != null) {
-                    iRLPresenter.AuditRefinance(
-                            token,
-                            workflow_content_id,
-                            wk_point_id,
-                            getData_Con("备注"));
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
                 }
+
+                if (iRLPresenter != null) {
+                    iRLPresenter.AuditRefinance(map);
+                }
+//                if (iRLPresenter != null) {
+//                    iRLPresenter.AuditRefinance(
+//                            token,
+//                            workflow_content_id,
+//                            wk_point_id,
+//                            getData_Con("备注"));
+//                }
                 break;
             case 26:
-                if (iRLPresenter != null) {
-                    iRLPresenter.UploadCarPhoto(
-                            request_start_flag,
-                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
-                            token,
-                            workflow_content_id,
-                            getData_Con("备注"),
-                            wk_point_id,
-                            "10",
-                            selectList);
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
                 }
+                iRLPresenter.UploadCarPhoto(
+                        request_start_flag,
+                        !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+                        map,
+                        "10",
+                        selectList);
+
+//                if (iRLPresenter != null) {
+//                    iRLPresenter.UploadCarPhoto(
+//                            request_start_flag,
+//                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+//                            token,
+//                            workflow_content_id,
+//                            getData_Con("备注"),
+//                            wk_point_id,
+//                            "10",
+//                            selectList);
+//                }
                 break;
             case 27:
-                if (iRLPresenter != null) {
-                    iRLPresenter.ContractDetail(
-                            token,
-                            workflow_content_id,
-                            wk_point_id,
-                            getData_Con("备注"),
-                            getData_Con("金额"),
-                            getData_Con("利息"),
-                            getData_Con("期限"),
-                            getData_Con("展期费"),
-                            getData_Con("服务费"),
-                            getData_Con("保险"),
-                            getData_Con("违章"),
-                            getData_Con("合同日期")
-                    );
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
                 }
+
+                if (iRLPresenter != null) {
+                    iRLPresenter.ContractDetail(map);
+                }
+//                if (iRLPresenter != null) {
+//                    iRLPresenter.ContractDetail(
+//                            token,
+//                            workflow_content_id,
+//                            wk_point_id,
+//                            getData_Con("备注"),
+//                            getData_Con("金额"),
+//                            getData_Con("利息"),
+//                            getData_Con("期限"),
+//                            getData_Con("展期费"),
+//                            getData_Con("服务费"),
+//                            getData_Con("保险"),
+//                            getData_Con("违章"),
+//                            getData_Con("合同日期")
+//                    );
+//                }
                 break;
             case 30:
-                if (iRLPresenter != null) {
-                    iRLPresenter.InputInfo(
-                            token,
-                            workflow_content_id,
-                            wk_point_id,
-                            getData_Con("客户姓名"),
-                            getData_Con("身份证号"),
-                            getData_Con("手机号"),
-                            getData_Con("现住址"),
-                            getData_Con("开户银行"),
-                            getData_Con("银行账号"),
-                            getData_Con("借款用途"),
-                            getData_Con("车辆牌照"),
-                            getData_Con("汽车登记证"),
-                            getData_Con("发动机号"),
-                            getData_Con("车架号"),
-                            ""
-                    );
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
                 }
+
+                if (iRLPresenter != null) {
+                    iRLPresenter.InputInfo(map);
+                }
+//                if (iRLPresenter != null) {
+//                    iRLPresenter.InputInfo(
+//                            token,
+//                            workflow_content_id,
+//                            wk_point_id,
+//                            getData_Con("客户姓名"),
+//                            getData_Con("身份证号"),
+//                            getData_Con("手机号"),
+//                            getData_Con("现住址"),
+//                            getData_Con("开户银行"),
+//                            getData_Con("银行账号"),
+//                            getData_Con("借款用途"),
+//                            getData_Con("车辆牌照"),
+//                            getData_Con("汽车登记证"),
+//                            getData_Con("发动机号"),
+//                            getData_Con("车架号"),
+//                            ""
+//                    );
+//                }
                 break;
             case 31:
-                if (iRLPresenter != null) {
-                    iRLPresenter.ApplyforRefinance(
-                            token,
-                            Integer.toString(workflow_content_id),
-                            Integer.toString(wk_point_id),
-                            getData_Con("期限"),
-                            getData_Con("备注")
-                    );
+
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
                 }
+
+                if (iRLPresenter != null) {
+                    iRLPresenter.ApplyforRefinance(map);
+                }
+//                if (iRLPresenter != null) {
+//                    iRLPresenter.ApplyforRefinance(
+//                            token,
+//                            Integer.toString(workflow_content_id),
+//                            Integer.toString(wk_point_id),
+//                            getData_Con("期限"),
+//                            getData_Con("备注")
+//                    );
+//                }
                 break;
         }
     }
@@ -1059,8 +1367,26 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                     } else {
                         switch (wk_point_id){
                             case 7:
-                                iRLPresenter.FirstFeedback(token,Integer.toString(workflow_content_id),
-                                        Integer.toString(wk_point_id),et.getText().toString());
+                                HashMap<String ,Object> feedbackInfo = new HashMap<>();
+                                feedbackInfo.put("token",token );
+                                feedbackInfo.put("w_con_id", workflow_content_id);
+                                feedbackInfo.put("w_pot_id", wk_point_id);
+
+                                for (int i=0;i< formLists.size();i++){
+                                    String submit_field = formLists.get(i).getSubmit_field();
+
+                                    if (submit_field != null && submit_field.length() >0){
+                                        String value = formLists.get(i).getData_con();
+                                        feedbackInfo.put(submit_field,value);
+                                    }
+                                }
+
+                                feedbackInfo.put("remark", et.getText().toString());
+
+                                if (iRLPresenter != null){
+                                    iRLPresenter.FirstFeedback(feedbackInfo);
+                                }
+
                                 break;
                             case 11:
 

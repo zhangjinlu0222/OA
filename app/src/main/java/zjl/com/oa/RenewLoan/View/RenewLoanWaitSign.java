@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.dou361.dialogui.DialogUIUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -76,8 +77,12 @@ public class RenewLoanWaitSign extends BaseActivity implements IRLView {
     private void submitMsg() {
         if (iRLPresenter != null){
             //调用上传图片的借口，备注写空，type_id是11，文件传空
-            iRLPresenter.UploadCarPhoto(request_start_flag,UPLOAD_TYPE_NORMAL,token,
-                    workflow_content_id,"",wk_point_id,"11",new ArrayList<>());
+            HashMap<String ,Object> map = new HashMap();
+            map.put("token",token );
+            map.put("w_con_id",workflow_content_id );
+            map.put("w_pot_id",wk_point_id );
+
+            iRLPresenter.UploadCarPhoto(request_start_flag,UPLOAD_TYPE_NORMAL,map,"11",new ArrayList<>());
         }
     }
 

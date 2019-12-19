@@ -222,7 +222,6 @@ public class InformationCheck extends BaseActivity implements IInfoCheckView {
                 } else if (isFastDoubleClick(R.id.infocheck_btn_next)) {
                     return;
                 } else {
-
                     infoCheckPresenter.uploadMsg(request_start_flag,
                             !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
                             token, workflow_content_id,

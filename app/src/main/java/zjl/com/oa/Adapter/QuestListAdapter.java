@@ -105,8 +105,8 @@ public class QuestListAdapter extends BaseAdapter {
         TextView projectTvPoint1Name;
         @Bind(R.id.tv_finance)
         TextView tvFinance;
-        @Bind(R.id.tv_project_type)
-        TextView tvProjectType;
+        @Bind(R.id.tv_project_provider)
+        TextView tvProjectProvider;
 
         ViewHolder(Context context,View view) {
             this.context = context;
@@ -250,7 +250,14 @@ public class QuestListAdapter extends BaseAdapter {
             holder.tvProcType.setVisibility(View.VISIBLE);
             holder.tvProcType.setText(proc_type);
         }else{
-            holder.tvProcType.setVisibility(View.GONE);
+            holder.tvProcType.setVisibility(View.INVISIBLE);
+        }
+        String provider = data.get(position).getDocking_com_name();
+        if (provider != null && provider.length() > 0){
+            holder.tvProjectProvider.setVisibility(View.VISIBLE);
+            holder.tvProjectProvider.setText(provider);
+        }else{
+            holder.tvProjectProvider.setVisibility(View.INVISIBLE);
         }
 
         String refinance = data.get(position).getRefinance();
@@ -258,7 +265,7 @@ public class QuestListAdapter extends BaseAdapter {
             holder.tvFinance.setVisibility(View.VISIBLE);
             holder.tvFinance.setText(refinance);
         }else{
-            holder.tvFinance.setVisibility(View.GONE);
+            holder.tvFinance.setVisibility(View.INVISIBLE);
         }
 
         holder.projectRlPoint1.setOnClickListener(new View.OnClickListener() {
@@ -433,7 +440,7 @@ public class QuestListAdapter extends BaseAdapter {
             v.projectTvCustomerName.setTextColor(Color.parseColor("#ffffff"));
             v.projectCustomerName.setTextColor(Color.parseColor("#ffffff"));
 
-            v.tvProjectType.setTextColor(Color.parseColor("#ffffff"));
+            v.tvProjectProvider.setTextColor(Color.parseColor("#ffffff"));
             v.tvProcType.setTextColor(Color.parseColor("#ffffff"));
             v.tvFinance.setTextColor(Color.parseColor("#ffffff"));
             if (v.projectTvPoint1Name != null){
@@ -464,7 +471,7 @@ public class QuestListAdapter extends BaseAdapter {
             v.projectTvCustomerName.setTextColor(Color.parseColor("#333333"));
             v.projectCustomerName.setTextColor(Color.parseColor("#333333"));
 
-            v.tvProjectType.setTextColor(Color.parseColor("#333333"));
+            v.tvProjectProvider.setTextColor(Color.parseColor("#333333"));
             v.tvProcType.setTextColor(Color.parseColor("#333333"));
             v.tvFinance.setTextColor(Color.parseColor("#333333"));
             if (v.projectTvPoint1Name != null){

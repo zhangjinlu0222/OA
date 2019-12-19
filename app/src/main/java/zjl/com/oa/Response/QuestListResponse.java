@@ -67,6 +67,8 @@ public class QuestListResponse extends BaseResponse{
 
             private String refinance = "";
 
+            private String docking_com_name;
+
             public int getOper_flag() {
                 return oper_flag;
             }
@@ -144,6 +146,14 @@ public class QuestListResponse extends BaseResponse{
 
             public void setRefinance(String refinance) {
                 this.refinance = refinance;
+            }
+
+            public String getDocking_com_name() {
+                return docking_com_name;
+            }
+
+            public void setDocking_com_name(String docking_com_name) {
+                this.docking_com_name = docking_com_name;
             }
 
             /**

@@ -97,4 +97,5 @@ public class Constant {
     public static final String RecoverWorkflow  = "WebApi/V1/Workflow/RecoverWorkflow";
     public static final String QueryCarAssess  = "WebApi/V1/Assess/QueryCarAssess";
     public static final String ApplyforRefinance  = "WebApi/V1/Refinance/ApplyforRefinance";
+    public static final String FinishFlow  = "WebApi/V1/Workflow/FinishFlow";
 }

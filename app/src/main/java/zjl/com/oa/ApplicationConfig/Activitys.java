@@ -34,7 +34,7 @@ public class Activitys {
                     destClass =  RenewLoanActivity.class;//来访
                     break;
                 case "2":
-                    destClass =  EnteringOrderActivity.class;//面谈
+                    destClass =  EnteringOrderActivity.class;//面谈（取消）
 //                    destClass =  MettingActivity.class;//面谈
                     break;
                 case "3":
@@ -108,7 +108,8 @@ public class Activitys {
                     destClass =  RenewLoanActivity.class;//首扣通知
                     break;
                 case "22":
-                    destClass =  TransferFinishActivity.class;//放款结束
+//                    destClass =  TransferFinishActivity.class;//放款结束
+                    destClass =  RenewLoanActivity.class;//放款结束
                     break;
                 case "23":
                     destClass =  RenewLoanActivity.class;//信息核查续贷
