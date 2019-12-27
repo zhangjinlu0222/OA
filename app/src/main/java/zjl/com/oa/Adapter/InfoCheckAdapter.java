@@ -153,6 +153,8 @@ public class InfoCheckAdapter extends BaseAdapter implements View.OnClickListene
                     convertView.setTag(form2);
                     break;
                 case 3:
+                case 4:
+                case 5:
                     convertView = inflater.inflate(R.layout.form_item_3, null);
                     form3 = new Form3(convertView);
                     form3.title = convertView.findViewById(R.id.title);
@@ -253,6 +255,8 @@ public class InfoCheckAdapter extends BaseAdapter implements View.OnClickListene
                     form2 = (Form2) convertView.getTag();
                     break;
                 case 3:
+                case 4:
+                case 5:
                     form3 = (Form3) convertView.getTag();
                     break;
                 case 6:
@@ -285,7 +289,7 @@ public class InfoCheckAdapter extends BaseAdapter implements View.OnClickListene
             setContentValue(form1,position);
         }else if (type == 2){
             setContentValue(form2,position);
-        }else if (type == 3){
+        }else if (type == 3 || type == 4  ||type == 5 ){
             setContentValue(form3,position);
         }else if (type == 6){
             setContentValue(form6,position);
@@ -325,6 +329,9 @@ public class InfoCheckAdapter extends BaseAdapter implements View.OnClickListene
         int keyboardInputStyle = formLists.get(pos).getKeyboard_style();
         if (keyboardInputStyle == 3 && !isReadOnly){
             viewHolder.content.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        }else if(keyboardInputStyle == 2 && !isReadOnly){
+            viewHolder.content.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
+
         }else{
             viewHolder.content.setInputType(InputType.TYPE_CLASS_TEXT);
 
@@ -474,19 +481,25 @@ public class InfoCheckAdapter extends BaseAdapter implements View.OnClickListene
     }
     private void setContentValue(Form9 viewHolder,int pos){
         viewHolder.position = pos;
-        viewHolder.title.setText(formLists.get(pos).getControl_title().toString().trim());
+        viewHolder.title.setText(formLists.get(pos).getControl_title().trim());
+        String img = formLists.get(pos).getTitle_img().trim();
         if (viewHolder.img != null){
+            if (img.length() > 0){
+                viewHolder.img.setVisibility(View.VISIBLE);
             Glide.with(context).load(formLists.get(pos).getTitle_img()).into(viewHolder.img);
+            }else{
+                viewHolder.img.setVisibility(View.GONE);
+            }
         }
-        viewHolder.time.setHint(formLists.get(pos).getPlace_holder().toString().trim());
-        viewHolder.time.setText(formLists.get(pos).getData_con().toString().trim());
+        viewHolder.time.setHint(formLists.get(pos).getPlace_holder().trim());
+        viewHolder.time.setText(formLists.get(pos).getData_con().trim());
         viewHolder.time.setTag(pos);
         viewHolder.time.setOnClickListener(this);
     }
     private void setContentValue(Form10 viewHolder,int pos){
         viewHolder.position = pos;
-        viewHolder.title.setText(formLists.get(pos).getControl_title().toString().trim());
-        viewHolder.content.setText(formLists.get(pos).getData_con().toString().trim());
+        viewHolder.title.setText(formLists.get(pos).getControl_title().trim());
+        viewHolder.content.setText(formLists.get(pos).getData_con().trim());
 
         String unit = formLists.get(pos).getUnit();
         if (unit != null && unit.length() > 0){
@@ -497,12 +510,12 @@ public class InfoCheckAdapter extends BaseAdapter implements View.OnClickListene
     }
     private void setContentValue(Form11 viewHolder,int pos){
         viewHolder.position = pos;
-        viewHolder.content.setHint(formLists.get(pos).getPlace_holder().toString().trim());
+        viewHolder.content.setHint(formLists.get(pos).getPlace_holder().trim());
     }
 
     private void setContentValue(Form12 viewHolder,int pos){
         viewHolder.position = pos;
-        viewHolder.content.setHint(formLists.get(pos).getPlace_holder().toString().trim());
+        viewHolder.content.setHint(formLists.get(pos).getPlace_holder().trim());
     }
     private void setContentValue(Form13 viewHolder,int pos){
         viewHolder.position = pos;
@@ -513,8 +526,8 @@ public class InfoCheckAdapter extends BaseAdapter implements View.OnClickListene
                 Glide.with(context).load(formLists.get(pos).getTitle_img()).into(viewHolder.ig_time);
             }
         }
-        viewHolder.tv_time.setText(formLists.get(pos).getControl_title().toString().trim());
-        viewHolder.tv_manager.setText(formLists.get(pos).getData_con().toString().trim());
+        viewHolder.tv_time.setText(formLists.get(pos).getControl_title().trim());
+        viewHolder.tv_manager.setText(formLists.get(pos).getData_con().trim());
     }
 
     class Form1 {

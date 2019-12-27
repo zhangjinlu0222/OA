@@ -38,7 +38,8 @@ public class Activitys {
 //                    destClass =  MettingActivity.class;//面谈
                     break;
                 case "3":
-                    destClass =  InformationCheck.class;//信息核查
+//                    destClass =  InformationCheck.class;//信息核查
+                    destClass =  RenewLoanActivity.class;//信息核查
                     break;
                 case "4":
 //                    destClass =  UploadPhotosActivity.class;//车辆照片

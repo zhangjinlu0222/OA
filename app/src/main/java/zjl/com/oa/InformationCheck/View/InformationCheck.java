@@ -24,6 +24,7 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -222,17 +223,37 @@ public class InformationCheck extends BaseActivity implements IInfoCheckView {
                 } else if (isFastDoubleClick(R.id.infocheck_btn_next)) {
                     return;
                 } else {
-                    infoCheckPresenter.uploadMsg(request_start_flag,
-                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
-                            token, workflow_content_id,
-                            getData_Con("人法查询"),
-                            getData_Con("征信查询"),
-                            getData_Con("违章查询"),
-                            getData_Con("保险查询"),
-                            getData_Con("企业法人查询"),
-                            wk_point_id,
-                            lFiles,
-                            getData_Con("备注"));
+                    HashMap<String ,Object> map = new HashMap<>();
+
+                    map.put("token",token );
+                    map.put("w_con_id", workflow_content_id);
+                    map.put("w_pot_id", wk_point_id);
+
+                    for (int i=0;i< lInfos.size();i++){
+                        String submit_field = lInfos.get(i).getSubmit_field();
+
+                        if (submit_field != null && submit_field.length() >0){
+                            String value = lInfos.get(i).getData_con();
+                            map.put(submit_field,value);
+                        }
+                    }
+
+                    if (infoCheckPresenter != null){
+                        infoCheckPresenter.uploadMsg(request_start_flag,
+                                !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,map,
+                                lFiles);
+                    }
+//                    infoCheckPresenter.uploadMsg(request_start_flag,
+//                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+//                            token, workflow_content_id,
+//                            getData_Con("人法查询"),
+//                            getData_Con("征信查询"),
+//                            getData_Con("违章查询"),
+//                            getData_Con("保险查询"),
+//                            getData_Con("企业法人查询"),
+//                            wk_point_id,
+//                            lFiles,
+//                            getData_Con("备注"));
                 }
                 break;
         }

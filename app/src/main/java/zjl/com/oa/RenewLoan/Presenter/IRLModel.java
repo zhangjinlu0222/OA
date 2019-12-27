@@ -26,14 +26,12 @@ import zjl.com.oa.UploadPhotos.Presenter.IPhotoUploadListener;
 
 public interface IRLModel{
 
-    void FinishFlow(HashMap<String ,Object> map,
-                         IRLListener listener);
+    void endWorkFlow(String token, int workflow_content_id,int wk_point_id,String remark,IRLListener listener);
+    void InfoCheck(String request_end_flag, String uploadType, HashMap<String ,Object> map, List<LocalMedia> files, IRLListener listener);
 
-//    void loanApplication(String token,int w_con_id,int w_pot_id,String remark,
-//                         IRLListener listener);
+    void FinishFlow(HashMap<String ,Object> map,IRLListener listener);
 
-    void loanApplication(HashMap<String ,Object> map,
-                         IRLListener listener);
+    void loanApplication(HashMap<String ,Object> map,IRLListener listener);
 
 //    void InformSigned(String token,String workflow_content_id,String wk_point_id,
 //                      String service_fee,String pontage,
@@ -62,11 +60,6 @@ public interface IRLModel{
 //    void ApplyforRefinance(String token, String w_con_id, String w_pot_id,
 //                         String loan_length, String remark,IRLListener listener);
 
-//    void CarPhoto(String request_end_flag,String uploadType,
-//                  String token, String remark,
-//                  int workflow_content_id, int wk_point_id,
-//                  List<LocalMedia> files,String type_id,
-//                  String loan_length, IRLListener listener);
     void CarPhoto(String request_end_flag,String uploadType,HashMap<String ,Object > map,String type_id,
                   List<LocalMedia> files, IRLListener listener);
 
@@ -78,20 +71,8 @@ public interface IRLModel{
 
     void SureAmountReturn(String token,String w_con_id,String w_pot_id,
                           String type_id,IRLListener listener);
-//    void InputInfo(String token, int w_con_id, int w_pot_id,
-//
-//                   String customer_name, String identity, String customer_phone,
-//                   String address, String bank_name, String bank_code,
-//
-//                   String purpose,
-//                   String car_license, String car_registration, String car_engine_no, String car_vin,
-//
-//                   String remark, IRLListener listener);
     void InputInfo(HashMap<String ,Object> map, IRLListener listener);
 
-//    void UploadCarPhoto(String request_end_flag,String uploadType,
-//                        String token,  String workflow_content_id, String remark,String wk_point_id,
-//                        String type_id, List<LocalMedia> files, IRLListener listener);
     void UploadCarPhoto(String request_end_flag,String uploadType,
                         HashMap<String,Object> map,
                         String type_id, List<LocalMedia> files, IRLListener listener);

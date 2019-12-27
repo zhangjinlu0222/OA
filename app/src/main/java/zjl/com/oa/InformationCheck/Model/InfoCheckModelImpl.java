@@ -89,10 +89,7 @@ public class InfoCheckModelImpl extends ModelImpl implements IInfoCheckModel {
         });
     }
     @Override
-    public void uploadMsg(String request_end_flag ,String uploadType,String token, int workflow_content_id,
-                          String persion_court, String credit,
-                          String car_break_rules, String insurance, String legal_person,
-                          int wk_point_id, List<LocalMedia> files,String remark, IInfoCheckListener listener) {
+    public void uploadMsg(String request_end_flag ,String uploadType,HashMap<String ,Object> map,List<LocalMedia> files, IInfoCheckListener listener) {
 //        Retrofit retrofit = new Retrofit.Builder()
 //                .baseUrl(Constant.BASE_URL)
 //                .addConverterFactory(GsonConverterFactory.create())
@@ -102,15 +99,15 @@ public class InfoCheckModelImpl extends ModelImpl implements IInfoCheckModel {
 
 
         // 创建RequestBody，传入参数："multipart/form-data"，String
-        RequestBody tokenbody = RequestBody.create(MediaType.parse("multipart/form-data"), token);
-        RequestBody workflow_content_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), Integer.toString(workflow_content_id));
-        RequestBody persion_courtbody = RequestBody.create(MediaType.parse("multipart/form-data"), persion_court);
-        RequestBody creditbody = RequestBody.create(MediaType.parse("multipart/form-data"), credit);
-        RequestBody car_break_rulesbody = RequestBody.create(MediaType.parse("multipart/form-data"), car_break_rules);
-        RequestBody insurancebody = RequestBody.create(MediaType.parse("multipart/form-data"), insurance);
-        RequestBody legal_personbody = RequestBody.create(MediaType.parse("multipart/form-data"), legal_person);
-        RequestBody wk_point_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), Integer.toString(wk_point_id));
-        RequestBody remarkbody = RequestBody.create(MediaType.parse("multipart/form-data"), remark);
+        RequestBody tokenbody = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("token").toString());
+        RequestBody workflow_content_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("w_con_id").toString());
+        RequestBody persion_courtbody = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("persion_court").toString());
+        RequestBody creditbody = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("credit").toString());
+        RequestBody car_break_rulesbody = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("car_break_rules").toString());
+        RequestBody insurancebody = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("insurance").toString());
+        RequestBody legal_personbody = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("legal_person").toString());
+        RequestBody wk_point_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("w_pot_id").toString());
+        RequestBody remarkbody = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("remark").toString());
         RequestBody typebody = RequestBody.create(MediaType.parse("multipart/form-data"), uploadType);
 
         List<MultipartBody.Part> filesBody = new ArrayList<>();
@@ -128,15 +125,14 @@ public class InfoCheckModelImpl extends ModelImpl implements IInfoCheckModel {
             }
             size += file.length();
             RequestBody imgFile = RequestBody.create(MediaType.parse("image/png"), file);
-            String subfix = file.getName().toString().trim().substring(
-                    file.getName().toString().trim().lastIndexOf("."),
-                    file.getName().toString().trim().length());
+            String subfix = file.getName().trim().substring(
+                    file.getName().trim().lastIndexOf("."),
+                    file.getName().trim().length());
             MultipartBody.Part requestImgPart =
                     MultipartBody.Part.createFormData(file.getName(),i+""+System.currentTimeMillis() + subfix, imgFile);
             filesBody.add(requestImgPart);
         }
 
-        Log.e(TAG,size + "");
         Call<ResponseWithNoData> call = service.post(request_end_flag,typebody,tokenbody,workflow_content_idbody,
                 persion_courtbody,creditbody,
                 car_break_rulesbody, insurancebody,legal_personbody,
@@ -167,6 +163,85 @@ public class InfoCheckModelImpl extends ModelImpl implements IInfoCheckModel {
             }
         });
     }
+//    @Override
+//    public void uploadMsg(String request_end_flag ,String uploadType,String token, int workflow_content_id,
+//                          String persion_court, String credit,
+//                          String car_break_rules, String insurance, String legal_person,
+//                          int wk_point_id, List<LocalMedia> files,String remark, IInfoCheckListener listener) {
+////        Retrofit retrofit = new Retrofit.Builder()
+////                .baseUrl(Constant.BASE_URL)
+////                .addConverterFactory(GsonConverterFactory.create())
+////                .build();
+//
+//        IInfoCheck service = retrofit.create(IInfoCheck.class);
+//
+//
+//        // 创建RequestBody，传入参数："multipart/form-data"，String
+//        RequestBody tokenbody = RequestBody.create(MediaType.parse("multipart/form-data"), token);
+//        RequestBody workflow_content_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), Integer.toString(workflow_content_id));
+//        RequestBody persion_courtbody = RequestBody.create(MediaType.parse("multipart/form-data"), persion_court);
+//        RequestBody creditbody = RequestBody.create(MediaType.parse("multipart/form-data"), credit);
+//        RequestBody car_break_rulesbody = RequestBody.create(MediaType.parse("multipart/form-data"), car_break_rules);
+//        RequestBody insurancebody = RequestBody.create(MediaType.parse("multipart/form-data"), insurance);
+//        RequestBody legal_personbody = RequestBody.create(MediaType.parse("multipart/form-data"), legal_person);
+//        RequestBody wk_point_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), Integer.toString(wk_point_id));
+//        RequestBody remarkbody = RequestBody.create(MediaType.parse("multipart/form-data"), remark);
+//        RequestBody typebody = RequestBody.create(MediaType.parse("multipart/form-data"), uploadType);
+//
+//        List<MultipartBody.Part> filesBody = new ArrayList<>();
+//
+//        int size = 0;
+//        for (int i=0; i< files.size();i++){
+//            File file;
+//            if (files.get(i).getCompressPath() != null
+//                    && files.get(i).getCompressPath().length() > 0){
+//                file = new File(files.get(i).getCompressPath());
+////                file = new File(BitmapUtil.compressImage(files.get(i).getCompressPath()));
+//            }else{
+//                file = new File(files.get(i).getPath());
+////                file = new File(BitmapUtil.compressImage(files.get(i).getPath()));
+//            }
+//            size += file.length();
+//            RequestBody imgFile = RequestBody.create(MediaType.parse("image/png"), file);
+//            String subfix = file.getName().toString().trim().substring(
+//                    file.getName().toString().trim().lastIndexOf("."),
+//                    file.getName().toString().trim().length());
+//            MultipartBody.Part requestImgPart =
+//                    MultipartBody.Part.createFormData(file.getName(),i+""+System.currentTimeMillis() + subfix, imgFile);
+//            filesBody.add(requestImgPart);
+//        }
+//
+//        Log.e(TAG,size + "");
+//        Call<ResponseWithNoData> call = service.post(request_end_flag,typebody,tokenbody,workflow_content_idbody,
+//                persion_courtbody,creditbody,
+//                car_break_rulesbody, insurancebody,legal_personbody,
+//                wk_point_idbody,filesBody,remarkbody);
+//
+//        call.enqueue(new Callback<ResponseWithNoData>() {
+//            @Override
+//            public void onResponse(Call<ResponseWithNoData> call, Response<ResponseWithNoData> response) {
+//                if (response.isSuccessful()){
+//                    ResponseWithNoData result = response.body();
+//                    if (result != null){
+//                        if (result.getCode() == Constant.Succeed){
+//                            listener.onSucceed();
+//                        }else if (result.getCode() == Constant.LoginAnotherPhone){
+//                            listener.relogin();
+//                        }else{
+//                            listener.onFail(result.getMessage());
+//                        }
+//                    }
+//                }else{
+//                    listener.onFail();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseWithNoData> call, Throwable t) {
+//                listener.onFail("网络异常");
+//            }
+//        });
+//    }
 
     @Override
     public void Form(String token, int workflow_content_id, int wk_point_id, IInfoCheckListener listener) {

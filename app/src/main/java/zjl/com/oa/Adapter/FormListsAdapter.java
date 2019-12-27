@@ -309,8 +309,10 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
 
         viewHolder.title.setText(formLists.get(pos).getControl_title().trim());
 
-        viewHolder.content.setText(formLists.get(pos).getData_con());
         viewHolder.content.setHint(formLists.get(pos).getPlace_holder());
+
+        String content = formLists.get(pos).getData_con();
+        viewHolder.content.setText(content);
 
         boolean isReadOnly = formLists.get(pos).isRead_only();
         if (isReadOnly){
@@ -501,7 +503,7 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
         String value = formLists.get(pos).getData_con();
         if (formLists.get(pos).getData_con().equals("")){
             formLists.get(pos).setData_con(units.get(0));
-            viewHolder.nsSelector.setSelectedIndex(1);
+//            viewHolder.nsSelector.setSelectedIndex(1);
         }else{
         //初始值不为空，则显示初始值内容
             int index =  units.indexOf(value);
@@ -603,6 +605,7 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
         @SuppressLint("ClickableViewAccessibility")
         public Form1(View convertView) {
             content = convertView.findViewById(R.id.content);
+            content.setTag(this);
             unit = convertView.findViewById(R.id.unit);
             title = convertView.findViewById(R.id.title);
             img = convertView.findViewById(R.id.title_img);
@@ -629,6 +632,8 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
                     String s = content.getText().toString().trim();
                     if (hasFocus){
                         content.setSelection(s.length());
+                    }else{
+                        content.setText(s);
                     }
                 }
             });

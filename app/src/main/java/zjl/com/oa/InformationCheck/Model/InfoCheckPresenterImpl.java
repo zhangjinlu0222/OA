@@ -3,6 +3,7 @@ package zjl.com.oa.InformationCheck.Model;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import zjl.com.oa.InformationCheck.Presenter.IInfoCheckListener;
@@ -22,10 +23,9 @@ public class InfoCheckPresenterImpl  implements IInfoCheckPresenter,IInfoCheckLi
     private IInfoCheckView infoCheckView;
     private IInfoCheckModel infoCheckModel;
     private boolean isUploading;
-    private String token,persion_court,credit,
-            car_break_rules,  insurance,  legal_person,remark,uploadType;
-    private int workflow_content_id, wk_point_id;
     private List<LocalMedia> files = new ArrayList<>();
+
+    private HashMap<String ,Object> map = new HashMap<>();
 
     public InfoCheckPresenterImpl(IInfoCheckView iInfoCheckView){
         this.infoCheckView = iInfoCheckView;
@@ -43,10 +43,20 @@ public class InfoCheckPresenterImpl  implements IInfoCheckPresenter,IInfoCheckLi
     }
 
     @Override
-    public void uploadMsg(String request_end_flag,String uploadType,String token, int workflow_content_id,
-                          String persion_court, String credit,
-                          String car_break_rules, String insurance, String legal_person,
-                          int wk_point_id, List<LocalMedia> files,String remark) {
+    public void uploadMsg(String request_end_flag, String uploadType, HashMap<String ,Object> map, List<LocalMedia> files) {
+
+        if (map == null || map.size() <= 0){
+            infoCheckView.showFailureMsg("请输入内容");
+            return;
+        }
+
+        String persion_court = map.get("persion_court").toString();
+        String credit = map.get("credit").toString();
+        String car_break_rules = map.get("car_break_rules").toString();
+        String insurance = map.get("insurance").toString();
+        String legal_person = map.get("legal_person").toString();
+
+
         if ("".equals(persion_court)){
             if (infoCheckView != null){
                 infoCheckView.showFailureMsg("请输入人法查询结果");
@@ -85,16 +95,10 @@ public class InfoCheckPresenterImpl  implements IInfoCheckPresenter,IInfoCheckLi
         }
         if (infoCheckModel != null){
             if (files.size() <= 1){
-                infoCheckModel.uploadMsg( request_end_flag,uploadType,token,
-                        workflow_content_id, persion_court,  credit,
-                        car_break_rules,  insurance,  legal_person,
-                        wk_point_id, files,remark,this);
+                infoCheckModel.uploadMsg( request_end_flag,uploadType,map,files,this);
                 isUploading = false;
             }else{
-                infoCheckModel.uploadMsg( request_end_flag,uploadType,token,
-                        workflow_content_id, persion_court,  credit,
-                        car_break_rules,  insurance,  legal_person,
-                        wk_point_id, files.subList(0,files.size() / 2),remark,this);
+                infoCheckModel.uploadMsg( request_end_flag,uploadType,map, files.subList(0,files.size() / 2),this);
                 isUploading = true;
             }
         }
@@ -102,18 +106,82 @@ public class InfoCheckPresenterImpl  implements IInfoCheckPresenter,IInfoCheckLi
             infoCheckView.showProgress();
         }
 
-        this.token = token;
-        this.persion_court = persion_court;
-        this.credit = credit;
-        this.car_break_rules = car_break_rules;
-        this.insurance = insurance;
-        this.legal_person = legal_person;
-        this.remark = remark;
-        this.workflow_content_id = workflow_content_id;
-        this.wk_point_id = wk_point_id;
+        this.map.clear();
+        this.map.putAll(map);
         this.files.addAll(files);
-        this.uploadType = uploadType;
     }
+//    @Override
+//    public void uploadMsg(String request_end_flag,String uploadType,String token, int workflow_content_id,
+//                          String persion_court, String credit,
+//                          String car_break_rules, String insurance, String legal_person,
+//                          int wk_point_id, List<LocalMedia> files,String remark) {
+//        if ("".equals(persion_court)){
+//            if (infoCheckView != null){
+//                infoCheckView.showFailureMsg("请输入人法查询结果");
+//            }
+//            return;
+//        }
+//        if ("".equals(credit)){
+//            if (infoCheckView != null){
+//                infoCheckView.showFailureMsg("请输入征信查询结果");
+//            }
+//            return;
+//        }
+//        if ("".equals(car_break_rules)){
+//            if (infoCheckView != null){
+//                infoCheckView.showFailureMsg("请输入违章查询结果");
+//            }
+//            return;
+//        }
+//        if ("".equals(insurance)){
+//            if (infoCheckView != null){
+//                infoCheckView.showFailureMsg("请输入保险查询结果");
+//            }
+//            return;
+//        }
+//        if ("".equals(legal_person)){
+//            if (infoCheckView != null){
+//                infoCheckView.showFailureMsg("请输入法人查询结果");
+//            }
+//            return;
+//        }
+//        if (files.size() <= 0 && !infoCheckView.isUploadTypeAdd()){
+//            if (infoCheckView != null){
+//                infoCheckView.showFailureMsg("请选择上传文件");
+//            }
+//            return;
+//        }
+//        if (infoCheckModel != null){
+//            if (files.size() <= 1){
+//                infoCheckModel.uploadMsg( request_end_flag,uploadType,token,
+//                        workflow_content_id, persion_court,  credit,
+//                        car_break_rules,  insurance,  legal_person,
+//                        wk_point_id, files,remark,this);
+//                isUploading = false;
+//            }else{
+//                infoCheckModel.uploadMsg( request_end_flag,uploadType,token,
+//                        workflow_content_id, persion_court,  credit,
+//                        car_break_rules,  insurance,  legal_person,
+//                        wk_point_id, files.subList(0,files.size() / 2),remark,this);
+//                isUploading = true;
+//            }
+//        }
+//        if (infoCheckView != null){
+//            infoCheckView.showProgress();
+//        }
+//
+//        this.token = token;
+//        this.persion_court = persion_court;
+//        this.credit = credit;
+//        this.car_break_rules = car_break_rules;
+//        this.insurance = insurance;
+//        this.legal_person = legal_person;
+//        this.remark = remark;
+//        this.workflow_content_id = workflow_content_id;
+//        this.wk_point_id = wk_point_id;
+//        this.files.addAll(files);
+//        this.uploadType = uploadType;
+//    }
 
     @Override
     public void Form(String token, int workflow_content_id, int wk_point_id) {
@@ -132,8 +200,7 @@ public class InfoCheckPresenterImpl  implements IInfoCheckPresenter,IInfoCheckLi
             infoCheckView.hideProgress();
             infoCheckView.toMainActivity();
         }else{
-            infoCheckModel.uploadMsg( request_end_flag,UPLOAD_TYPE_ADD,token,  workflow_content_id, persion_court,  credit,
-                    car_break_rules,  insurance,  legal_person, wk_point_id, files.subList(files.size() / 2,files.size()),remark,this);
+            infoCheckModel.uploadMsg( request_end_flag,UPLOAD_TYPE_ADD,map, files.subList(files.size() / 2,files.size()),this);
 
             isUploading = false;
         }

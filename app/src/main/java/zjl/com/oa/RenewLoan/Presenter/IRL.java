@@ -2,6 +2,7 @@ package zjl.com.oa.RenewLoan.Presenter;
 
 import java.util.List;
 
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -101,12 +102,41 @@ public interface IRL {
             @Part("type") RequestBody typebody,
             @Part("token") RequestBody token,
             @Part("workflow_content_id") RequestBody workflow_content_id,
+            @Part("persion_court") RequestBody persion_court,
+            @Part("car_break_rules") RequestBody car_break_rules,
+            @Part("car_break_rules_amount") RequestBody car_break_rules_amount,
+            @Part("car_check_amount") RequestBody car_check_amount,
+            @Part("car_check_enddate") RequestBody car_check_enddate,
+            @Part("insurance") RequestBody insurance,
+            @Part("insurance_amount") RequestBody insurance_amount,
+            @Part("insurance_enddate") RequestBody insurance_enddate,
+            @Part("overtime_fee") RequestBody overtime_fee,
             @Part("wk_point_id") RequestBody wk_point_id,
-            @Part("persion_court") RequestBody persion_court_body,
-            @Part("car_break_rules") RequestBody car_break_rules_body,
-            @Part("insurance") RequestBody insurance_body,
-            @Part("remark") RequestBody remark,
-            @Part List<MultipartBody.Part> filesBody);
+            @Part List<MultipartBody.Part> files,
+            @Part("remark") RequestBody remark);
+    @POST(Constant.InfoCheck)
+    @Multipart
+    Call<ResponseWithNoData> InfoCheck(
+            @Header("request_end_flag") String request_end_flag ,
+            @Part("type") RequestBody typebody,
+            @Part("token") RequestBody token,
+            @Part("workflow_content_id") RequestBody workflow_content_id,
+            @Part("persion_court") RequestBody persion_court,
+            @Part("credit") RequestBody credit,
+            @Part("car_break_rules") RequestBody car_break_rules,
+            @Part("car_break_rules_amount") RequestBody car_break_rules_amount,
+            @Part("car_check_amount") RequestBody car_check_amount,
+            @Part("car_check_enddate") RequestBody car_check_enddate,
+            @Part("insurance") RequestBody insurance,
+            @Part("insurance_amount") RequestBody insurance_amount,
+            @Part("insurance_enddate") RequestBody insurance_enddate,
+            @Part("legal_person") RequestBody legal_person,
+            @Part("overtime_fee") RequestBody overtime_fee,
+            @Part("wk_point_id") RequestBody wk_point_id,
+            @Part List<MultipartBody.Part> files,
+            @Part("remark") RequestBody remark);
+    @POST(Constant.EndWorkflow)
+    Call<ResponseWithNoData> endWorkFlow(@Body RequestBody body);
     @POST(Constant.Form)
     Call<FormResponse> Form(@Body RequestBody body);
 

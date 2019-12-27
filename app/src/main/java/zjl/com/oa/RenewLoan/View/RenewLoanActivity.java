@@ -44,6 +44,7 @@ import zjl.com.oa.Bean.UploadCarPhotosType;
 import zjl.com.oa.Bean.UserInfo;
 import zjl.com.oa.CustomView.ActionSheetDialog;
 import zjl.com.oa.CustomView.MyListView;
+import zjl.com.oa.InformationCheck.View.InformationCheck;
 import zjl.com.oa.Login.View.LoginActivity;
 import zjl.com.oa.R;
 import zjl.com.oa.RenewLoan.Model.RLPresenterImpl;
@@ -150,6 +151,16 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 renewloanBtnUpload.setEnabled(true);
                 renewloanBtnUpload.setBackgroundResource(R.mipmap.info_bg_next);
             }
+        } else if (workflow_name.contains("信息核查")) {//初步反馈与业务反馈节点反馈操作
+            rlrenewloanRlUpload.setVisibility(View.VISIBLE);
+            renewloanBtnUpload.setText("拒件");
+            if (type != null && type.equals("bohui")){
+                renewloanBtnUpload.setEnabled(false);
+                renewloanBtnUpload.setBackgroundColor(Color.LTGRAY);
+            }else{
+                renewloanBtnUpload.setEnabled(true);
+                renewloanBtnUpload.setBackgroundResource(R.mipmap.info_bg_next);
+            }
         } else {
             rlrenewloanRlUpload.setVisibility(View.GONE);
         }
@@ -211,6 +222,7 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 break;
             case R.id.renewloan_btn_upload:
                 switch (wk_point_id){
+                    case 3://信息核查
                     case 7: //初步反馈
                     case 11: //业务反馈
                         submitMsgAlert(wk_point_id);
@@ -336,8 +348,9 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 }
 
                 if (iRLPresenter != null){
-                    iRLPresenter.FirstSureAmount(map);
+                    iRLPresenter.InfoCheck(request_start_flag,!uploadType?UPLOAD_TYPE_NORMAL:UPLOAD_TYPE_ADD,map,selectList);
                 }
+
                 break;
             case 4:
                 map.clear();
@@ -357,18 +370,6 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 if (iRLPresenter != null){
                     iRLPresenter.CarPhoto(request_start_flag,!uploadType?UPLOAD_TYPE_NORMAL:UPLOAD_TYPE_ADD,map,"1",selectList);
                 }
-//                if (iRLPresenter != null) {
-//                    iRLPresenter.CarPhoto(
-//                            request_start_flag,
-//                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
-//                            token,
-//                            getData_Con("备注"),
-//                            workflow_content_id,
-//                            wk_point_id,
-//                            selectList,
-//                            "1",
-//                            getData_Con("借款周期"));
-//                }
                 break;
             case 5:
                 map.clear();
@@ -388,22 +389,6 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 if (iRLPresenter != null){
                     iRLPresenter.PleDgeAssess(request_start_flag,!uploadType?UPLOAD_TYPE_NORMAL:UPLOAD_TYPE_ADD,map,selectList);
                 }
-//                if (iRLPresenter != null) {
-//                    iRLPresenter.PleDgeAssess(
-//                            request_start_flag,
-//                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
-//                            token,
-//                            getData_Con("车辆年份").equals("")?0:Integer.parseInt(getData_Con("车辆年份")),
-//                            getData_Con("车辆品牌"),
-//                            getData_Con("车辆型号"),
-//                            getData_Con("里程数"),
-//                            getData_Con("备注"),
-//                            getData_Con("市场价"),
-//                            getData_Con("收车价"),
-//                            workflow_content_id,
-//                            wk_point_id,
-//                            selectList);
-//                }
                 break;
             case 6:
                 map.clear();
@@ -434,13 +419,6 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 if (iRLPresenter != null){
                     iRLPresenter.FirstFeedback(map);
                 }
-//                if (iRLPresenter != null) {
-//                    iRLPresenter.FirstFeedback(
-//                            token,
-//                            Integer.toString(workflow_content_id),
-//                            Integer.toString(wk_point_id),
-//                            "");
-//                }
                 break;
             case 8:
                 if (zheshubiao.size() < 1){
@@ -476,17 +454,6 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                             UploadCarPhotosType.getType_id(wk_point_id)+"",
                             selectList);
                 }
-//                if (iRLPresenter != null) {
-//                    iRLPresenter.UploadCarPhoto(
-//                            request_start_flag,
-//                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
-//                            token,
-//                            workflow_content_id,
-//                            getData_Con("备注"),
-//                            wk_point_id,
-//                            UploadCarPhotosType.getType_id(wk_point_id)+"",
-//                            selectList);
-//                }
                 break;
             case 10:
                 map.clear();
@@ -506,16 +473,6 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 if (iRLPresenter != null) {
                     iRLPresenter.SureAmount(map);
                 }
-//                if (iRLPresenter != null) {
-//                    iRLPresenter.SureAmount(
-//                            token,
-//                            Integer.toString(workflow_content_id),
-//                            Integer.toString(wk_point_id),
-//                            getData_Con("评估定额"),
-//                            getData_Con("担保价"),
-//                            getData_Con("降额意见"),
-//                            getData_Con("备注"));
-//                }
                 break;
             case 11:
                 map.clear();
@@ -536,18 +493,10 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 if (iRLPresenter != null){
                     iRLPresenter.BusFeedback(map);
                 }
-//                iRLPresenter.BusFeedback(token,
-//                        Integer.toString(workflow_content_id) ,
-//                        Integer.toString(wk_point_id) ,
-//                        Integer.parseInt(getData_Con("借款期限")),
-//                        getData_Con("借款 利率"),
-//                        getData_Con("还款方式"),
-//                        "");
                 break;
             case 13:
                 map.clear();
-
-                map.put("token",token );
+                map.put("token",token);
                 map.put("w_con_id", workflow_content_id);
                 map.put("w_pot_id", wk_point_id);
 
@@ -563,13 +512,6 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 if (iRLPresenter != null){
                     iRLPresenter.InformSigned(map);
                 }
-//                iRLPresenter.InformSigned(token,
-//                        Integer.toString(workflow_content_id) ,
-//                        Integer.toString(wk_point_id) ,
-//                        getData_Con("服务费") ,
-//                        getData_Con("展期费/过桥费"),
-//                        getData_Con("合同日期"),
-//                        getData_Con("备注"));
                 break;
             case 15:
                 if (selectList.size() < 1){
@@ -604,15 +546,6 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                         map,
                         type_id+"",
                         selectList);
-//                iRLPresenter.UploadCarPhoto(
-//                        request_start_flag,
-//                        !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
-//                        token,
-//                        workflow_content_id,
-//                        getData_Con("备注"),
-//                        wk_point_id,
-//                        type_id+"",
-//                        selectList);
                 break;
             case 17:
                 if (selectList.size() < 1){
@@ -641,15 +574,6 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                         map,
                         type_id+"",
                         selectList);
-//                iRLPresenter.UploadCarPhoto(
-//                        request_start_flag,
-//                        !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
-//                        token,
-//                        workflow_content_id,
-//                        getData_Con("备注"),
-//                        wk_point_id,
-//                        type_id+"",
-//                        selectList);
                 break;
             case 18:
                 if (selectList.size() < 1){
@@ -677,15 +601,6 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                         map,
                         type_id+"",
                         selectList);
-//                iRLPresenter.UploadCarPhoto(
-//                        request_start_flag,
-//                        !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
-//                        token,
-//                        workflow_content_id,
-//                        getData_Con("备注"),
-//                        wk_point_id,
-//                        type_id+"",
-//                        selectList);
                 break;
             case 20:
                 map.clear();
@@ -705,13 +620,6 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 if (iRLPresenter != null) {
                     iRLPresenter.loanApplication(map);
                 }
-//                if (iRLPresenter != null) {
-//                    iRLPresenter.loanApplication(
-//                            token,
-//                            workflow_content_id,
-//                            wk_point_id,
-//                            getData_Con("备注"));
-//                }
                 break;
             case 21:
                 if (selectList.size() < 1 && (getInType().length() > 0 && !getInType().equals("bohui"))){
@@ -738,15 +646,6 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                         map,
                         type_id+"",
                         selectList);
-//                iRLPresenter.UploadCarPhoto(
-//                        request_start_flag,
-//                        !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
-//                        token,
-//                        workflow_content_id,
-//                        getData_Con("备注"),
-//                        wk_point_id,
-//                        type_id+"",
-//                        selectList);
                 break;
             case 22://放款结束
                 map.clear();
@@ -806,16 +705,6 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 if (iRLPresenter != null) {
                     iRLPresenter.AssessRefinance(map);
                 }
-//                if (iRLPresenter != null) {
-//                    iRLPresenter.AssessRefinance(
-//                            token,
-//                            workflow_content_id,
-//                            wk_point_id,
-//                            getData_Con("档案信息"),
-//                            getData_Con("降额意见"),
-//                            getData_Con("备注")
-//                    );
-//                }
                 break;
             case 25:
                 map.clear();
@@ -835,13 +724,6 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 if (iRLPresenter != null) {
                     iRLPresenter.AuditRefinance(map);
                 }
-//                if (iRLPresenter != null) {
-//                    iRLPresenter.AuditRefinance(
-//                            token,
-//                            workflow_content_id,
-//                            wk_point_id,
-//                            getData_Con("备注"));
-//                }
                 break;
             case 26:
                 map.clear();
@@ -863,18 +745,6 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                         map,
                         "10",
                         selectList);
-
-//                if (iRLPresenter != null) {
-//                    iRLPresenter.UploadCarPhoto(
-//                            request_start_flag,
-//                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
-//                            token,
-//                            workflow_content_id,
-//                            getData_Con("备注"),
-//                            wk_point_id,
-//                            "10",
-//                            selectList);
-//                }
                 break;
             case 27:
                 map.clear();
@@ -894,22 +764,6 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 if (iRLPresenter != null) {
                     iRLPresenter.ContractDetail(map);
                 }
-//                if (iRLPresenter != null) {
-//                    iRLPresenter.ContractDetail(
-//                            token,
-//                            workflow_content_id,
-//                            wk_point_id,
-//                            getData_Con("备注"),
-//                            getData_Con("金额"),
-//                            getData_Con("利息"),
-//                            getData_Con("期限"),
-//                            getData_Con("展期费"),
-//                            getData_Con("服务费"),
-//                            getData_Con("保险"),
-//                            getData_Con("违章"),
-//                            getData_Con("合同日期")
-//                    );
-//                }
                 break;
             case 30:
                 map.clear();
@@ -929,25 +783,6 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 if (iRLPresenter != null) {
                     iRLPresenter.InputInfo(map);
                 }
-//                if (iRLPresenter != null) {
-//                    iRLPresenter.InputInfo(
-//                            token,
-//                            workflow_content_id,
-//                            wk_point_id,
-//                            getData_Con("客户姓名"),
-//                            getData_Con("身份证号"),
-//                            getData_Con("手机号"),
-//                            getData_Con("现住址"),
-//                            getData_Con("开户银行"),
-//                            getData_Con("银行账号"),
-//                            getData_Con("借款用途"),
-//                            getData_Con("车辆牌照"),
-//                            getData_Con("汽车登记证"),
-//                            getData_Con("发动机号"),
-//                            getData_Con("车架号"),
-//                            ""
-//                    );
-//                }
                 break;
             case 31:
 
@@ -968,15 +803,6 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 if (iRLPresenter != null) {
                     iRLPresenter.ApplyforRefinance(map);
                 }
-//                if (iRLPresenter != null) {
-//                    iRLPresenter.ApplyforRefinance(
-//                            token,
-//                            Integer.toString(workflow_content_id),
-//                            Integer.toString(wk_point_id),
-//                            getData_Con("期限"),
-//                            getData_Con("备注")
-//                    );
-//                }
                 break;
         }
     }
@@ -1343,9 +1169,23 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
         AlertDialog dialog = new AlertDialog.Builder(this).create();
         View view = View.inflate(context, R.layout.alertdialog, null);
         dialog.setView(view);
+
         EditText et = view.findViewById(R.id.et_feedback);
         TextView cancel = view.findViewById(R.id.tv_cancel);
         TextView confirm = view.findViewById(R.id.tv_confirm);
+        TextView title = view.findViewById(R.id.title);
+
+        switch (wk_point_id){
+            case 3:
+                title.setText("确认拒件");
+                et.setHint("拒件原因");
+                break;
+            default:
+                title.setText("反馈说明");
+                et.setHint("请输入反馈说明");
+                break;
+        }
+
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1366,6 +1206,10 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                         return;
                     } else {
                         switch (wk_point_id){
+                            case 3:
+                                iRLPresenter.endWorkFlow(token, workflow_content_id, wk_point_id,
+                                        et.getText().toString().trim());
+                                break;
                             case 7:
                                 HashMap<String ,Object> feedbackInfo = new HashMap<>();
                                 feedbackInfo.put("token",token );

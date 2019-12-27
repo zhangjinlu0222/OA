@@ -16,8 +16,10 @@ import zjl.com.oa.Meeting.Presenter.IMettingListener;
 
 public interface IRLPresenter{
 
+    void endWorkFlow(String token,int workflow_content_id,int wk_point_id,String remark);
+    void InfoCheck(String request_end_flag, String uploadType, HashMap<String ,Object> map, List<LocalMedia> files);
+
     void FinishFlow(HashMap<String ,Object> map);
-//    void loanApplication(String token,int w_con_id,int w_pot_id,String remark);
     void loanApplication(HashMap<String ,Object> map);
 
 //    void InformSigned(String token,String workflow_content_id,String wk_point_id,
@@ -45,11 +47,6 @@ public interface IRLPresenter{
 //    void ApplyforRefinance(String token, String w_con_id, String w_pot_id,
 //                           String loan_length, String remark);
 
-//    void CarPhoto(String request_end_flag,String uploadType,
-//                  String token, String remark,
-//                  int workflow_content_id, int wk_point_id,
-//                  List<LocalMedia> files,String type_id,
-//                  String loan_length);
     void CarPhoto(String request_end_flag,String uploadType,HashMap<String ,Object > map,String type_id,
                   List<LocalMedia> files);
     void FirstSureAmount(HashMap<String ,Object> map);
@@ -57,20 +54,9 @@ public interface IRLPresenter{
 //                    String  amount,String assure_amount, String derating_opinion,String remark);
     void SureAmount(HashMap<String ,Object> map);
     void SureAmountReturn(String token,String w_con_id,String w_pot_id,String type_id);
-//    void InputInfo(String token, int w_con_id, int w_pot_id,
-//
-//                   String customer_name, String identity, String customer_phone,
-//                   String address, String bank_code, String bank_name,
-//
-//                   String purpose,
-//                   String car_license, String car_registration, String car_engine_no, String car_vin,
-//
-//                   String remark);
+
     void InputInfo(HashMap<String ,Object> map);
 
-//    void UploadCarPhoto(String request_end_flag,String uploadType,
-//                        String token, int workflow_content_id, String remark, int wk_point_id,
-//                        String type_id, List<LocalMedia> files);
     void UploadCarPhoto(String request_end_flag,String uploadType,
                         HashMap<String,Object> map,
                         String type_id, List<LocalMedia> files);
