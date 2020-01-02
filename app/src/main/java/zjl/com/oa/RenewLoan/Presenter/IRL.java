@@ -89,7 +89,7 @@ public interface IRL {
         @Part("type_id") RequestBody type_id,
         @Part List<MultipartBody.Part> filesBody);
 
-    @POST(Constant.ContractDetail)
+    @POST(Constant.ContractDetailTwo)
     Call<ResponseWithNoData> ContractDetail(@Body RequestBody body);
     @POST(Constant.AuditRefinance)
     Call<ResponseWithNoData> AuditRefinance(@Body RequestBody body);

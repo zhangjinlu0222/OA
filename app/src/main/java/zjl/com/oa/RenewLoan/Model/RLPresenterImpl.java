@@ -69,6 +69,7 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
                 case "18"://抵押登记
                 case "21"://首扣通知
                 case "26"://展期费续贷
+                case "32"://上传合同续贷
                     irlModel.UploadCarPhoto( request_end_flag, UPLOAD_TYPE_ADD, map,
                             type_id,files.subList(files.size() / 2,files.size()),this);
                     break;

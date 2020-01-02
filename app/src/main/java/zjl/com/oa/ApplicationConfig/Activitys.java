@@ -140,6 +140,11 @@ public class Activitys {
                 case "31":
                     destClass =  RenewLoanActivity.class;//续贷申请
                     break;
+                case "32":
+                    destClass =  RenewLoanActivity.class;//续贷上传合同
+                    break;
+                default:
+                    destClass = RenewLoanActivity.class;
             }
         return destClass;
     }

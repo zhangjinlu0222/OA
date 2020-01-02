@@ -421,11 +421,11 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 }
                 break;
             case 8:
-                if (zheshubiao.size() < 1){
+                if (zheshubiao.size() < 1 && !getInType().equals("bohui")){
                     showFailureMsg("请选择折数表");
                     return;
                 }
-                if (photos.size() < 1){
+                if (photos.size() < 1 && !getInType().equals("bohui")){
                     showFailureMsg("请选择实地图片");
                     return;
                 }
@@ -514,7 +514,7 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 }
                 break;
             case 15:
-                if (selectList.size() < 1){
+                if (selectList.size() < 1 && !getInType().equals("bohui")){
                     showFailureMsg("请选择照片");
                     return;
                 }
@@ -548,7 +548,7 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                         selectList);
                 break;
             case 17:
-                if (selectList.size() < 1){
+                if (selectList.size() < 1 && !getInType().equals("bohui")){
                     showFailureMsg("请选择照片");
                     return;
                 }
@@ -576,7 +576,7 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                         selectList);
                 break;
             case 18:
-                if (selectList.size() < 1){
+                if (selectList.size() < 1 && !getInType().equals("bohui")){
                     showFailureMsg("请选择照片");
                     return;
                 }
@@ -802,6 +802,31 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
 
                 if (iRLPresenter != null) {
                     iRLPresenter.ApplyforRefinance(map);
+                }
+                break;
+            case 32:
+
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
+                }
+
+                if (iRLPresenter != null) {
+                    iRLPresenter.UploadCarPhoto(
+                            request_start_flag,
+                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+                            map,
+                            "12",
+                            selectList);
                 }
                 break;
         }

@@ -93,6 +93,7 @@ public class Constant {
     public static final String AssessRefinance  = "WebApi/V1/Refinance/AssessRefinance";
     public static final String AuditRefinance  = "WebApi/V1/Refinance/AuditRefinance";
     public static final String ContractDetail  = "WebApi/V1/Refinance/ContractDetail";
+    public static final String ContractDetailTwo  = "WebApi/V1/Refinance/ContractDetailTwo";
     public static final String Form  = "WebApi/V1/FormControl/Form";
     public static final String RecoverWorkflow  = "WebApi/V1/Workflow/RecoverWorkflow";
     public static final String QueryCarAssess  = "WebApi/V1/Assess/QueryCarAssess";
