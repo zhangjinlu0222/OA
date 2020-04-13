@@ -26,7 +26,10 @@ import zjl.com.oa.UploadPhotos.Presenter.IPhotoUploadListener;
 
 public interface IRLModel{
 
-    void endWorkFlow(String token, int workflow_content_id,int wk_point_id,String remark,IRLListener listener);
+    void HRInterview(String request_end_flag,String uploadType,HashMap<String ,Object > map,
+                   List<LocalMedia> files,IRLListener listener);
+
+    void endWorkFlow(String token, int workflow_content_id,int wk_point_id,String remark,String proc_type_id,IRLListener listener);
     void InfoCheck(String request_end_flag, String uploadType, HashMap<String ,Object> map, List<LocalMedia> files, IRLListener listener);
 
     void FinishFlow(HashMap<String ,Object> map,IRLListener listener);
@@ -60,6 +63,9 @@ public interface IRLModel{
 //    void ApplyforRefinance(String token, String w_con_id, String w_pot_id,
 //                         String loan_length, String remark,IRLListener listener);
 
+    void HRUploadData(String request_end_flag,String uploadType,HashMap<String ,Object > map,
+                      List<LocalMedia> files, IRLListener listener);
+
     void CarPhoto(String request_end_flag,String uploadType,HashMap<String ,Object > map,String type_id,
                   List<LocalMedia> files, IRLListener listener);
 
@@ -68,6 +74,7 @@ public interface IRLModel{
 //    void SureAmount(String token,String w_con_id,String w_pot_id,
 //                    String amount,String assure_amount,String derating_opinion,String remark,IRLListener listener);
     void SureAmount(HashMap<String ,Object>map,IRLListener listener);
+    void HRSureAmount(HashMap<String ,Object>map,IRLListener listener);
 
     void SureAmountReturn(String token,String w_con_id,String w_pot_id,
                           String type_id,IRLListener listener);
@@ -97,6 +104,6 @@ public interface IRLModel{
 
     void InfoCheckRefinance(String request_end_flag ,String uploadType,HashMap<String ,Object> map,
                             List<LocalMedia> files, IRLListener listener);
-    void Form(String token, int workflow_content_id, int wk_point_id, IRLListener listener);
+    void Form(String token, int workflow_content_id, int wk_point_id,String proc_type_id, IRLListener listener);
 
 }

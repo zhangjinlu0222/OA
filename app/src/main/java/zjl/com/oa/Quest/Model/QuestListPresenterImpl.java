@@ -35,10 +35,10 @@ public class QuestListPresenterImpl implements IQuestListPresenter,IQuestListLis
     @Override
     public void WorkflowListAdvPage(String token, String status, String proc_type, int page_Count,
                                     String name, int order_type,boolean order, String start_date,
-                                    String end_date) {
+                                    String end_date,int filter) {
         if (questListModel != null){
             questListModel.WorkflowListAdvPage(token,status,proc_type,page_Count,name,order_type,
-                    order,start_date,end_date,this);
+                    order,start_date,end_date,filter,this);
         }
         if (questListView != null && !isShowing){
             isShowing = true;
@@ -47,10 +47,10 @@ public class QuestListPresenterImpl implements IQuestListPresenter,IQuestListLis
     }
 
     @Override
-    public void PointOpertState(String token, int w_con_id, int w_pot_id) {
+    public void PointOpertState(String token, int w_con_id, int w_pot_id,String proc_type_id) {
 
         if (questListModel != null){
-            questListModel.PointOpertState(token,w_con_id,w_pot_id,this);
+            questListModel.PointOpertState(token,w_con_id,w_pot_id, proc_type_id,this);
         }
         if (questListView != null && !isShowing){
             isShowing = true;

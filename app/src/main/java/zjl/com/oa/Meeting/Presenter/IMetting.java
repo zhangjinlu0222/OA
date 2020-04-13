@@ -49,7 +49,7 @@ public interface IMetting {
     @POST(Constant.InputInfo)
     Call<ResponseWithNoData> InputInfo(@Body RequestBody body);
 
-    @POST(Constant.EndWorkflow)
+    @POST(Constant.HRRefuseProject)
     Call<ResponseWithNoData> endWorkFlow(@Body RequestBody body);
     @POST(Constant.LookInterview)
     Call<LookInterviewResponse> LookInterview(@Body RequestBody body);

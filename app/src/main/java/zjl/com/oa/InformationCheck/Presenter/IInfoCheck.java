@@ -36,7 +36,7 @@ public interface IInfoCheck {
           @Part List<MultipartBody.Part> files,
           @Part("remark") RequestBody remark);
 
-    @POST(Constant.EndWorkflow)
+    @POST(Constant.HRRefuseProject)
     Call<ResponseWithNoData> endWorkFlow(@Body RequestBody body);
     @POST(Constant.Form)
     Call<FormResponse> Form(@Body RequestBody body);

@@ -22,6 +22,34 @@ import zjl.com.oa.Response.FormResponse;
 
 public interface IRL {
 
+    @POST(Constant.Interview)
+    @Multipart
+    Call<ResponseWithNoData> HRInterview(
+    @Header("request_end_flag") String request_end_flag ,
+    @Part("token") RequestBody token,
+    @Part("w_con_id") RequestBody w_con_id,
+    @Part("w_pot_id") RequestBody w_pot_id,
+    @Part("length") RequestBody length,
+    @Part("identity_id") RequestBody identity_id,
+    @Part("phone") RequestBody phone,
+    @Part("purpose") RequestBody purpose,
+    @Part("amount") RequestBody amount,
+    @Part("a_name") RequestBody a_name,
+    @Part("a_desc") RequestBody a_desc,
+    @Part("a_phone") RequestBody a_phone,
+    @Part("b_name") RequestBody b_name,
+    @Part("b_desc") RequestBody b_desc,
+    @Part("b_phone") RequestBody b_phone,
+    @Part("c_name") RequestBody c_name,
+    @Part("c_desc") RequestBody c_desc,
+    @Part("c_phone") RequestBody c_phone,
+    @Part("diya_desc") RequestBody diya_desc,
+    @Part("zhiya_desc") RequestBody zhiya_desc,
+    @Part("situation") RequestBody situation,
+    @Part("remark") RequestBody remark,
+    @Part("type") RequestBody typebody,
+    @Part List<MultipartBody.Part> filesBody);
+
     @POST(Constant.FinishFlow)
     Call<ResponseWithNoData> FinishFlow(@Body RequestBody body);
 
@@ -70,24 +98,39 @@ public interface IRL {
             @Part List<MultipartBody.Part> filesBody);
     @POST(Constant.FirstSureAmount)
     Call<ResponseWithNoData> FirstSureAmount(@Body RequestBody body);
+
+    @POST(Constant.HRSureAmount)
+    Call<ResponseWithNoData> HRSureAmount(@Body RequestBody body);
     @POST(Constant.SureAmount)
     Call<ResponseWithNoData> SureAmount(@Body RequestBody body);
+
     @POST(Constant.SureAmountReturn)
     Call<ResponseWithNoData> SureAmountReturn(@Body RequestBody body);
     @POST(Constant.InputInfo)
     Call<ResponseWithNoData> InputInfo(@Body RequestBody body);
 
+    @POST(Constant.UploadPhoto)
+    @Multipart
+    Call<ResponseWithNoData> HRUploadData(
+            @Header("request_end_flag") String request_end_flag ,
+            @Part("type") RequestBody typebody,
+            @Part("token") RequestBody token,
+            @Part("workflow_content_id") RequestBody workflow_content_id,
+            @Part("remark") RequestBody remark,
+            @Part("wk_point_id") RequestBody wk_point_id,
+            @Part List<MultipartBody.Part> filesBody);
+
     @POST(Constant.UploadCarPhoto)
     @Multipart
     Call<ResponseWithNoData> UploadCarPhoto(
-        @Header("request_end_flag") String request_end_flag ,
-        @Part("type") RequestBody typebody,
-        @Part("token") RequestBody token,
-        @Part("workflow_content_id") RequestBody workflow_content_id,
-        @Part("remark") RequestBody remark,
-        @Part("wk_point_id") RequestBody wk_point_id,
-        @Part("type_id") RequestBody type_id,
-        @Part List<MultipartBody.Part> filesBody);
+            @Header("request_end_flag") String request_end_flag ,
+            @Part("type") RequestBody typebody,
+            @Part("token") RequestBody token,
+            @Part("workflow_content_id") RequestBody workflow_content_id,
+            @Part("remark") RequestBody remark,
+            @Part("wk_point_id") RequestBody wk_point_id,
+            @Part("type_id") RequestBody type_id,
+            @Part List<MultipartBody.Part> filesBody);
 
     @POST(Constant.ContractDetailTwo)
     Call<ResponseWithNoData> ContractDetail(@Body RequestBody body);
@@ -135,7 +178,7 @@ public interface IRL {
             @Part("wk_point_id") RequestBody wk_point_id,
             @Part List<MultipartBody.Part> files,
             @Part("remark") RequestBody remark);
-    @POST(Constant.EndWorkflow)
+    @POST(Constant.HRRefuseProject)
     Call<ResponseWithNoData> endWorkFlow(@Body RequestBody body);
     @POST(Constant.Form)
     Call<FormResponse> Form(@Body RequestBody body);

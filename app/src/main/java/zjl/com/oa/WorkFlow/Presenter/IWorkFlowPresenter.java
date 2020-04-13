@@ -5,10 +5,10 @@ package zjl.com.oa.WorkFlow.Presenter;
  */
 
 public interface IWorkFlowPresenter{
-    void getWorkFlow(String token,String w_con_id);
-    void getWorkDetail(String token,String w_con_id);
-    void postPointEdit(String token,String w_con_id,String w_pot_id,String remark);
-    void getPhotoVideoDetail(String token,String w_con_id,String type_id);
-    void endWorkFlow(String token, int workflow_content_id,int wk_point_id,String remark);
-    void recoverWorkflow(String token, int workflow_content_id);
+    void getWorkFlow(String token,String w_con_id,String proc_type_id);
+    void getWorkDetail(String token,String w_con_id,String proc_type_id);
+    void HRRejection(String token,String w_con_id,String w_pot_id,String proc_type_id,String remark);
+    void getPhotoVideoDetail(String token,String w_con_id,String w_pot_id,String proc_type_id);
+    void endWorkFlow(String token, int workflow_content_id,int wk_point_id,String remark,String proc_type_id);
+    void recoverWorkflow(String token, int workflow_content_id,String proc_type_id);
 }

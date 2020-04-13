@@ -27,8 +27,9 @@ import zjl.com.oa.WorkFlow.Presenter.IWorkFlowModel;
 
 public class WorkFlowModelImpl extends ModelImpl implements IWorkFlowModel{
     private static final String TAG = "WorkFlowModelImpl";
+
     @Override
-    public void getWorkFlow(String token, String w_con_id,IWorkFlowListener listener) {
+    public void getWorkFlow(String token, String w_con_id,String proc_type_id,IWorkFlowListener listener) {
 //        Retrofit retrofit = new Retrofit.Builder()
 //                .addConverterFactory(GsonConverterFactory.create())
 //                .baseUrl(Constant.BASE_URL).build();
@@ -37,6 +38,7 @@ public class WorkFlowModelImpl extends ModelImpl implements IWorkFlowModel{
         HashMap<String,String> map = new HashMap<>();
         map.put("token",token);
         map.put("w_con_id",w_con_id);
+        map.put("proc_type_id",proc_type_id);
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"),new Gson().toJson(map));
 
         Call<GetWorkFlowResponse> call = service.getWorkFlow(body);
@@ -70,7 +72,7 @@ public class WorkFlowModelImpl extends ModelImpl implements IWorkFlowModel{
     }
 
     @Override
-    public void getWorkDetail(String token, String w_con_id, IWorkFlowListener listener) {
+    public void getWorkDetail(String token, String w_con_id,String proc_type_id, IWorkFlowListener listener) {
 //        Retrofit retrofit = new Retrofit.Builder()
 //                .addConverterFactory(GsonConverterFactory.create())
 //                .baseUrl(Constant.BASE_URL).build();
@@ -79,6 +81,7 @@ public class WorkFlowModelImpl extends ModelImpl implements IWorkFlowModel{
         HashMap<String,String> map = new HashMap<>();
         map.put("token",token);
         map.put("w_con_id",w_con_id);
+        map.put("proc_type_id",proc_type_id);
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"),new Gson().toJson(map));
 
         Call<GetWorkFlowResponse> call = service.getWorkDetail(body);
@@ -112,7 +115,7 @@ public class WorkFlowModelImpl extends ModelImpl implements IWorkFlowModel{
     }
 
     @Override
-    public void postPointEdit(String token, String w_con_id, String w_pot_id,String remark,  IWorkFlowListener listener) {
+    public void HRRejection(String token, String w_con_id, String w_pot_id,String proc_type_id,String remark,  IWorkFlowListener listener) {
 //        Retrofit retrofit = new Retrofit.Builder()
 //                .addConverterFactory(GsonConverterFactory.create())
 //                .baseUrl(Constant.BASE_URL).build();
@@ -122,10 +125,11 @@ public class WorkFlowModelImpl extends ModelImpl implements IWorkFlowModel{
         map.put("token",token);
         map.put("w_con_id",w_con_id);
         map.put("w_pot_id",w_pot_id);
+        map.put("proc_type_id",proc_type_id);
         map.put("remark",remark);
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"),new Gson().toJson(map));
 
-        Call<ResponseWithNoData> call = service.postPointEdit(body);
+        Call<ResponseWithNoData> call = service.HRRejection(body);
         call.enqueue(new Callback<ResponseWithNoData>() {
             @Override
             public void onResponse(Call<ResponseWithNoData> call, Response<ResponseWithNoData> response) {
@@ -156,7 +160,7 @@ public class WorkFlowModelImpl extends ModelImpl implements IWorkFlowModel{
     }
 
     @Override
-    public void getPhotoVideoDetail(String token, String w_con_id, String type_id, IWorkFlowListener listener) {
+    public void getPhotoVideoDetail(String token, String w_con_id, String w_pot_id,String proc_type_id, IWorkFlowListener listener) {
 
 //        Retrofit retrofit = new Retrofit.Builder()
 //                .addConverterFactory(GsonConverterFactory.create())
@@ -166,7 +170,8 @@ public class WorkFlowModelImpl extends ModelImpl implements IWorkFlowModel{
         HashMap<String,String> map = new HashMap<>();
         map.put("token",token);
         map.put("w_con_id",w_con_id);
-        map.put("type_id",type_id);
+        map.put("w_pot_id",w_pot_id);
+        map.put("proc_type_id",proc_type_id);
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"),new Gson().toJson(map));
 
         Call<PhotoVideoDetailResponse> call = service.getPhotoVideoDetail(body);
@@ -199,15 +204,16 @@ public class WorkFlowModelImpl extends ModelImpl implements IWorkFlowModel{
         });
     }
     @Override
-    public void endWorkFlow(String token, int workflow_content_id, int wk_point_id, String remark,IWorkFlowListener listener) {
+    public void endWorkFlow(String token, int workflow_content_id, int wk_point_id, String remark,String proc_type_id,IWorkFlowListener listener) {
 
-        IInfoCheck service = retrofit.create(IInfoCheck.class);
+        IWorkFlow service = retrofit.create(IWorkFlow.class);
 
         HashMap<String,Object> map = new HashMap<>();
         map.put("token",token);
         map.put("wk_content_id",workflow_content_id);
         map.put("wk_point_id",wk_point_id);
         map.put("remark",remark);
+        map.put("proc_type_id",proc_type_id);
 
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"),new Gson().toJson(map));
 
@@ -247,12 +253,13 @@ public class WorkFlowModelImpl extends ModelImpl implements IWorkFlowModel{
     }
 
     @Override
-    public void recoverWorkflow(String token, int workflow_content_id, IWorkFlowListener listener) {
+    public void recoverWorkflow(String token, int workflow_content_id,String proc_type_id, IWorkFlowListener listener) {
         IWorkFlow service = retrofit.create(IWorkFlow.class);
 
         HashMap<String,String> map = new HashMap<>();
         map.put("token",token);
         map.put("wk_content_id",workflow_content_id+"");
+        map.put("proc_type_id",proc_type_id);
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"),new Gson().toJson(map));
 
         Call<ResponseWithNoData> call = service.recoverWorkflow(body);

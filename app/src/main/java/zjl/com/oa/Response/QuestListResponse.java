@@ -56,11 +56,14 @@ public class QuestListResponse extends BaseResponse{
 
             private String proc_type_name;
 
+            private String proc_type_id;
+
             private int detail_flag = -1;
 
             private int process_flag = -1;
 
             private String customer_name;
+
             private String status;
 
             private int oper_flag = -1;
@@ -68,6 +71,15 @@ public class QuestListResponse extends BaseResponse{
             private String refinance = "";
 
             private String docking_com_name;
+
+
+            public String getProc_type_id() {
+                return proc_type_id;
+            }
+
+            public void setProc_type_id(String proc_type_id) {
+                this.proc_type_id = proc_type_id;
+            }
 
             public int getOper_flag() {
                 return oper_flag;

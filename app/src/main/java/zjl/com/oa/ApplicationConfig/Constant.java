@@ -49,17 +49,35 @@ public class Constant {
 
     public static final String Coming = "WebApi/V1/Workflow/Coming";
     public static final String WorkList = "WebApi/V1/Workflow/WrokflowList";
-    public static final String WrokflowListOrder = "WebApi/V1/Workflow/WorkflowListOrder";
+
+    //增加华融车贷，接口更新，2020.3.25
+//    public static final String WorkflowListOrder = "WebApi/V1/Workflow/WorkflowListOrder";
+
+    public static final String WorkflowListOrder = "WebApi/V1/HRCreditBus/WorkflowListOrder";
     public static final String WorkListPage = "WebApi/V1/Workflow/WrokflowListPage";
-    public static final String WorkflowListAdvPage = "WebApi/V1/Workflow/WorkflowListAdvPage";
-    public static final String Interview = "WebApi/V1/Workflow/Interview";
+
+    //新增搜索参数，显示续贷单子，2020.3.26
+//    public static final String WorkflowListAdvPage = "WebApi/V1/Workflow/WorkflowListAdvPage";
+    public static final String WorkflowListAdvPage = "WebApi/V1/HRCreditBus/WorkflowListAdvPage";
+
+    //新增面谈参数，2020.3.30
+//    public static final String Interview = "WebApi/V1/Workflow/Interview";
+    public static final String Interview = "WebApi/V1/HRCreditBus/Interview";
+
     public static final String InputInfo = "WebApi/V1/Workflow/InputInfo";
-    public static final String EndWorkflow = "WebApi/V1/Workflow/EndWorkflow";
+
+//    public static final String EndWorkflow = "WebApi/V1/Workflow/EndWorkflow";
+    public static final String HRRefuseProject = "WebApi/V1/HRCreditBus/EndWorkflow";
+
     public static final String InfoCheck = "WebApi/V1/Workflow/InfoCheck";
     public static final String Assess = "WebApi/V1/Workflow/Assess";
     public static final String UploadCarPhoto = "WebApi/V1/Workflow/UploadCarPhoto";
     public static final String CarPhoto = "WebApi/V1/Workflow/CarPhoto";
+
+    //华融信贷定额接口，2020.4.2
     public static final String SureAmount = "WebApi/V1/Workflow/SureAmount";
+    public static final String HRSureAmount  = "WebApi/V1/HRCreditBus/SureAmount";
+
     public static final String LookSureAmount = "WebApi/V1/Workflow/LookSureAmount";
     public static final String SureAmountReturn = "WebApi/V1/Workflow/SureAmountReturn";
     public static final String BusFeedback = "WebApi/V1/Workflow/BusFeedback";
@@ -72,16 +90,30 @@ public class Constant {
     public static final String BeginSigned = "WebApi/V1/Workflow/BeginSigned";
     public static final String LookLoanApplication = "WebApi/V1/Workflow/LookLoanApplication";
     public static final String LoanApplication = "WebApi/V1/Workflow/LoanApplication";
-    public static final String Flowprocess = "WebApi/V1/Workflow/flowprocess";
-    public static final String Detail = "WebApi/V1/Workflow/Detail";
+//    public static final String Flowprocess = "WebApi/V1/Workflow/flowprocess";
+
+//    public static final String Detail = "WebApi/V1/Workflow/Detail";
+    public static final String HRProjectDetail = "WebApi/V1/HRCreditBus/Detail";
+
     public static final String LookFirstCharge = "WebApi/V1/Workflow/LookFirstCharge";
-    public static final String PointEdit = "WebApi/V1/Workflow/PointEdit";
-    public static final String PhotoVideoDetail = "WebApi/V1/Workflow/PhotoVideoDetail";
+
+    //驳回添加业务类型参数，2020.4.7
+//    public static final String PointEdit = "WebApi/V1/Workflow/PointEdit";
+    public static final String HRRejection = "WebApi/V1/HRCreditBus/PointEdit";
+
+//    public static final String PhotoVideoDetail = "WebApi/V1/Workflow/PhotoVideoDetail";
+    public static final String PhotoVideoDetail = "WebApi/V1/HRCreditBus/PhotoVideoDetail";
+
     public static final String PleDgeAssess = "WebApi/V1/Workflow/PleDgeAssess";
     public static final String PleDgeAssessTwo = "WebApi/V1/Workflow/PleDgeAssessTwo";
     public static final String FirstSureAmount = "WebApi/V1/Workflow/FirstSureAmount";
     public static final String LookFirstSureAmount = "WebApi/V1/Workflow/LookFirstSureAmount";
-    public static final String PointOpertState = "WebApi/V1/Workflow/PointOpertState";
+
+    //接单状态更新的新接口，20.3.27
+//    public static final String PointOpertState = "WebApi/V1/Workflow/PointOpertState";
+    public static final String PointOpertState = "WebApi/V1/HRCreditBus/PointOpertState";
+
+
     public static final String CloseFlow = "WebApi/V1/Workflow/CloseFlow";
     public static final String FirstFeedbackResult = "WebApi/V1/Workflow/FirstFeedbackResult";
     public static final String LookFirstFeedbackResult  = "WebApi/V1/Workflow/LookFirstFeedbackResult";
@@ -94,9 +126,19 @@ public class Constant {
     public static final String AuditRefinance  = "WebApi/V1/Refinance/AuditRefinance";
     public static final String ContractDetail  = "WebApi/V1/Refinance/ContractDetail";
     public static final String ContractDetailTwo  = "WebApi/V1/Refinance/ContractDetailTwo";
-    public static final String Form  = "WebApi/V1/FormControl/Form";
-    public static final String RecoverWorkflow  = "WebApi/V1/Workflow/RecoverWorkflow";
+
+//    public static final String Form  = "WebApi/V1/FormControl/Form";
+    public static final String Form  = "WebApi/V1/FormControl/Form_V2";
+
+//    public static final String RecoverWorkflow  = "WebApi/V1/Workflow/RecoverWorkflow";
+    public static final String HRRecoverProject  = "WebApi/V1/HRCreditBus/RecoverWorkflow";
+
     public static final String QueryCarAssess  = "WebApi/V1/Assess/QueryCarAssess";
     public static final String ApplyforRefinance  = "WebApi/V1/Refinance/ApplyforRefinance";
     public static final String FinishFlow  = "WebApi/V1/Workflow/FinishFlow";
+
+    //新增上传文件接口，2020.3.31
+    public static final String UploadPhoto  = "WebApi/V1/HRCreditBus/UploadPhoto";
+    //新增流程查看接口, 2020.4.3
+    public static final String FlowProcess  = "WebApi/V1/HRCreditBus/FlowProcess";
 }

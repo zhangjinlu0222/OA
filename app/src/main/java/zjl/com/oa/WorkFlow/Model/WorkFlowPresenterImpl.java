@@ -23,17 +23,20 @@ public class WorkFlowPresenterImpl implements IWorkFlowListener,IWorkFlowPresent
     }
 
     @Override
-    public void getWorkFlow(String token, String w_con_id) {
+    public void getWorkFlow(String token, String w_con_id,String proc_type_id) {
         if (workFlowModel != null){
-            workFlowModel.getWorkFlow(token,w_con_id,this);
+            workFlowModel.getWorkFlow(token,w_con_id, proc_type_id,this);
+        }
+        if (workFlowView != null){
+            workFlowView.showProcess();
         }
     }
 
     @Override
-    public void getWorkDetail(String token, String w_con_id) {
+    public void getWorkDetail(String token, String w_con_id,String proc_type_id) {
 
         if (workFlowModel != null){
-            workFlowModel.getWorkDetail(token,w_con_id,this);
+            workFlowModel.getWorkDetail(token,w_con_id, proc_type_id,this);
         }
 
         if (workFlowView != null){
@@ -42,10 +45,10 @@ public class WorkFlowPresenterImpl implements IWorkFlowListener,IWorkFlowPresent
     }
 
     @Override
-    public void postPointEdit(String token, String w_con_id, String w_pot_id, String remark) {
+    public void HRRejection(String token, String w_con_id, String w_pot_id,String proc_type_id, String remark) {
 
         if (workFlowModel != null){
-            workFlowModel.postPointEdit(token,w_con_id,w_pot_id,remark,this);
+            workFlowModel.HRRejection(token,w_con_id,w_pot_id,proc_type_id,remark,this);
         }
         if (workFlowView != null){
             workFlowView.showProcess();
@@ -53,16 +56,16 @@ public class WorkFlowPresenterImpl implements IWorkFlowListener,IWorkFlowPresent
     }
 
     @Override
-    public void getPhotoVideoDetail(String token, String w_con_id, String type_id) {
+    public void getPhotoVideoDetail(String token, String w_con_id, String w_pot_id,String proc_type_id) {
 
         if (workFlowModel != null){
-            workFlowModel.getPhotoVideoDetail(token,w_con_id,type_id,this);
+            workFlowModel.getPhotoVideoDetail(token,w_con_id,w_pot_id,proc_type_id,this);
         }
     }
     @Override
-    public void endWorkFlow(String token, int workflow_content_id,int wk_point_id,String remark) {
+    public void endWorkFlow(String token, int workflow_content_id,int wk_point_id,String remark,String proc_type_id) {
         if (workFlowModel != null){
-            workFlowModel.endWorkFlow( token,  workflow_content_id, wk_point_id,remark,this);
+            workFlowModel.endWorkFlow( token,  workflow_content_id, wk_point_id,remark,proc_type_id,this);
         }
         if (workFlowView != null){
             workFlowView.showProcess();
@@ -70,9 +73,9 @@ public class WorkFlowPresenterImpl implements IWorkFlowListener,IWorkFlowPresent
     }
 
     @Override
-    public void recoverWorkflow(String token, int workflow_content_id) {
+    public void recoverWorkflow(String token, int workflow_content_id,String proc_type_id) {
         if (workFlowModel != null){
-            workFlowModel.recoverWorkflow( token,  workflow_content_id,this);
+            workFlowModel.recoverWorkflow( token,  workflow_content_id,proc_type_id,this);
         }
         if (workFlowView != null){
             workFlowView.showProcess();

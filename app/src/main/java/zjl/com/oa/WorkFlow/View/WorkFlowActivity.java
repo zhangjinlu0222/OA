@@ -59,7 +59,7 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
     private WorkFlowAdapter workFlowAdapter;
     private List<WorkFlowGroupData> groupData = new ArrayList<>();
     private List<List<GetWorkFlowResponse.Result.Section.dict>> childData = new ArrayList<>();
-    private String workflow_content_id, token, date, manager;
+    private String workflow_content_id,proc_type_id, token, date, manager;
     private BuildBean dialog = null;
     private boolean dialogshowing;
     private AlertDialog videoPreviewDialog = null;
@@ -75,7 +75,7 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
         setContentView(R.layout.activity_workflow);
         ButterKnife.bind(this);
         TitleBarUtil.setTitleBarColor(this, Color.rgb(116, 169, 237));
-        dialog = DialogUIUtils.showLoading(context, "驳回申请提交中", true, false, false, true);
+        dialog = DialogUIUtils.showLoading(context, "请求中", true, false, false, true);
 
         String autoUpdate = UserInfo.getInstance(context).getUserInfo(UserInfo.AUTOUPDATE);
         if (autoUpdate != null && autoUpdate.equals("1")){
@@ -126,13 +126,14 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 String w_pot_id = groupData.get(groupPosition).getW_pot_id();
                 String workflow_name = groupData.get(groupPosition).getTitle();
-                String proc_type_id = groupData.get(groupPosition).getProc_type_id();
+                String proc_type_id = groupData.get(groupPosition).getProcTypeId();
                 //如果父元组中reedit flag 为0 ，并且点击位置是groudata最后一项，则重新上传此步骤的内容
                 if (0 == groupData.get(groupPosition).getReedit_flag() && childPosition == childData.get(groupPosition).size() - 1) {
                     Intent intent = new Intent(WorkFlowActivity.this, Activitys.getClass(w_pot_id));
                     intent.putExtra("workflow_content_id", workflow_content_id);
                     intent.putExtra("wk_point_id", w_pot_id);
                     intent.putExtra("workflow_name", workflow_name);
+                    intent.putExtra("proc_type_id", proc_type_id);
 
                     if (w_pot_id != null && //面谈节点步骤ID，添加日期和经理
                             (w_pot_id.equals("30") || w_pot_id.equals("2"))) { //录入订单节点步骤ID，添加日期和经理
@@ -157,11 +158,11 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
                     String value = childData.get(groupPosition).get(childPosition).getL_value();
                     if (key.contains("签约视频") && value.contains("点击查看")) {
                         if (workFlowPresenter != null) {
-                            workFlowPresenter.getPhotoVideoDetail(token, workflow_content_id, "999");
+                            workFlowPresenter.getPhotoVideoDetail(token, workflow_content_id, "999",proc_type_id);
                         }
                     } else if (value.contains("点击查看")) {
                         if (workFlowPresenter != null) {
-                            workFlowPresenter.getPhotoVideoDetail(token, workflow_content_id, w_pot_id);
+                            workFlowPresenter.getPhotoVideoDetail(token, workflow_content_id, w_pot_id,proc_type_id);
                         }
                     }
                 }
@@ -170,6 +171,7 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
         });
 
         workflow_content_id = getIntent().getStringExtra("workflow_content_id");
+        proc_type_id = getIntent().getStringExtra("proc_type_id");
         //date 和manager 在表单被管理员在面谈步骤打回重新进去的时候使用
         date = getIntent().getStringExtra("date");
         manager = getIntent().getStringExtra("manager");
@@ -217,7 +219,7 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
 
                 wfGroupData.setTitle(section.getTitle());
                 wfGroupData.setW_pot_id(section.getW_pot_id());
-                wfGroupData.setProc_type_id(result.getProc_type_id());
+                wfGroupData.setProcTypeId(result.getProc_type_id());
                 groupData.add(wfGroupData);
 
                 //如果该步骤被驳回了，则添加重新上传的文字提示
@@ -260,6 +262,7 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
     @Override
     public void showProcess() {
         if (dialog != null && !dialogshowing) {
+            dialog.msg = "请求中";
             dialog.show();
             dialogshowing = true;
         }
@@ -282,7 +285,7 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
     @Override
     public void reloadData() {
         if (workFlowPresenter != null) {
-            workFlowPresenter.getWorkFlow(token, workflow_content_id);
+            workFlowPresenter.getWorkFlow(token, workflow_content_id,proc_type_id);
         }
     }
 
@@ -294,72 +297,11 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
             return;
         }
 
-//        //添加缩略图
-//        thumbnails.clear();
-//        if (data.getThum().size() > 0) {
-//            for (String str : data.getThum()) {
-//                LocalMedia media = new LocalMedia();
-//                media.setPath(str);
-//                thumbnails.add(media);
-//            }
-//        } else {
-//            this.showFailureMsg("暂无数据");
-//            return;
-//        }
-//        //添加缩略图
-//        normalImgs.clear();
-//        if (data.getBig().size() > 0) {
-//                for (String str : data.getBig()) {
-//                    LocalMedia media = new LocalMedia();
-//                    media.setPath(str);
-//                    if (VideoUtil.isVideo(str)){
-//                        media.setPictureType("video/mp4");
-//                    }
-//                    normalImgs.add(media);
-//                }
-//        } else {
-//            this.showFailureMsg("暂无数据");
-//            return;
-//        }
         Intent intent = new Intent(context,Thumbnails.class);
         intent.putExtra("thumbnails",(Serializable) data.getThum());
         intent.putExtra("normalMedias",(Serializable) data.getBig());
         startActivity(intent);
     }
-//    @Override
-//    public void loadPhotosAndVideos(List<List<String>> data) {
-//        List<String> selectList = new ArrayList<>();
-//        for (int i = 0; i < data.size(); i++) {
-//            for (int j = 0; j < data.get(i).size(); j++) {
-//                selectList.add(data.get(i).get(j));
-//            }
-//        }
-//        //判断是进行图片查看还是进行视频查看,判断取下的数据是否不为空
-//        if (selectList.size() > 0) {
-//            if (PhotoUtil.isPhoto(selectList.get(0))) {
-//                List<LocalMedia> list = new ArrayList<>();
-//                for (String str : selectList) {
-//                    LocalMedia media = new LocalMedia();
-//                    media.setPath(str);
-//                    list.add(media);
-//                }
-////                 PictureSelector.create(WorkFlowActivity.this).externalPicturePreview(0, list);
-//                Intent intent = new Intent(context,Thumbnails.class);
-//                startActivity(intent);
-//            } else if (VideoUtil.isVideo(selectList.get(0))) {
-//                List<LocalMedia> videolist = new ArrayList<>();
-//                for (String str : selectList) {
-//                    LocalMedia media = new LocalMedia();
-//                    media.setPictureType("video/mp4");
-//                    media.setPath(str);
-//                    videolist.add(media);
-//                }
-//                showVideoPreview(videolist);
-//            }
-//        } else {
-//            this.showFailureMsg("暂无数据");
-//        }
-//    }
 
     //禁止在提交驳回请求的时候退出界面
     @Override
@@ -382,7 +324,7 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
     protected void onResume() {
         super.onResume();
         if (workFlowPresenter != null) {
-            workFlowPresenter.getWorkFlow(token, workflow_content_id);
+            workFlowPresenter.getWorkFlow(token, workflow_content_id,proc_type_id);
         }
     }
 
@@ -450,7 +392,13 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
             @Override
             public void onClick(View v) {
                 if (reason.getText().toString().trim().length() > 0) {
-                    workFlowPresenter.postPointEdit(token, workflow_content_id, groupData.get(position).getW_pot_id(), reason.getText().toString().trim());
+
+                    dialog.msg = "驳回申请提交中";
+
+                    workFlowPresenter.HRRejection(token, workflow_content_id,
+                            groupData.get(position).getW_pot_id(),
+                            groupData.get(position).getProcTypeId(),
+                            reason.getText().toString().trim());
                     DialogUIUtils.dismiss(reEditDialog);
                 } else {
                     Toast.makeText(context, "请输入驳回原因", Toast.LENGTH_SHORT).show();
@@ -487,7 +435,7 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
                     int wk_con_id = Integer.parseInt(workflow_content_id);
                     int wk_pot_id = Integer.parseInt(getWk_Pot_Id(groupData));
 
-                    workFlowPresenter.endWorkFlow(token, wk_con_id, wk_pot_id, reason.getText().toString().trim());
+                    workFlowPresenter.endWorkFlow(token, wk_con_id, wk_pot_id, reason.getText().toString().trim(),proc_type_id);
                     DialogUIUtils.dismiss(reEditDialog);
                 } else {
                     Toast.makeText(context, "请输入拒件原因", Toast.LENGTH_SHORT).show();
@@ -524,7 +472,7 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
 
                 //表单不是已办状态，执行拒件操作，或者恢复单据操作
                 if(QuestState.isRefused(workflow_state)){
-                    workFlowPresenter.recoverWorkflow(token,Integer.parseInt(workflow_content_id));
+                    workFlowPresenter.recoverWorkflow(token,Integer.parseInt(workflow_content_id),proc_type_id);
                     dialog.msg = "恢复单据操作提交中";
                 }else{
                     dialog.msg = "拒件操作提交中";

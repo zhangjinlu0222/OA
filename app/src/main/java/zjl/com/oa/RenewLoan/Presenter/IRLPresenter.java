@@ -16,7 +16,10 @@ import zjl.com.oa.Meeting.Presenter.IMettingListener;
 
 public interface IRLPresenter{
 
-    void endWorkFlow(String token,int workflow_content_id,int wk_point_id,String remark);
+    void HRInterview(String request_end_flag,String uploadType,HashMap<String ,Object > map,
+                      List<LocalMedia> files);
+
+    void endWorkFlow(String token,int workflow_content_id,int wk_point_id,String remark,String proc_type_id);
     void InfoCheck(String request_end_flag, String uploadType, HashMap<String ,Object> map, List<LocalMedia> files);
 
     void FinishFlow(HashMap<String ,Object> map);
@@ -47,12 +50,17 @@ public interface IRLPresenter{
 //    void ApplyforRefinance(String token, String w_con_id, String w_pot_id,
 //                           String loan_length, String remark);
 
+    void HRUploadData(String request_end_flag,String uploadType,HashMap<String ,Object > map,
+                     List<LocalMedia> files);
+
     void CarPhoto(String request_end_flag,String uploadType,HashMap<String ,Object > map,String type_id,
                   List<LocalMedia> files);
     void FirstSureAmount(HashMap<String ,Object> map);
 //    void SureAmount(String token, String w_con_id, String w_pot_id,
 //                    String  amount,String assure_amount, String derating_opinion,String remark);
     void SureAmount(HashMap<String ,Object> map);
+    void HRSureAmount(HashMap<String ,Object> map);
+
     void SureAmountReturn(String token,String w_con_id,String w_pot_id,String type_id);
 
     void InputInfo(HashMap<String ,Object> map);
@@ -78,5 +86,5 @@ public interface IRLPresenter{
 //                            String insurance,String remark,List<LocalMedia> files);
     void InfoCheckRefinance(String request_end_flag ,String uploadType,HashMap<String ,Object> map,List<LocalMedia> files);
 
-    void Form(String token, int workflow_content_id, int wk_point_id);
+    void Form(String token, int workflow_content_id, int wk_point_id,String proc_type_id);
 }

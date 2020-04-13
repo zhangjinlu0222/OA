@@ -11,11 +11,16 @@ public class WorkFlowGroupData {
 
     private String proc_type_id;
 
-    public String getProc_type_id() {
+    private String status;//表单状态
+    private String w_pot_id;
+    private int reedit_flag;
+    private int edit; //是否是管理员登录
+
+    public String getProcTypeId() {
         return proc_type_id;
     }
 
-    public void setProc_type_id(String proc_type_id) {
+    public void setProcTypeId(String proc_type_id) {
         this.proc_type_id = proc_type_id;
     }
 
@@ -26,11 +31,6 @@ public class WorkFlowGroupData {
     public void setStatus(String status) {
         this.status = status;
     }
-
-    private String status;//表单状态
-    private String w_pot_id;
-    private int reedit_flag;
-    private int edit; //是否是管理员登录
 
     public int getEdit() {
         return edit;

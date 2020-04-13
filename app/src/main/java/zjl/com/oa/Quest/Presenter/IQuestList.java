@@ -17,7 +17,7 @@ public interface IQuestList {
 //    Call<QuestListResponse> post(@Body RequestBody token);
 //    @POST(Constant.WorkListPage)
 //    Call<QuestListResponse> postFilter(@Body RequestBody body);
-    @POST(Constant.WrokflowListOrder)
+    @POST(Constant.WorkflowListOrder)
     Call<QuestListResponse> WorkflowListOrder(@Body RequestBody body);
     @POST(Constant.WorkflowListAdvPage)
     Call<QuestListResponse> WorkflowListAdvPage(@Body RequestBody body);

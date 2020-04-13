@@ -14,16 +14,16 @@ import zjl.com.oa.Response.PhotoVideoDetailResponse;
  */
 
 public interface IWorkFlow {
-    @POST(Constant.Flowprocess)
+    @POST(Constant.FlowProcess)
     Call<GetWorkFlowResponse> getWorkFlow(@Body RequestBody body);
-    @POST(Constant.Detail)
+    @POST(Constant.HRProjectDetail)
     Call<GetWorkFlowResponse> getWorkDetail(@Body RequestBody body);
-    @POST(Constant.PointEdit)
-    Call<ResponseWithNoData> postPointEdit(@Body RequestBody body);
+    @POST(Constant.HRRejection)
+    Call<ResponseWithNoData> HRRejection(@Body RequestBody body);
     @POST(Constant.PhotoVideoDetail)
     Call<PhotoVideoDetailResponse> getPhotoVideoDetail(@Body RequestBody body);
-    @POST(Constant.EndWorkflow)
+    @POST(Constant.HRRefuseProject)
     Call<ResponseWithNoData> endWorkFlow(@Body RequestBody body);
-    @POST(Constant.RecoverWorkflow)
+    @POST(Constant.HRRecoverProject)
     Call<ResponseWithNoData> recoverWorkflow(@Body RequestBody body);
 }

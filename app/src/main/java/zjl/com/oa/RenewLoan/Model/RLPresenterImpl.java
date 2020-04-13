@@ -6,12 +6,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import zjl.com.oa.RenewLoan.Presenter.IRLListener;
 import zjl.com.oa.RenewLoan.Presenter.IRLModel;
 import zjl.com.oa.RenewLoan.Presenter.IRLPresenter;
 import zjl.com.oa.RenewLoan.Presenter.IRLView;
 import zjl.com.oa.RenewLoan.View.RenewLoanActivity;
 import zjl.com.oa.Response.FormResponse;
+import zjl.com.oa.Utils.IDCardUtil;
+import zjl.com.oa.Utils.PhoneUtils;
 
 import static zjl.com.oa.Base.BaseActivity.UPLOAD_TYPE_ADD;
 import static zjl.com.oa.Base.BaseActivity.UPLOAD_TYPE_NORMAL;
@@ -73,6 +77,17 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
                     irlModel.UploadCarPhoto( request_end_flag, UPLOAD_TYPE_ADD, map,
                             type_id,files.subList(files.size() / 2,files.size()),this);
                     break;
+                case "33"://华融信贷面谈
+                    irlModel.HRInterview( request_end_flag, UPLOAD_TYPE_ADD, map,
+                            files.subList(files.size() / 2,files.size()),this);
+                    break;
+                case "34"://华融信贷上传资料
+                case "36"://华融信贷家访
+                case "38"://华融信贷签约
+                case "39"://华融信贷放款
+                    irlModel.HRUploadData( request_end_flag, UPLOAD_TYPE_ADD, map,
+                            files.subList(files.size() / 2,files.size()),this);
+                    break;
                 case "23"://信息核查续贷
                     irlModel.InfoCheckRefinance( request_end_flag , UPLOAD_TYPE_ADD, map,
                             files.subList(files.size() / 2,files.size()),this);
@@ -108,13 +123,93 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
     }
 
     @Override
-    public void endWorkFlow(String token, int workflow_content_id,int wk_point_id,String remark) {
+    public void endWorkFlow(String token, int workflow_content_id,int wk_point_id,String remark,String proc_type_id) {
         if (irlModel != null){
-            irlModel.endWorkFlow( token,  workflow_content_id, wk_point_id,remark,this);
+            irlModel.endWorkFlow( token,  workflow_content_id, wk_point_id,remark, proc_type_id,this);
         }
         if (irlView != null){
             irlView.showProgress();
         }
+    }
+
+    @Override
+    public void HRInterview(String request_end_flag,String uploadType,HashMap<String ,Object> map,List<LocalMedia> files) {
+
+        if (map == null){
+            irlView.showFailureMsg("请确认信息填写完整");
+            return;
+        }
+
+        String token = map.get("token").toString();
+        String workflow_content_id = map.get("w_con_id").toString();
+        String wk_point_id = map.get("w_pot_id").toString();
+
+        for (String key :map.keySet()){
+
+            //对备注不做强制检查，可提交空字符串
+            if (key.equals("remark")){
+                continue;
+            }
+
+            if(key.equals("length")
+                    && (map.get(key) == null
+                    || map.get(key).toString().length() <=0)){
+                irlView.showFailureMsg("请确认信息填写完整");
+                return;
+            }
+            if(key.equals("identity_id")
+                    && (map.get(key) == null
+                    || map.get(key).toString().length() <=0
+                    || !IDCardUtil.IDCardValidate(map.get(key).toString()))){
+                irlView.showFailureMsg("请确认信息填写完整");
+                return;
+            }
+            if(key.equals("phone")
+                    && (map.get(key) == null
+                    || map.get(key).toString().length() <=0
+                    || !PhoneUtils.isChinaPhoneLegal(map.get(key).toString()))){
+                irlView.showFailureMsg("请确认信息填写完整");
+                return;
+            }
+            if(key.equals("purpose") && (map.get(key) == null || map.get(key).toString().length() <=0)){
+                irlView.showFailureMsg("请确认信息填写完整");
+                return;
+            }
+            if(key.equals("amount") && (map.get(key) == null || map.get(key).toString().length() <=0)){
+                irlView.showFailureMsg("请确认信息填写完整");
+                return;
+            }
+
+        }
+
+        if (files.size() <=0 && irlView != null && uploadType.equals(UPLOAD_TYPE_NORMAL)){
+            irlView.showFailureMsg("请选择文件");
+            return;
+        }
+
+
+        if (irlModel != null){
+            if (files.size() <= 1){
+                irlModel.HRInterview( request_end_flag, uploadType,map,files,this);
+                this.isUploading = false;
+            }else{
+                irlModel.HRInterview( request_end_flag, uploadType,map,files.subList(0,files.size() / 2),
+                        this);
+                this.wk_point_id = wk_point_id;
+                this.isUploading = true;
+            }
+            irlView.showProgress();
+        }
+
+        this.map.clear();
+        this.map.putAll(map);
+
+        this.token = token;
+        this.workflow_content_id = workflow_content_id;
+        this.wk_point_id = wk_point_id;
+
+        this.files.clear();
+        this.files.addAll(files);
     }
 
     @Override
@@ -424,6 +519,59 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
     }
 
     @Override
+    public void HRUploadData(String request_end_flag,String uploadType,HashMap<String ,Object> map,List<LocalMedia> files) {
+        if (map == null){
+            irlView.showFailureMsg("请确认信息填写完整");
+            return;
+        }
+
+        String token = map.get("token").toString();
+        String workflow_content_id = map.get("w_con_id").toString();
+        String wk_point_id = map.get("w_pot_id").toString();
+
+        for (String key :map.keySet()){
+            //对备注不做强制检查，可提交空字符串
+            if (key.equals("remark")){
+                continue;
+            }
+
+            if (map.get(key) == null || map.get(key).toString().length() <=0){
+                irlView.showFailureMsg("请确认信息填写完整");
+                return;
+            }
+        }
+
+        if (files.size() <=0 && irlView != null && uploadType.equals(UPLOAD_TYPE_NORMAL) && !"35".equals(wk_point_id)){
+            irlView.showFailureMsg("请选择文件");
+            return;
+        }
+
+
+        if (irlModel != null){
+            if (files.size() <= 1){
+                irlModel.HRUploadData( request_end_flag, uploadType,map,files,this);
+                this.isUploading = false;
+            }else{
+                irlModel.HRUploadData( request_end_flag, uploadType,map,files.subList(0,files.size() / 2),
+                        this);
+                this.wk_point_id = wk_point_id;
+                this.isUploading = true;
+            }
+            irlView.showProgress();
+        }
+
+        this.map.clear();
+        this.map.putAll(map);
+
+        this.token = token;
+        this.workflow_content_id = workflow_content_id;
+        this.wk_point_id = wk_point_id;
+
+        this.files.clear();
+        this.files.addAll(files);
+    }
+
+    @Override
     public void CarPhoto(String request_end_flag,String uploadType,HashMap<String ,Object> map,String type_id,List<LocalMedia> files) {
         if (map == null){
             irlView.showFailureMsg("请确认信息填写完整");
@@ -531,6 +679,38 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
 
         if (irlModel != null){
             irlModel.SureAmount(map,this);
+        }
+
+        if (irlView != null){
+            irlView.showProgress();
+        }
+    }
+    @Override
+    public void HRSureAmount(HashMap<String ,Object> map) {
+        if (map == null || map.size() <= 0){
+            irlView.showFailureMsg("请确认信息填写完整");
+            return;
+        }
+
+        for (String key :map.keySet()){
+            //对备注不做强制检查，可提交空字符串
+            if (key.equals("remark")){
+                continue;
+            }
+
+            //对降额意见不做强制检查，可提交空字符串
+            if (key.equals("derating_opinion")){
+                continue;
+            }
+
+            if (map.get(key) == null || map.get(key).toString().length() <=0){
+                irlView.showFailureMsg("请确认信息填写完整");
+                return;
+            }
+        }
+
+        if (irlModel != null){
+            irlModel.HRSureAmount(map,this);
         }
 
         if (irlView != null){
@@ -717,68 +897,6 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
         }
     }
 
-//    @Override
-//    public void InfoCheckRefinance(String request_end_flag ,String uploadType,String token,
-//                                   int workflow_content_id,int wk_point_id,
-//                                   String persion_court, String car_break_rules,String insurance,
-//                                   String remark,List<LocalMedia> files) {
-//
-//        if ("".equals(persion_court)){
-//            if (irlView != null){
-//                irlView.showFailureMsg("请输入人法查询结果");
-//            }
-//            return;
-//        }
-//        if ("".equals(car_break_rules)){
-//            if (irlView != null){
-//                irlView.showFailureMsg("请输入违章查询结果");
-//            }
-//            return;
-//        }
-//        if ("".equals(insurance)){
-//            if (irlView != null){
-//                irlView.showFailureMsg("请输入保险查询结果");
-//            }
-//            return;
-//        }
-//        if (null == files || files.size() <= 0
-//                && !irlView.isUploadTypeAdd()){
-//            if (irlView != null){
-//                irlView.showFailureMsg("请选择要上传的照片");
-//            }
-//            return;
-//        }
-//
-//        if (irlModel != null){
-//
-//            if (files.size() <= 1){
-//                irlModel.InfoCheckRefinance( request_end_flag , uploadType, token,  workflow_content_id+"",
-//                        wk_point_id+"", persion_court,  car_break_rules,
-//                        insurance, remark,files,this);
-//                this.isUploading = false;
-//            }else{
-//                irlModel.InfoCheckRefinance( request_end_flag , uploadType, token,  workflow_content_id+"",
-//                        wk_point_id+"", persion_court,  car_break_rules,
-//                        insurance, remark,files.subList(0,files.size() / 2),this);
-//                this.isUploading = true;
-//            }
-//        }
-//        if (irlView != null){
-//            irlView.showProgress();
-//        }
-//
-//        this.token = token;
-//        this.workflow_content_id = workflow_content_id+"";
-//        this.remark = remark;
-//        this.wk_point_id = wk_point_id+"";
-//        this.persion_court = persion_court;
-//        this.car_break_rules = car_break_rules;
-//        this.insurance = insurance;
-//        this.remark = remark;
-//        this.files.clear();
-//        this.files.addAll(files);
-//
-//    }
     @Override
     public void InfoCheckRefinance(String request_end_flag ,String uploadType,HashMap<String ,Object> map,List<LocalMedia> files) {
 
@@ -834,9 +952,9 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
     }
 
     @Override
-    public void Form(String token, int workflow_content_id,int wk_point_id) {
+    public void Form(String token, int workflow_content_id,int wk_point_id,String proc_type_id) {
         if (irlModel != null){
-            irlModel.Form( token,  workflow_content_id, wk_point_id,this);
+            irlModel.Form( token,  workflow_content_id, wk_point_id,proc_type_id,this);
         }
         if (irlView != null){
             irlView.showProgress();

@@ -79,7 +79,7 @@ public class QuestListModelImpl extends ModelImpl implements IQuestListModel{
 
     @Override
     public void WorkflowListAdvPage(String token, String status, String proc_type, int page_Count,
-                                    String name, int order_type,boolean order, String start_date, String end_date,
+                                    String name, int order_type,boolean order, String start_date, String end_date,int filter,
                                     IQuestListListener listener) {
 
         IQuestList service = retrofit.create(IQuestList.class);
@@ -94,6 +94,7 @@ public class QuestListModelImpl extends ModelImpl implements IQuestListModel{
         map.put("order",order);
         map.put("start_date",start_date);
         map.put("end_date",end_date);
+        map.put("filter",filter);
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), new Gson().toJson(map));
 
         Call<QuestListResponse> call = service.WorkflowListAdvPage(body);
@@ -133,7 +134,7 @@ public class QuestListModelImpl extends ModelImpl implements IQuestListModel{
     }
 
     @Override
-    public void PointOpertState(String token, int w_con_id, int w_pot_id, IQuestListListener listener) {
+    public void PointOpertState(String token, int w_con_id, int w_pot_id,String proc_type_id, IQuestListListener listener) {
 
         IQuestList service = retrofit.create(IQuestList.class);
 
@@ -141,6 +142,7 @@ public class QuestListModelImpl extends ModelImpl implements IQuestListModel{
         map.put("token",token);
         map.put("w_con_id",w_con_id);
         map.put("w_pot_id",w_pot_id);
+        map.put("proc_type_id",proc_type_id);
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), new Gson().toJson(map));
 
         Call<ResponseWithNoData> call = service.postPointOpertState(body);

@@ -16,6 +16,8 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Header;
+import retrofit2.http.Part;
 import zjl.com.oa.ApplicationConfig.Constant;
 import zjl.com.oa.Base.ModelImpl;
 import zjl.com.oa.Base.ResponseWithNoData;
@@ -34,7 +36,7 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
     private static final String TAG = "RLEvaluationModelImpl";
 
     @Override
-    public void endWorkFlow(String token, int workflow_content_id, int wk_point_id, String remark,IRLListener listener) {
+    public void endWorkFlow(String token, int workflow_content_id, int wk_point_id, String remark,String  proc_type_id,IRLListener listener) {
 
         IInfoCheck service = retrofit.create(IInfoCheck.class);
 
@@ -43,6 +45,7 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
         map.put("wk_content_id",workflow_content_id);
         map.put("wk_point_id",wk_point_id);
         map.put("remark",remark);
+        map.put("proc_type_id",proc_type_id);
 
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"),new Gson().toJson(map));
 
@@ -77,6 +80,91 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
             }
         });
     }
+
+    @Override
+    public void HRInterview(String request_end_flag,String uploadType,HashMap<String ,Object> map,List<LocalMedia> files,
+                          IRLListener listener) {
+        IRL service = retrofit.create(IRL.class);
+
+        // 创建RequestBody，传入参数："multipart/form-data"，String
+        RequestBody token = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("token").toString());
+        RequestBody w_con_id = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("w_con_id").toString());
+        RequestBody w_pot_id = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("w_pot_id").toString());
+        RequestBody length = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("length").toString());
+        RequestBody identity_id = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("identity_id").toString());
+        RequestBody phone = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("phone").toString());
+        RequestBody purpose = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("purpose").toString());
+        RequestBody amount = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("amount").toString());
+        RequestBody a_name = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("a_name").toString());
+        RequestBody a_desc = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("a_desc").toString());
+        RequestBody a_phone = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("a_phone").toString());
+        RequestBody b_name = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("b_name").toString());
+        RequestBody b_desc = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("b_desc").toString());
+        RequestBody b_phone = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("b_phone").toString());
+        RequestBody c_name = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("c_name").toString());
+        RequestBody c_desc = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("c_desc").toString());
+        RequestBody c_phone = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("c_phone").toString());
+        RequestBody diya_desc = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("diya_desc").toString());
+        RequestBody zhiya_desc = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("zhiya_desc").toString());
+        RequestBody situation = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("situation").toString());
+        RequestBody remark = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("remark").toString());
+        RequestBody type = RequestBody.create(MediaType.parse("multipart/form-data"), uploadType);
+
+        List<MultipartBody.Part> filesBody = new ArrayList<>();
+
+        for (int i=0; i< files.size();i++){
+
+            File file;
+            if (files.get(i).getCompressPath() != null
+                    && files.get(i).getCompressPath().length() >0){
+
+                file = new File(files.get(i).getCompressPath());
+            }else{
+
+                file = new File(files.get(i).getPath());
+            }
+            String subfix = file.getName().trim().substring(
+                    file.getName().trim().lastIndexOf("."),
+                    file.getName().trim().length());
+            RequestBody imgFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            MultipartBody.Part requestImgPart =
+                    MultipartBody.Part.createFormData(file.getName(),  i+""+System.currentTimeMillis() + subfix, imgFile);
+            filesBody.add(requestImgPart);
+
+        }
+
+        Call<ResponseWithNoData> call = service.HRInterview(
+                request_end_flag,token,w_con_id, w_pot_id,length, identity_id,phone,purpose,amount,
+                a_name,a_desc,a_phone,b_name,b_desc,b_phone,c_name,c_desc,c_phone,
+                diya_desc,zhiya_desc,situation,remark,type,filesBody);
+
+        call.enqueue(new Callback<ResponseWithNoData>() {
+            @Override
+            public void onResponse(Call<ResponseWithNoData> call, Response<ResponseWithNoData> response) {
+                if (response.isSuccessful()){
+                    ResponseWithNoData result = response.body();
+                    if (result != null ){
+                        if (result.getCode() == Constant.Succeed){
+                            listener.onSucceed();
+                        }else if (result.getCode() == Constant.LoginAnotherPhone){
+                            listener.relogin();
+                        }else{
+                            listener.onFail(result.getMessage());
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWithNoData> call, Throwable t) {
+//                listListener.onFail(t.getMessage());
+                Log.e(TAG,"网络异常");
+                t.printStackTrace();
+                listener.onFail();
+            }
+        });
+    }
+
     @Override
     public void InfoCheck(String request_end_flag ,String uploadType,HashMap<String ,Object> map,List<LocalMedia> files, IRLListener listener) {
         IRL service = retrofit.create(IRL.class);
@@ -616,6 +704,41 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
     }
 
     @Override
+    public void HRSureAmount(HashMap<String ,Object>map, IRLListener listener) {
+        IRL service = retrofit.create(IRL.class);
+        // 创建RequestBody，传入参数："multipart/form-data"，String
+        RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), new Gson().toJson(map));
+
+        Call<ResponseWithNoData> call = service.HRSureAmount(body);
+
+        call.enqueue(new Callback<ResponseWithNoData>() {
+            @Override
+            public void onResponse(Call<ResponseWithNoData> call, Response<ResponseWithNoData> response) {
+                if (response.isSuccessful()){
+                    ResponseWithNoData result = response.body();
+                    if (result != null){
+                        if (result.getCode() == Constant.Succeed){
+                            listener.onSucceed();
+                        }else if (result.getCode() == Constant.LoginAnotherPhone){
+                            listener.relogin();
+                        }else{
+                            listener.onFail(result.getMessage());
+                        }
+                    }
+                }else{
+                    listener.onFail();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWithNoData> call, Throwable t) {
+                t.printStackTrace();
+                listener.onFail("网络异常，操作失败");
+            }
+        });
+    }
+
+    @Override
     public void SureAmountReturn(String token, String w_con_id, String w_pot_id, String type_id, IRLListener listener) {
         IRL service = retrofit.create(IRL.class);
         // 创建RequestBody，传入参数："multipart/form-data"，String
@@ -686,6 +809,72 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
             }
         });
     }
+
+    @Override
+    public void HRUploadData(String request_end_flag,String uploadType,HashMap<String ,Object> map,List<LocalMedia> files,
+                               IRLListener listener) {
+
+        IRL service = retrofit.create(IRL.class);
+
+        // 创建RequestBody，传入参数："multipart/form-data"，String
+        RequestBody tokenbody = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("token").toString());
+        RequestBody remark_body = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("remark").toString());
+        RequestBody workflow_content_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("w_con_id").toString());
+        RequestBody wk_point_idbody = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("w_pot_id").toString());
+        RequestBody type_body = RequestBody.create(MediaType.parse("multipart/form-data"), uploadType);
+
+        List<MultipartBody.Part> filesBody = new ArrayList<>();
+
+        for (int i=0; i< files.size();i++){
+
+            File file;
+            if (files.get(i).getCompressPath() != null
+                    && files.get(i).getCompressPath().length() >0){
+
+                file = new File(files.get(i).getCompressPath());
+            }else{
+
+                file = new File(files.get(i).getPath());
+            }
+            String subfix = file.getName().trim().substring(
+                    file.getName().trim().lastIndexOf("."),
+                    file.getName().trim().length());
+            RequestBody imgFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            MultipartBody.Part requestImgPart =
+                    MultipartBody.Part.createFormData(file.getName(),  i+""+System.currentTimeMillis() + subfix, imgFile);
+            filesBody.add(requestImgPart);
+
+        }
+
+        Call<ResponseWithNoData> call = service.HRUploadData(request_end_flag,type_body,tokenbody, workflow_content_idbody,remark_body, wk_point_idbody,filesBody);
+
+        call.enqueue(new Callback<ResponseWithNoData>() {
+            @Override
+            public void onResponse(Call<ResponseWithNoData> call, Response<ResponseWithNoData> response) {
+                if (response.isSuccessful()){
+                    ResponseWithNoData result = response.body();
+                    if (result != null ){
+                        if (result.getCode() == Constant.Succeed){
+                            listener.onSucceed();
+                        }else if (result.getCode() == Constant.LoginAnotherPhone){
+                            listener.relogin();
+                        }else{
+                            listener.onFail(result.getMessage());
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWithNoData> call, Throwable t) {
+//                listListener.onFail(t.getMessage());
+                Log.e(TAG,"网络异常");
+                t.printStackTrace();
+                listener.onFail();
+            }
+        });
+    }
+
     @Override
     public void UploadCarPhoto(String request_end_flag,String uploadType,HashMap<String ,Object> map, String type_id, List<LocalMedia> files,
                                IRLListener listener) {
@@ -957,7 +1146,7 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
     }
 
     @Override
-    public void Form(String token, int workflow_content_id, int wk_point_id,IRLListener listener) {
+    public void Form(String token, int workflow_content_id, int wk_point_id,String proc_type_id,IRLListener listener) {
 
         IRL service = retrofit.create(IRL.class);
 
@@ -965,6 +1154,7 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
         map.put("token",token);
         map.put("w_con_id",workflow_content_id);
         map.put("w_pot_id",wk_point_id);
+        map.put("proc_type_id",proc_type_id);
 
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"),new Gson().toJson(map));
 

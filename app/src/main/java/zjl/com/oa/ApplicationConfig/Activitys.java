@@ -143,6 +143,27 @@ public class Activitys {
                 case "32":
                     destClass =  RenewLoanActivity.class;//续贷上传合同
                     break;
+                case "33":
+                    destClass =  RenewLoanActivity.class;//华融车贷面谈
+                    break;
+                case "34":
+                    destClass =  RenewLoanActivity.class;//华融信贷资料上传
+                    break;
+                case "35":
+                    destClass =  RenewLoanActivity.class;//华融信贷审核
+                    break;
+                case "36":
+                    destClass =  RenewLoanActivity.class;//华融信贷家访
+                    break;
+                case "37":
+                    destClass =  RenewLoanActivity.class;//华融信贷定额
+                    break;
+                case "38":
+                    destClass =  RenewLoanActivity.class;//华融信贷签约
+                    break;
+                case "39":
+                    destClass =  RenewLoanActivity.class;//华融信贷放款
+                    break;
                 default:
                     destClass = RenewLoanActivity.class;
             }

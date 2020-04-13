@@ -189,6 +189,7 @@ public class QuestListAdapter extends BaseAdapter {
                         intent.putExtra("wk_point_id",wk_point_id);
                         intent.putExtra("date",data.get(position).getStart_time());
                         intent.putExtra("manager",data.get(position).getUser_name());
+                        intent.putExtra("proc_type_id",data.get(position).getProc_type_id());
                         context.startActivity(intent);
                 }
             });
@@ -235,9 +236,9 @@ public class QuestListAdapter extends BaseAdapter {
                         intent.setClass(context, WorkFlowActivity.class);
                         intent.putExtra("workflow_content_id", workflow_content_id);
                         intent.putExtra("date",data.get(position).getStart_time());
-                        intent.putExtra("date",data.get(position).getStart_time());
                         intent.putExtra("manager",data.get(position).getUser_name());
                         intent.putExtra("state",data.get(position).getStatus());
+                        intent.putExtra("proc_type_id",data.get(position).getProc_type_id());
                         context.startActivity(intent);
                     }
             });
@@ -513,6 +514,7 @@ public class QuestListAdapter extends BaseAdapter {
             String wk_point_id = data.get(position).getNext_approval_list().get(index).getWorkflow_point_id();
             String workflow_content_id = data.get(position).getWorkflow_content_id();
             String workflow_name = data.get(position).getNext_approval_list().get(index).getWorkflow_name();
+            String proc_type_id = data.get(position).getProc_type_id();
             int role_flag = data.get(position).getNext_approval_list().get(index).getRole_flag();
 
             int point_oper_flag = data.get(position).getNext_approval_list().get(index).getPoint_oper_flag();
@@ -525,6 +527,7 @@ public class QuestListAdapter extends BaseAdapter {
                 intent.putExtra("type","refinance");
                 intent.putExtra("workflow_content_id",workflow_content_id);
                 intent.putExtra("wk_point_id",wk_point_id);
+                intent.putExtra("proc_type_id",proc_type_id);
                 context.sendBroadcast(intent);
                 return;
             }
@@ -536,6 +539,7 @@ public class QuestListAdapter extends BaseAdapter {
                 intent.putExtra("type","endflow");
                 intent.putExtra("workflow_content_id",workflow_content_id);
                 intent.putExtra("wk_point_id",wk_point_id);
+                intent.putExtra("proc_type_id",proc_type_id);
                 context.sendBroadcast(intent);
                 return;
             }
@@ -550,6 +554,7 @@ public class QuestListAdapter extends BaseAdapter {
             intent.putExtra("workflow_content_id",workflow_content_id);
             intent.putExtra("wk_point_id",wk_point_id);
             intent.putExtra("workflow_name",workflow_name);
+            intent.putExtra("proc_type_id",proc_type_id);
 
             //面谈节点步骤ID,添加日期和经理
             //录入订单节点步骤ID,添加日期和经理

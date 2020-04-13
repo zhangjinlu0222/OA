@@ -127,11 +127,14 @@ public class QuestFragment extends Fragment implements IQuestListView, PullToRef
     private String enddate;
     private String type;
     private String status;
+    private boolean showRefinance = true;
     private int w_con_id;
     private int w_pot_id;
     private String date,manager,way,stepInType;
     private String workflow_name;
     private int scrollPosition;
+
+    private String proc_type_id;
 
 
     public QuestFragment() {
@@ -386,6 +389,7 @@ public class QuestFragment extends Fragment implements IQuestListView, PullToRef
         intent.putExtra("workflow_content_id", "0");
         intent.putExtra("wk_point_id", "1");
         intent.putExtra("workflow_name", "来访");
+        intent.putExtra("proc_type_id", "0");
         startActivity(intent);
     }
 
@@ -397,6 +401,7 @@ public class QuestFragment extends Fragment implements IQuestListView, PullToRef
             intent.putExtra("enddate",enddate);
             intent.putExtra("type",type);
             intent.putExtra("status",status);
+            intent.putExtra("showRefinance",showRefinance);
         }
         startActivityForResult(intent, SearchAction);
     }
@@ -438,7 +443,7 @@ public class QuestFragment extends Fragment implements IQuestListView, PullToRef
             }
             if (highFilter){
                 questListPresenter.WorkflowListAdvPage(token,status,type,currentPageCount,name,
-                        currentFliter,currentOrder,startdate,enddate);
+                        currentFliter,currentOrder,startdate,enddate,showRefinance?0:1);
             }else{
                 questListPresenter.WorkflowListOrder(token, currentFliter, currentPageCount, currentOrder);
             }
@@ -455,6 +460,7 @@ public class QuestFragment extends Fragment implements IQuestListView, PullToRef
         intent.putExtra("workflow_content_id",w_con_id+"");
         intent.putExtra("wk_point_id",w_pot_id+"");
         intent.putExtra("workflow_name",workflow_name+"");
+        intent.putExtra("proc_type_id",proc_type_id);
 
         //录入订单节点步骤ID,添加日期和经理
         if (w_pot_id == 30 )
@@ -527,7 +533,7 @@ public class QuestFragment extends Fragment implements IQuestListView, PullToRef
 
             if (highFilter){
                 questListPresenter.WorkflowListAdvPage(token,status,type,currentPageCount,name,
-                        currentFliter,currentOrder,startdate,enddate);
+                        currentFliter,currentOrder,startdate,enddate,showRefinance?0:1);
             }else{
                 questListPresenter.WorkflowListOrder(token, currentFliter, currentPageCount, currentOrder);
             }
@@ -542,14 +548,14 @@ public class QuestFragment extends Fragment implements IQuestListView, PullToRef
 
             if (highFilter){
                 questListPresenter.WorkflowListAdvPage(token,status,type,currentPageCount,name,
-                        currentFliter,currentOrder,startdate,enddate);
+                        currentFliter,currentOrder,startdate,enddate,showRefinance?0:1);
             }else{
                 questListPresenter.WorkflowListOrder(token, currentFliter, currentPageCount, currentOrder);
             }
         }
     }
 
-    public void showAlertDialog(String type,int w_con_id, int w_pot_id) {
+    public void showAlertDialog(String type,int w_con_id, int w_pot_id,String proc_type_id,int position,int index) {
 
         View rootView = View.inflate(context, R.layout.workflow_reedit_dialog, null);
         acceptDialog = DialogUIUtils.showCustomAlert(context, rootView);
@@ -597,66 +603,7 @@ public class QuestFragment extends Fragment implements IQuestListView, PullToRef
                     questListPresenter.CreateRefinance(token, w_con_id);
                 }
                 if ("takeproject".equals(type)){
-                    questListPresenter.PointOpertState(token, w_con_id, w_pot_id);
-                }
-                if ("endflow".equals(type)){
-                    questListPresenter.CloseFlow(token, w_con_id);
-                }
-            }
-        });
-        if (acceptDialog!= null){
-            acceptDialog.show();
-        }
-    }
-    public void showAlertDialog(String type,int w_con_id, int w_pot_id,int position,int index) {
-
-        View rootView = View.inflate(context, R.layout.workflow_reedit_dialog, null);
-        acceptDialog = DialogUIUtils.showCustomAlert(context, rootView);
-
-
-        TextView title = rootView.findViewById(R.id.title);
-
-        if ("refinance".equals(type)){
-            title.setText("确认续贷");
-        }
-        if ("takeproject".equals(type)){
-            title.setText("确认开始执行");
-        }
-        if ("endflow".equals(type)){
-            title.setText("结清");
-        }
-
-        TextView cancel = rootView.findViewById(R.id.tv_cancel);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogUIUtils.dismiss(acceptDialog);
-                acceptDialog = null;
-            }
-        });
-
-        TextView confirm = rootView.findViewById(R.id.tv_confirm);
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogUIUtils.dismiss(acceptDialog);
-                /**
-                 * 弹框在关闭后设置为null，防止多次显示
-                 */
-                acceptDialog = null;
-                if (!getNetState()) {
-                    questAndSetting.showNetError();
-                    return;
-                }
-                if (dialog != null){
-                    dialog.msg = "确认中";
-                }
-
-                if ("refinance".equals(type)){
-                    questListPresenter.CreateRefinance(token, w_con_id);
-                }
-                if ("takeproject".equals(type)){
-                    questListPresenter.PointOpertState(token, w_con_id, w_pot_id);
+                    questListPresenter.PointOpertState(token, w_con_id, w_pot_id,proc_type_id);
                 }
                 if ("endflow".equals(type)){
                     questListPresenter.CloseFlow(token, w_con_id);
@@ -719,7 +666,7 @@ public class QuestFragment extends Fragment implements IQuestListView, PullToRef
                 }
                 if (highFilter){
                     questListPresenter.WorkflowListAdvPage(token,status,type,currentPageCount,name,
-                            currentFliter,currentOrder,startdate,enddate);
+                            currentFliter,currentOrder,startdate,enddate,showRefinance?0:1);
                 }else{
                     questListPresenter.WorkflowListOrder(token, currentFliter, currentPageCount, currentOrder);
                 }
@@ -743,7 +690,7 @@ public class QuestFragment extends Fragment implements IQuestListView, PullToRef
                 }
                 if (highFilter){
                     questListPresenter.WorkflowListAdvPage(token,status,type,currentPageCount,name,
-                            currentFliter,currentOrder,startdate,enddate);
+                            currentFliter,currentOrder,startdate,enddate,showRefinance?0:1);
                 }else {
                     questListPresenter.WorkflowListOrder(token, currentFliter, currentPageCount, currentOrder);
                 }
@@ -766,7 +713,7 @@ public class QuestFragment extends Fragment implements IQuestListView, PullToRef
                 }
                 if (highFilter){
                     questListPresenter.WorkflowListAdvPage(token,status,type,currentPageCount,name,
-                            currentFliter,currentOrder,startdate,enddate);
+                            currentFliter,currentOrder,startdate,enddate,showRefinance?0:1);
                 }else{
                     questListPresenter.WorkflowListOrder(token, currentFliter, currentPageCount, currentOrder);
                 }
@@ -789,7 +736,7 @@ public class QuestFragment extends Fragment implements IQuestListView, PullToRef
                 }
                 if (highFilter){
                     questListPresenter.WorkflowListAdvPage(token,status,type,currentPageCount,name,
-                            currentFliter,currentOrder,startdate,enddate);
+                            currentFliter,currentOrder,startdate,enddate,showRefinance?0:1);
                 }else{
                     questListPresenter.WorkflowListOrder(token, currentFliter, currentPageCount, currentOrder);
                 }
@@ -809,6 +756,8 @@ public class QuestFragment extends Fragment implements IQuestListView, PullToRef
             w_pot_id = Integer.parseInt(intent.getStringExtra("wk_point_id") == null? "0":intent.getStringExtra("wk_point_id"));
             workflow_name = intent.getStringExtra("workflow_name");
 
+            proc_type_id = intent.getStringExtra("proc_type_id");
+
             //录入订单节点步骤ID,需要日期和经理
             if (w_pot_id == 30) {
                 date = intent.getStringExtra("date");
@@ -824,8 +773,7 @@ public class QuestFragment extends Fragment implements IQuestListView, PullToRef
             //接单的时候传入位置，接单成功后刷新本地数据
             questAndSetting.itemPosition = intent.getIntExtra("position",-1);
             questAndSetting.itemIndex = intent.getIntExtra("index",-1);
-            showAlertDialog(type,w_con_id, w_pot_id,questAndSetting.itemPosition,questAndSetting.itemIndex);
-//            showAlertDialog(type,w_con_id, w_pot_id);
+            showAlertDialog(type,w_con_id, w_pot_id,proc_type_id,questAndSetting.itemPosition,questAndSetting.itemIndex);
         }
     }
 
@@ -844,6 +792,8 @@ public class QuestFragment extends Fragment implements IQuestListView, PullToRef
             enddate = data.getStringExtra("enddate");
             type = data.getStringExtra("type");
             status = data.getStringExtra("status");
+            showRefinance = data.getBooleanExtra("showRefinance",true);
+
 
             currentFliter = 1;
             currentPageCount = 1;
@@ -855,7 +805,7 @@ public class QuestFragment extends Fragment implements IQuestListView, PullToRef
             }
             if (questListPresenter != null){
                 questListPresenter.WorkflowListAdvPage(token,status,type,currentPageCount,name,
-                        currentFliter,currentOrder,startdate,enddate);
+                        currentFliter,currentOrder,startdate,enddate,showRefinance?0:1);
             }
         }else{
             highFilter = false;

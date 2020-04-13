@@ -53,7 +53,7 @@ public class WorkDetailActivity extends BaseActivity implements IWorkFlowView {
     private WorkDetailAdapter workDetailAdapter;
     private List<WorkFlowGroupData> groupData = new ArrayList<>();
     private List<List<GetWorkFlowResponse.Result.Section.dict>> childData = new ArrayList<>();
-    private String workflow_content_id, token, date, manager;
+    private String workflow_content_id, token, date, manager,proc_type_id;
     private String wx_share_content;
 
     @Override
@@ -77,6 +77,7 @@ public class WorkDetailActivity extends BaseActivity implements IWorkFlowView {
         workflow_content_id = getIntent().getStringExtra("workflow_content_id");
         date = getIntent().getStringExtra("date");
         manager = getIntent().getStringExtra("manager");
+        proc_type_id = getIntent().getStringExtra("proc_type_id");
         token = UserInfo.getInstance(context).getUserInfo(UserInfo.TOKEN);
 
         tvTime.setText(date);
@@ -84,7 +85,7 @@ public class WorkDetailActivity extends BaseActivity implements IWorkFlowView {
 
         workFlowPresenter = new WorkFlowPresenterImpl(this);
         submitDialog.msg = "加载中";
-        workFlowPresenter.getWorkDetail(token, workflow_content_id);
+        workFlowPresenter.getWorkDetail(token, workflow_content_id,proc_type_id);
     }
 
 
@@ -149,6 +150,7 @@ public class WorkDetailActivity extends BaseActivity implements IWorkFlowView {
             for (GetWorkFlowResponse.Result.Section section : result.getList()) {
                 WorkFlowGroupData wfGroupData = new WorkFlowGroupData();
                 wfGroupData.setEdit(result.getEdit());
+                wfGroupData.setProcTypeId(result.getProc_type_id());
                 wfGroupData.setDate(section.getDate());
                 wfGroupData.setReedit_flag(section.getReedit_flag());
                 wfGroupData.setState(section.getState());

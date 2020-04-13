@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.dou361.dialogui.DialogUIUtils;
 import com.dou361.dialogui.listener.DialogUIDateTimeSaveListener;
 import com.dou361.dialogui.widget.DateSelectorWheelView;
+import com.kyleduo.switchbutton.SwitchButton;
 
 import org.angmarch.views.NiceSpinner;
 
@@ -53,11 +54,14 @@ public class SearchActivity extends BaseActivity implements ISearchView {
     NiceSpinner nsSearchTypes;
     @Bind(R.id.ns_SearchStatus)
     NiceSpinner nsSearchStatus;
+    @Bind(R.id.showRefinance)
+    SwitchButton btnShowRefinance;
 
     private ISearchPresenter iSearchPresenter;
     private List<String> status = new ArrayList<>();
     private List<String> type = new ArrayList<>();
     private String mSearchName,mSearchStartdate,mSearchEnddate,mSearchType,mSearchStatus;
+    private boolean showRefinance = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +87,8 @@ public class SearchActivity extends BaseActivity implements ISearchView {
         mSearchEnddate = getIntent().getStringExtra("enddate");
         mSearchType = getIntent().getStringExtra("type");
         mSearchStatus = getIntent().getStringExtra("status");
+        showRefinance = getIntent().getBooleanExtra("showRefinance",true);
+
 
         if (mSearchName != null && mSearchName.length() > 0){
             name.setText(mSearchName);
@@ -95,6 +101,8 @@ public class SearchActivity extends BaseActivity implements ISearchView {
         if (mSearchEnddate != null && mSearchEnddate.length() > 0){
             enddate.setText(mSearchEnddate);
         }
+
+        btnShowRefinance.setChecked(showRefinance);
     }
 
     @OnClick({R.id.ig_back, R.id.name, R.id.startdate, R.id.rl_start_date, R.id.enddate, R.id.rl_end_date, R.id.btn_reset, R.id.btn_search})
@@ -124,6 +132,7 @@ public class SearchActivity extends BaseActivity implements ISearchView {
                     intent.putExtra("enddate", getEndDate());
                     intent.putExtra("type", getSearchType());
                     intent.putExtra("status", getSearchStatus());
+                    intent.putExtra("showRefinance", btnShowRefinance.isChecked());
                     setResult(RESULT_OK, intent);
                 }
                 this.finish();
@@ -134,7 +143,7 @@ public class SearchActivity extends BaseActivity implements ISearchView {
     private boolean searchOptionsValid(){
         if ("".equals(getSearchName())  && "".equals(getStartDate())
                 && "".equals(getEndDate()) && "全部".equals(getSearchType())
-                && "全部".equals(getSearchStatus())){
+                && "全部".equals(getSearchStatus()) && btnShowRefinance.isChecked()){
             return false;
         }
         return true;

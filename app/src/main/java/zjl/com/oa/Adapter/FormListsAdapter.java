@@ -501,8 +501,13 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
 
         //初始值如果为空，即没有选择的情况下,设置选中第一个
         String value = formLists.get(pos).getData_con();
-        if (formLists.get(pos).getData_con().equals("")){
+        if (units.indexOf(value) < 0){
+
             formLists.get(pos).setData_con(units.get(0));
+//        }
+//
+//        if (formLists.get(pos).getData_con().equals("")){
+//            formLists.get(pos).setData_con(units.get(0));
 //            viewHolder.nsSelector.setSelectedIndex(1);
         }else{
         //初始值不为空，则显示初始值内容
@@ -555,8 +560,8 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
     }
     private void setContentValue(Form11 viewHolder,int pos){
         viewHolder.position = pos;
-        String data = formLists.get(pos).getData_con().toString().trim();
-        String hint = formLists.get(pos).getPlace_holder().toString().trim();
+        String data = formLists.get(pos).getData_con().trim();
+        String hint = formLists.get(pos).getPlace_holder().trim();
         boolean readonly = formLists.get(pos).isRead_only();
         if (data.length() > 0){
             viewHolder.content.setText(data);
@@ -575,11 +580,23 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
         String data = formLists.get(pos).getData_con().trim();
         String hint = formLists.get(pos).getPlace_holder().trim();
         String title = formLists.get(pos).getControl_title().trim();
+        boolean isReadOnly = formLists.get(pos).isRead_only();
+        String submitField = formLists.get(pos).submit_field;
         viewHolder.title.setText(title);
         if (data.length() > 0){
             viewHolder.content.setText(data);
         }else{
-            viewHolder.content.setHint(hint);
+            if (submitField != null && submitField.equals("")){
+                viewHolder.content.setText("暂无");
+            }else{
+                viewHolder.content.setHint(hint);
+            }
+        }
+
+        if (isReadOnly){
+            viewHolder.content.setEnabled(false);
+        }else{
+            viewHolder.content.setEnabled(true);
         }
     }
     private void setContentValue(Form13 viewHolder,int pos){

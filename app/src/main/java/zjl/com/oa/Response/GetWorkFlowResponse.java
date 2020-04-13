@@ -19,11 +19,6 @@ public class GetWorkFlowResponse extends BaseResponse {
         this.Result = result;
     }
 
-    /**
-     * Created by Administrator on 2018/3/1.
-     */
-
-
     public static class Result {
         public int edit;
         public String wx_share_content;

@@ -78,6 +78,9 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
     private String workflow_name;
     private String token;
 
+    //业务类型id，区别华融车贷和车励享车贷
+    private String proc_type_id;
+
     private List<FormResponse.Result.Form> formLists = new ArrayList<>();
     private FormListsAdapter formListsAdapter;
 
@@ -111,6 +114,7 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
         workflow_content_id = Integer.parseInt(getIntent().getStringExtra("workflow_content_id"));
         wk_point_id = Integer.parseInt(getIntent().getStringExtra("wk_point_id"));
         workflow_name = getIntent().getStringExtra("workflow_name");
+        proc_type_id = getIntent().getStringExtra("proc_type_id");
         token = UserInfo.getInstance(this).getUserInfo(UserInfo.TOKEN);
 
         if (wk_point_id == 27){
@@ -128,7 +132,8 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
             tvTitle.setText(workflow_name);
         }
 
-        if (workflow_name.contains("定额")) {
+        //华融信贷定额节点（37）除外
+        if (workflow_name.contains("定额") && (37!=wk_point_id)) {
             rlrenewloanRlUpload.setVisibility(View.VISIBLE);
             if (type != null && type.equals("bohui")){
                 renewloanBtnUpload.setEnabled(false);
@@ -164,7 +169,7 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
         } else {
             rlrenewloanRlUpload.setVisibility(View.GONE);
         }
-        iRLPresenter.Form(token, workflow_content_id, wk_point_id);
+        iRLPresenter.Form(token, workflow_content_id, wk_point_id,proc_type_id);
 
         formListsAdapter = new FormListsAdapter(formLists, RenewLoanActivity.this, listview);
         listview.setAdapter(formListsAdapter);
@@ -829,6 +834,167 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                             selectList);
                 }
                 break;
+            case 33:
+
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
+                }
+
+                if (iRLPresenter != null) {
+                    iRLPresenter.HRInterview(
+                            request_start_flag,
+                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+                            map,selectList);
+                }
+                break;
+            case 34:
+
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
+                }
+
+                if (iRLPresenter != null) {
+                    iRLPresenter.HRUploadData(
+                            request_start_flag,
+                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+                            map,selectList);
+                }
+                break;
+            case 35:
+
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
+                }
+
+                selectList.clear();
+
+                if (iRLPresenter != null) {
+                    iRLPresenter.HRUploadData(
+                            request_start_flag,
+                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+                            map,selectList);
+                }
+                break;
+            case 36:
+
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
+                }
+
+                if (iRLPresenter != null) {
+                    iRLPresenter.HRUploadData(
+                            request_start_flag,
+                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+                            map,selectList);
+                }
+                break;
+            case 37:
+
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
+                }
+
+                if (iRLPresenter != null) {
+                    iRLPresenter.HRSureAmount(map);
+                }
+                break;
+
+            case 38:
+
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
+                }
+
+                if (iRLPresenter != null) {
+                    iRLPresenter.HRUploadData(
+                            request_start_flag,
+                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+                            map,selectList);
+                }
+                break;
+            case 39:
+
+                map.clear();
+                map.put("token",token );
+                map.put("w_con_id", workflow_content_id);
+                map.put("w_pot_id", wk_point_id);
+
+                for (int i=0;i< formLists.size();i++){
+                    String submit_field = formLists.get(i).getSubmit_field();
+
+                    if (submit_field != null && submit_field.length() >0){
+                        String value = formLists.get(i).getData_con();
+                        map.put(submit_field,value);
+                    }
+                }
+
+                if (iRLPresenter != null) {
+                    iRLPresenter.HRUploadData(
+                            request_start_flag,
+                            !uploadType ? UPLOAD_TYPE_NORMAL : UPLOAD_TYPE_ADD,
+                            map,selectList);
+                }
+                break;
         }
     }
 
@@ -1233,7 +1399,7 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                         switch (wk_point_id){
                             case 3:
                                 iRLPresenter.endWorkFlow(token, workflow_content_id, wk_point_id,
-                                        et.getText().toString().trim());
+                                        et.getText().toString().trim(),proc_type_id);
                                 break;
                             case 7:
                                 HashMap<String ,Object> feedbackInfo = new HashMap<>();

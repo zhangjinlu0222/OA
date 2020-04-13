@@ -138,9 +138,9 @@ public class WorkFlowAdapter extends BaseExpandableListAdapter implements View.O
         if (reedit_flag == 0){
             groupViewHolder.relativeLayout.setBackgroundColor(Color.parseColor("#f7b732"));//驳回颜色
         }else{
-            if (date.equals("未开始")){
+            if ( date != null && date.equals("未开始")){
                 groupViewHolder.relativeLayout.setBackgroundColor(Color.parseColor("#b2b2b2"));//未开始颜色
-            }else if (date.equals("待处理")){
+            }else if (date != null && date.equals("待处理")){
                 groupViewHolder.relativeLayout.setBackgroundColor(Color.parseColor("#3edea9"));//待处理颜色
             }else{
                 groupViewHolder.relativeLayout.setBackgroundColor(Color.parseColor("#0f4b88"));//完成颜色
