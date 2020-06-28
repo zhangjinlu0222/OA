@@ -58,6 +58,8 @@ public class SettingFragment extends Fragment implements ISettingView {
     ImageView settingIgRight3;
     @Bind(R.id.setting_tv_fixLoginPwd)
     TextView settingTvFixLoginPwd;
+    @Bind(R.id.setting_tv_bangke)
+    TextView settingTvBangKe;
     @Bind(R.id.version)
     TextView version;
     @Bind(R.id.setting_ig_right4)
@@ -163,7 +165,11 @@ public class SettingFragment extends Fragment implements ISettingView {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.setting_ig_sex, R.id.setting_tv_name, R.id.setting_name, R.id.setting_ig_right, R.id.setting_tv_department, R.id.setting_department, R.id.setting_ig_right2, R.id.setting_tv_phone, R.id.setting_phone, R.id.setting_ig_right3, R.id.setting_tv_fixLoginPwd, R.id.setting_ig_right4, R.id.button2})
+    @OnClick({R.id.setting_ig_sex, R.id.setting_tv_name, R.id.setting_name, R.id.setting_ig_right,
+            R.id.setting_tv_department, R.id.setting_department, R.id.setting_ig_right2,
+            R.id.setting_tv_phone, R.id.setting_phone, R.id.setting_ig_right3,
+            R.id.setting_tv_fixLoginPwd, R.id.setting_ig_right4, R.id.button2,
+    R.id.setting_ig_right7,R.id.setting_tv_bangke})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.setting_ig_sex:
@@ -183,6 +189,13 @@ public class SettingFragment extends Fragment implements ISettingView {
             case R.id.setting_tv_phone:
                 break;
             case R.id.setting_phone:
+                break;
+            case R.id.setting_ig_right7:
+            case R.id.setting_tv_bangke:
+                Intent bangke = new Intent(getActivity(),BangkeActivity.class);
+                String phone = UserInfo.getInstance(getContext()).getUserInfo(UserInfo.PHONE);
+                bangke.putExtra("phone", phone);
+                startActivity(bangke);
                 break;
             case R.id.setting_ig_right3:
             case R.id.setting_tv_fixLoginPwd:

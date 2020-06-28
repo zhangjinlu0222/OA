@@ -32,8 +32,8 @@ android {
         applicationId "zjl.com.oa"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 15
-        versionName "1.0.1.5"
+        versionCode 20
+        versionName "1.0.2.0"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
@@ -99,4 +99,6 @@ dependencies {
     //SwitchButton
     compile project(path: ':library')
     implementation project(':picture_library')
+    //二维码生成核心库
+    implementation 'com.google.zxing:core:3.3.0'
 }

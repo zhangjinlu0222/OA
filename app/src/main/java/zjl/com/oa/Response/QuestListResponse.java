@@ -66,6 +66,8 @@ public class QuestListResponse extends BaseResponse{
 
             private String status;
 
+            private String status_name;
+
             private int oper_flag = -1;
 
             private String refinance = "";
@@ -151,6 +153,10 @@ public class QuestListResponse extends BaseResponse{
                 this.status = status;
             }
             public String getStatus(){return this.status;}
+
+            public String getStatus_Name(){
+                return this.status_name;
+            }
 
             public String getRefinance() {
                 return refinance;

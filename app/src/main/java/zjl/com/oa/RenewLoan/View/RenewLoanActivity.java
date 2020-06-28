@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -1460,6 +1462,46 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
             }
         });
         dialog.show();
+    }
+
+    public void updateFormItemContent(){
+
+        if (!workflow_name.equals("业务反馈")){
+            return;
+        }
+
+        double totalCount = 0.00;
+
+        for (FormResponse.Result.Form form : formLists) {
+
+            String title = form.getControl_title();
+
+            String frontColor = form.getFront_color();
+
+//            if (title != null && (
+//                    title.contains("停车费") || title.contains("GPS费")||title.contains("首扣利息")||
+//                            title.contains("抵押登记") || title.contains("评估核档")||
+//                            title.contains("保证金") || title.contains("违章押金")||
+//                            title.contains("保险押金") || title.contains("审车押金")
+//            ))
+
+            if (frontColor != null && frontColor.equals("1"))
+            {
+                String value = form.getData_con();
+                if (value == null || value.equals("")){
+                    value="0";
+                }
+                totalCount = totalCount + Double.parseDouble(value);
+            }
+
+            if (title != null && title.equals("首扣")){
+
+                form.setData_con(totalCount+"");
+
+                formListsAdapter.notifyDataSetChanged();
+            }
+
+        }
     }
 
 }

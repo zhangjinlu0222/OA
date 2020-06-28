@@ -80,7 +80,11 @@ public class Constant {
 
     public static final String LookSureAmount = "WebApi/V1/Workflow/LookSureAmount";
     public static final String SureAmountReturn = "WebApi/V1/Workflow/SureAmountReturn";
-    public static final String BusFeedback = "WebApi/V1/Workflow/BusFeedback";
+
+    //2020.4.21,业务反馈接口更新为V2
+//    public static final String BusFeedback = "WebApi/V1/Workflow/BusFeedback";
+    public static final String BusFeedback = "WebApi/V1/Workflow/BusFeedback_V2";
+
     public static final String BusFirstFeedback = "WebApi/V1/Workflow/BusFirstFeedback";
     public static final String LookFeedbackResult = "WebApi/V1/Workflow/LookFeedbackResult";
     public static final String FeedbackResult = "WebApi/V1/Workflow/FeedbackResult";

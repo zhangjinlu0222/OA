@@ -303,6 +303,41 @@
             android:layout_marginRight="8dp"
             android:contentDescription="@null"
             android:src="@mipmap/setting_ig_next" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="20dp"
+            android:background="#dddddd" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#ffffff">
+
+        <TextView
+            android:id="@+id/setting_tv_bangke"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="false"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@+id/setting_ig_right7"
+            android:gravity="center_vertical"
+            android:text="@string/bangke"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/setting_ig_right7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:contentDescription="@null"
+            android:src="@mipmap/setting_ig_next" />
 
     </RelativeLayout>
     <RelativeLayout
@@ -315,7 +350,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="68dp"
             android:layout_marginRight="68dp"
-            android:layout_marginTop="140dp"
+            android:layout_marginTop="100dp"
             android:background="@mipmap/setting_bg_signup"
             android:text="@string/logout"
             android:textColor="#ffffff"

@@ -299,10 +299,16 @@ public class QuestListAdapter extends BaseAdapter {
         holder.projectManager.setText(data.get(position).getUser_name().trim());
         holder.projectCar.setText(data.get(position).getCar_type().trim());
 
-        String state = data.get(position).getStatus().trim();
+        //直接获取状态内容，通过内容获取颜色，不在通过status的值来获取内容和颜色
+//        String state = data.get(position).getStatus().trim();
+//        QuestState questState = new QuestState();
+//        holder.projectState.setText(questState.getStateString(state));
+//        holder.projectState.setTextColor(questState.getStateColor(state));
+//
+        String status_name = data.get(position).getStatus_Name().trim();
         QuestState questState = new QuestState();
-        holder.projectState.setText(questState.getStateString(state));
-        holder.projectState.setTextColor(questState.getStateColor(state));
+        holder.projectState.setText(status_name);
+        holder.projectState.setTextColor(questState.getStatusNameColor(status_name));
 
         List<QuestListResponse.Result.Data.Next_approval_list> list = data.get(position).getNext_approval_list();
 

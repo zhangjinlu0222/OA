@@ -157,20 +157,37 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
                 irlView.showFailureMsg("请确认信息填写完整");
                 return;
             }
-            if(key.equals("identity_id")
-                    && (map.get(key) == null
-                    || map.get(key).toString().length() <=0
-                    || !IDCardUtil.IDCardValidate(map.get(key).toString()))){
-                irlView.showFailureMsg("请确认信息填写完整");
-                return;
+
+            if(key.equals("identity_id")){
+
+                if (map.get(key) == null
+                        || map.get(key).toString().length() <=0){
+                    irlView.showFailureMsg("请输入身份证号");
+                    return;
+                }
+
+                if (map.get(key) != null
+                         && !IDCardUtil.IDCardValidate(map.get(key).toString())){
+                    irlView.showFailureMsg("请输入正确的身份证号");
+                    return;
+                }
             }
-            if(key.equals("phone")
-                    && (map.get(key) == null
-                    || map.get(key).toString().length() <=0
-                    || !PhoneUtils.isChinaPhoneLegal(map.get(key).toString()))){
-                irlView.showFailureMsg("请确认信息填写完整");
-                return;
+
+            if(key.equals("phone")){
+
+                if (map.get(key) == null
+                        || map.get(key).toString().length() <=0){
+                    irlView.showFailureMsg("请输入手机号");
+                    return;
+                }
+
+                if (map.get(key) != null
+                         && !PhoneUtils.isChinaPhoneLegal(map.get(key).toString())){
+                    irlView.showFailureMsg("请输入正确的手机号");
+                    return;
+                }
             }
+
             if(key.equals("purpose") && (map.get(key) == null || map.get(key).toString().length() <=0)){
                 irlView.showFailureMsg("请确认信息填写完整");
                 return;
@@ -472,6 +489,11 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
         for (String key :map.keySet()){
             //不对备注进行强制检查，可以提交空字符串
             if (key.equals("comment")){
+                continue;
+            }
+
+            //不对同行进行强制检查，可以提交空字符串
+            if (key.equals("tonghang_phone")){
                 continue;
             }
 

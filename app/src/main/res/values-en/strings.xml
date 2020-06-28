@@ -177,4 +177,6 @@
     <string name="milage">公里</string>
     <string name="auto_update">局部刷新</string>
     <string name="project_tv_provider">车励享</string>
+    <string name="bangke">车励享帮客</string>
+    <string name="share_to_friend">分享给好友</string>
 </resources>

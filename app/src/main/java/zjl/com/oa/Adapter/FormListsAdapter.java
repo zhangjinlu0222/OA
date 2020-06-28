@@ -62,6 +62,8 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
      * Form9*/
     private OnItemClickListener mOnItemClickListener;
 
+    private int iCurrentIndex = -1;
+
     public interface OnItemClickListener {
         void onItemClick(View view , int itemPosition);
     }
@@ -329,9 +331,7 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
 
         }else{
             viewHolder.content.setInputType(InputType.TYPE_CLASS_TEXT);
-
         }
-
 
         if (viewHolder.img != null){
             String url = formLists.get(pos).getTitle_img();
@@ -364,7 +364,33 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
             viewHolder.content.invalidate();
         }
 
+        viewHolder.content.setOnTouchListener(new myOnTouchListener(pos));
 
+//        viewHolder.content.clearFocus();
+
+        if (pos == iCurrentIndex){
+            viewHolder.content.requestFocus();
+        }
+
+
+    }
+
+
+    private class myOnTouchListener implements View.OnTouchListener{
+
+        int position;
+
+        myOnTouchListener(int pos){
+            this.position = pos;
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_UP){
+                iCurrentIndex = position;
+            }
+            return false;
+        }
     }
 
     private void setContentValue(Form2 viewHolder,int pos){
@@ -633,13 +659,14 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) {
 
                     formLists.get(position).setData_con(s.toString());
+
+                    context.updateFormItemContent();
                 }
             });
 
