@@ -1,5 +1,6 @@
 package zjl.com.oa.Setting.Model;
 
+import zjl.com.oa.Response.UserInfoResponse;
 import zjl.com.oa.Setting.Presenter.ISettingModel;
 import zjl.com.oa.Setting.Presenter.ISettingPresenter;
 import zjl.com.oa.Setting.Presenter.ISettingListener;
@@ -22,6 +23,12 @@ public class SettingPresenterImpl implements ISettingPresenter,ISettingListener 
     public void logout(String token) {
         if (iSettingModel != null){
             iSettingModel.logout(token,this);
+        }
+    }
+    @Override
+    public void getUserInfo(String token) {
+        if (iSettingModel != null){
+            iSettingModel.getUserInfo(token,this);
         }
     }
 
@@ -77,6 +84,14 @@ public class SettingPresenterImpl implements ISettingPresenter,ISettingListener 
             iSettingView.toMainActivity();
         }
         if (iSettingView != null){
+            iSettingView.hideProgressBar();
+        }
+    }
+
+    @Override
+    public void onSucceed(UserInfoResponse.Data data){
+        if (iSettingView != null){
+            iSettingView.saveUserInfo(data);
             iSettingView.hideProgressBar();
         }
     }

@@ -33,7 +33,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 26
         versionCode 20
-        versionName "1.0.2.0"
+        versionName "1.0.2.2"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
@@ -101,4 +101,8 @@ dependencies {
     implementation project(':picture_library')
     //二维码生成核心库
     implementation 'com.google.zxing:core:3.3.0'
+    //pdf阅读器
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+    //进度条
+    compile 'com.github.maning0303:MNProgressHUD:V1.1.7'
 }

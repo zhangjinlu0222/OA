@@ -6,6 +6,7 @@ package zjl.com.oa.Setting.Presenter;
 
 public interface ISettingPresenter {
     void logout(String token);
+    void getUserInfo(String token);
     void ModifyPwd(String token,String oldPwd,String newPwd);
     void onDestory();
 }

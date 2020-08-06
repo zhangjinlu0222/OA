@@ -11,4 +11,5 @@ public interface IWorkFlowModel {
     void getPhotoVideoDetail(String token,String w_con_id,String w_pot_id,String proc_type_id,IWorkFlowListener listener);
     void endWorkFlow(String token, int workflow_content_id,int wk_point_id,String remark,String proc_type_id,IWorkFlowListener listener);
     void recoverWorkflow(String token, int workflow_content_id,String proc_type_id,IWorkFlowListener listener);
+    void LookRefinanceContract(String token, String  workflow_content_id,String contract_type,IWorkFlowListener listener);
 }

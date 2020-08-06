@@ -3,6 +3,7 @@ package zjl.com.oa.WorkFlow.Model;
 import java.util.List;
 
 import zjl.com.oa.Response.GetWorkFlowResponse;
+import zjl.com.oa.Response.LookContractResponse;
 import zjl.com.oa.Response.PhotoVideoDetailResponse;
 import zjl.com.oa.WorkFlow.Presenter.IWorkFlowListener;
 import zjl.com.oa.WorkFlow.Presenter.IWorkFlowModel;
@@ -63,6 +64,17 @@ public class WorkFlowPresenterImpl implements IWorkFlowListener,IWorkFlowPresent
         }
     }
     @Override
+    public void LookRefinanceContract(String token, String w_con_id, String contract_type) {
+
+        if (workFlowModel != null){
+            workFlowModel.LookRefinanceContract(token,w_con_id,contract_type,this);
+        }
+
+        if (workFlowView != null ){
+            workFlowView.showProcess();
+        }
+    }
+    @Override
     public void endWorkFlow(String token, int workflow_content_id,int wk_point_id,String remark,String proc_type_id) {
         if (workFlowModel != null){
             workFlowModel.endWorkFlow( token,  workflow_content_id, wk_point_id,remark,proc_type_id,this);
@@ -102,7 +114,7 @@ public class WorkFlowPresenterImpl implements IWorkFlowListener,IWorkFlowPresent
         if (workFlowView != null){
             workFlowView.hideProcess();
             workFlowView.reloadData();
-            workFlowView.updateImgRefuse();
+            workFlowView.toMainActivity();
         }
     }
 
@@ -114,6 +126,15 @@ public class WorkFlowPresenterImpl implements IWorkFlowListener,IWorkFlowPresent
         this.onFail("网络异常");
     }
 
+    @Override
+    public void onSucceed(LookContractResponse.Result result) {
+        if (workFlowView != null){
+            workFlowView.downloadContract(result.getAndroid_url());
+        }
+        if (workFlowView != null){
+            workFlowView.hideProcess();
+        }
+    }
     @Override
     public void onSucceed(GetWorkFlowResponse.Result result) {
         if (workFlowView != null){

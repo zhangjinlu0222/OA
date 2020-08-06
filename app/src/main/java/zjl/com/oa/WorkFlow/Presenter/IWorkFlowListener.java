@@ -4,6 +4,7 @@ import java.util.List;
 
 import zjl.com.oa.Base.IBaseListener;
 import zjl.com.oa.Response.GetWorkFlowResponse;
+import zjl.com.oa.Response.LookContractResponse;
 import zjl.com.oa.Response.PhotoVideoDetailResponse;
 
 /**
@@ -11,6 +12,7 @@ import zjl.com.oa.Response.PhotoVideoDetailResponse;
  */
 
 public interface IWorkFlowListener extends IBaseListener{
+    void onSucceed(LookContractResponse.Result result);
     void onSucceed(GetWorkFlowResponse.Result result);
     void onSucceed(PhotoVideoDetailResponse.Result result);
     void onSucceed(boolean result);

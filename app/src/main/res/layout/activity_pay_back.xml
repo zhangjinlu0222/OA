@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eeeeee"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".Setting.PayBack.View.PayBackActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#74a9ed">
+
+        <ImageView
+            android:id="@+id/ig_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="4dp"
+            android:contentDescription="@null"
+            android:src="@mipmap/visitor_return" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical"
+            android:text="@string/paybackmark"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@mipmap/appraisal_ig_result_item_bg"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp">
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/st_name"
+                android:textColor="#000000"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_toEndOf="@+id/tvName"
+                android:layout_toStartOf="@+id/btnPayBackNameSearch"
+                android:background="@null"
+                android:hint="@string/st_name_hint"
+                android:paddingStart="10dp"
+                android:textColor="#000000"
+                android:textSize="13sp"
+                android:theme="@style/MyEditText" />
+
+
+            <Button
+                android:id="@+id/btnPayBackNameSearch"
+                android:layout_width="40dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:background="@mipmap/info_bg_next"
+                android:text="@string/st_search"
+                android:textColor="#ffffff"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:background="#eeeeee" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="55dp">
+
+            <TextView
+                android:id="@+id/tvCarType"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/carType"
+                android:textColor="#000000"
+                android:textSize="13sp" />
+
+            <org.angmarch.views.NiceSpinner
+                android:id="@+id/ns_cars"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:layout_toRightOf="@+id/tvCarType"
+                android:hint="@string/st_car_type_hint"
+                android:textColor="#000000"
+                android:textSize="13sp"
+                app:backgroundSelector="@mipmap/fixpwd" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:background="#eeeeee" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="55dp">
+
+            <TextView
+                android:id="@+id/tvNeedPayBack"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/st_need_payback"
+                android:textColor="#000000"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/etNeedPayBack"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/tvNeedPayBack"
+                android:background="@null"
+                android:enabled="false"
+                android:paddingStart="10dp"
+                android:textColor="#000000"
+                android:textSize="13sp"
+                android:theme="@style/MyEditText" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:background="#eeeeee" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="55dp">
+
+            <TextView
+                android:id="@+id/tvHasPayback"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/st_has_payback"
+                android:textColor="#000000"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/etHasPayback"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/tvHasPayback"
+                android:background="@null"
+                android:enabled="false"
+                android:paddingStart="10dp"
+                android:textColor="#000000"
+                android:textSize="13sp"
+                android:theme="@style/MyEditText" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:background="#eeeeee" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="55dp">
+
+            <TextView
+                android:id="@+id/tvActualPayback"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/st_actual_payback"
+                android:textColor="#000000"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/etActualPayback"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/tvActualPayback"
+                android:background="@null"
+                android:hint="@string/st_actual_payback_hint"
+                android:paddingStart="10dp"
+                android:textColor="#000000"
+                android:textSize="13sp"
+                android:theme="@style/MyEditText" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:background="#eeeeee" />
+
+        <RelativeLayout
+            android:id="@+id/rlActualPaybackDate"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp">
+
+            <TextView
+                android:id="@+id/tvActualPaybackDate"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/st_actual_payback_date"
+                android:textColor="#000000"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/etActualPaybackDate"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/tvActualPaybackDate"
+                android:background="@null"
+                android:focusable="false"
+                android:clickable="true"
+                android:hint="@string/st_actual_payback_date_hint"
+                android:paddingStart="10dp"
+                android:textColor="#000000"
+                android:textSize="13sp"
+                android:theme="@style/MyEditText" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:background="#eeeeee" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="55dp">
+
+            <TextView
+                android:id="@+id/tvPayBackPeriods"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/st_payback_periods"
+                android:textColor="#000000"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/etPayBackPeriods"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/tvPayBackPeriods"
+                android:background="@null"
+                android:enabled="false"
+                android:paddingStart="10dp"
+                android:textColor="#000000"
+                android:textSize="13sp"
+                android:theme="@style/MyEditText" />
+        </RelativeLayout>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btnPayBackMark"
+            android:layout_width="240dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="50dp"
+            android:background="@mipmap/info_bg_next"
+            android:text="@string/paybackmark"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+</LinearLayout>

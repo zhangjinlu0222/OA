@@ -212,4 +212,9 @@ public class WorkDetailActivity extends BaseActivity implements IWorkFlowView {
     public void updateImgRefuse() {
 
     }
+
+    @Override
+    public void downloadContract(String url) {
+
+    }
 }

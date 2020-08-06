@@ -1,24 +1,14 @@
 package zjl.com.oa.ApplicationConfig;
 
-import zjl.com.oa.BusinessFeedBack.View.BusinessFeedBackActivity;
-import zjl.com.oa.Evaluation.View.Evaluation;
-import zjl.com.oa.EvaluationQuota.View.EvaluationQuotaActivity;
 import zjl.com.oa.FeedBack.View.FeedBackActivity;
-import zjl.com.oa.InformationCheck.View.InformationCheck;
-import zjl.com.oa.LoanRequest.View.LoanRequestActivity;
 import zjl.com.oa.Meeting.View.EnteringOrderActivity;
-import zjl.com.oa.Meeting.View.MettingActivity;
-import zjl.com.oa.OTSInvest.View.OTSInvestActivity;
 import zjl.com.oa.RenewLoan.View.RenewLoanActivity;
 import zjl.com.oa.RenewLoan.View.RenewLoanWaitSign;
+import zjl.com.oa.RenewLoanCompletation.View.RenewLoanCompletationActivity;
 import zjl.com.oa.Sign.View.BeginSignActivity;
-import zjl.com.oa.Sign.View.InformSignActivity;
 import zjl.com.oa.Sign.View.SignActivity;
-import zjl.com.oa.TransferVoucher.View.TransferFinishActivity;
-import zjl.com.oa.TransferVoucher.View.TransferVoucherActivity;
 import zjl.com.oa.UploadPhotos.View.RiskManagerActivity;
 import zjl.com.oa.UploadPhotos.View.UploadPhotosActivity;
-import zjl.com.oa.Visit.View.Visitor;
 
 /**
  * Created by Administrator on 2018/3/12.
@@ -163,6 +153,9 @@ public class Activitys {
                     break;
                 case "39":
                     destClass =  RenewLoanActivity.class;//华融信贷放款
+                    break;
+                case "40":
+                    destClass =  RenewLoanCompletationActivity.class;//续贷结束
                     break;
                 default:
                     destClass = RenewLoanActivity.class;

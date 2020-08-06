@@ -46,6 +46,8 @@ import zjl.com.oa.WorkFlow.Model.WorkFlowPresenterImpl;
 import zjl.com.oa.WorkFlow.Presenter.IWorkFlowPresenter;
 import zjl.com.oa.WorkFlow.Presenter.IWorkFlowView;
 
+import static zjl.com.oa.Utils.ButtonUtils.isFastDoubleClick;
+
 public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
 
     @Bind(R.id.ig_back)
@@ -124,6 +126,11 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
         workflow.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                //防止多次点击
+                if (isFastDoubleClick()){
+                    return false;
+                }
+
                 String w_pot_id = groupData.get(groupPosition).getW_pot_id();
                 String workflow_name = groupData.get(groupPosition).getTitle();
                 String proc_type_id = groupData.get(groupPosition).getProcTypeId();
@@ -159,6 +166,10 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
                     if (key.contains("签约视频") && value.contains("点击查看")) {
                         if (workFlowPresenter != null) {
                             workFlowPresenter.getPhotoVideoDetail(token, workflow_content_id, "999",proc_type_id);
+                        }
+                    } else if (key.contains("合同") && value.contains("查看合同")){
+                        if (workFlowPresenter != null){
+                            workFlowPresenter.LookRefinanceContract(token,workflow_content_id,key);
                         }
                     } else if (value.contains("点击查看")) {
                         if (workFlowPresenter != null) {
@@ -196,7 +207,6 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
             params.width = 100;
         }
         igRefuse.invalidate();
-
     }
 
     @Override
@@ -248,12 +258,11 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
 
             /**
              * 管理员登录则显示拒件按钮*/
-            if (result != null && result.getEdit() == 1){
+            if ("1".equals(result.getRefuse_flag())){
                 igRefuse.setVisibility(View.VISIBLE);
             }else{
                 igRefuse.setVisibility(View.GONE);
             }
-
         } else {
             this.showFailureMsg("工作流程数据异常");
         }
@@ -480,5 +489,16 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
                 }
                 break;
         }
+    }
+
+    public void downloadContract(String url){
+        if (url == null || url.equals("")){
+            showFailureMsg("查看合同异常，请重试");
+            return;
+        }
+
+        Intent intent = new Intent(this,Contract.class);
+        intent.putExtra("url",url );
+        context.startActivity(intent);
     }
 }

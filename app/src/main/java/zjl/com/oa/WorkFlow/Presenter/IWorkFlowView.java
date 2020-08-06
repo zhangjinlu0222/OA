@@ -17,4 +17,5 @@ public interface IWorkFlowView extends IBaseView{
     void reloadData();
     void loadPhotosAndVideos(PhotoVideoDetailResponse.Result data);
     void updateImgRefuse();
+    void downloadContract(String url);
 }

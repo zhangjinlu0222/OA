@@ -15,6 +15,7 @@ import butterknife.OnClick;
 import zjl.com.oa.Base.BaseActivity;
 import zjl.com.oa.Bean.UserInfo;
 import zjl.com.oa.R;
+import zjl.com.oa.Response.UserInfoResponse;
 import zjl.com.oa.Setting.Model.SettingPresenterImpl;
 import zjl.com.oa.Setting.Presenter.ISettingView;
 import zjl.com.oa.Utils.TitleBarUtil;
@@ -100,6 +101,8 @@ public class ModifyPwdActivity extends BaseActivity implements ISettingView{
             DialogUIUtils.dismiss(submitDialog);
         }
     }
+    @Override
+    public void saveUserInfo(UserInfoResponse.Data data){}
 
     @Override
     public void onDestory() {

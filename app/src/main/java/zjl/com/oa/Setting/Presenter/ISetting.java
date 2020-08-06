@@ -7,6 +7,7 @@ import retrofit2.http.POST;
 import zjl.com.oa.ApplicationConfig.Constant;
 import zjl.com.oa.Response.LogoutResponse;
 import zjl.com.oa.Response.ModifyPwdResponse;
+import zjl.com.oa.Response.UserInfoResponse;
 
 /**
  * Created by Administrator on 2018/2/11.
@@ -17,4 +18,6 @@ public interface ISetting {
     Call<LogoutResponse> post(@Body RequestBody token);
     @POST(Constant.ModifyPwd)
     Call<ModifyPwdResponse> ModifyPwd(@Body RequestBody token);
+    @POST(Constant.GetUserInfo)
+    Call<UserInfoResponse> GetUserInfo(@Body RequestBody token);
 }

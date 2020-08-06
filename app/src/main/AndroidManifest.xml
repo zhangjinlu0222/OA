@@ -193,10 +193,25 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Setting.View.BangkeActivity"
+        <activity
+            android:name=".Setting.View.BangkeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Setting.PayBack.View.PayBackActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RenewLoanCompletation.View.RenewLoanCompletationActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".WorkFlow.View.Contract"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

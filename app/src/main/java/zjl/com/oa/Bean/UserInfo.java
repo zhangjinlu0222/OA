@@ -22,6 +22,7 @@ public class UserInfo {
     public static String AUTOUPDATE = "main_list_auto_update";
     public static String OPERATION = "operation_wk_pot_id";
     public static String OPERATIONSTATE = "operation_state";
+    public static String SCHEDULEFLAG = "schedule_flag";
 
     private UserInfo(Context cxt)
     {

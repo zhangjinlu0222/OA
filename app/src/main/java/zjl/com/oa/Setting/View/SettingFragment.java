@@ -3,17 +3,22 @@ package zjl.com.oa.Setting.View;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kyleduo.switchbutton.SwitchButton;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,7 +26,9 @@ import butterknife.OnClick;
 import zjl.com.oa.Bean.UserInfo;
 import zjl.com.oa.QuestAndSetting.View.QuestAndSetting;
 import zjl.com.oa.R;
+import zjl.com.oa.Response.UserInfoResponse;
 import zjl.com.oa.Setting.Model.SettingPresenterImpl;
+import zjl.com.oa.Setting.PayBack.View.PayBackActivity;
 import zjl.com.oa.Setting.Presenter.ISettingView;
 import zjl.com.oa.Utils.VersionUtils;
 
@@ -60,6 +67,10 @@ public class SettingFragment extends Fragment implements ISettingView {
     TextView settingTvFixLoginPwd;
     @Bind(R.id.setting_tv_bangke)
     TextView settingTvBangKe;
+    @Bind(R.id.setting_tv_payback)
+    TextView settingTvPayBack;
+    @Bind(R.id.rl_payback)
+    RelativeLayout rlPayBack;
     @Bind(R.id.version)
     TextView version;
     @Bind(R.id.setting_ig_right4)
@@ -117,6 +128,9 @@ public class SettingFragment extends Fragment implements ISettingView {
 
         init();
 
+        String token = UserInfo.getInstance(getContext()).getUserInfo(UserInfo.TOKEN);
+        logoutPresenter.getUserInfo(token);
+
         sbUpdate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -169,7 +183,8 @@ public class SettingFragment extends Fragment implements ISettingView {
             R.id.setting_tv_department, R.id.setting_department, R.id.setting_ig_right2,
             R.id.setting_tv_phone, R.id.setting_phone, R.id.setting_ig_right3,
             R.id.setting_tv_fixLoginPwd, R.id.setting_ig_right4, R.id.button2,
-    R.id.setting_ig_right7,R.id.setting_tv_bangke})
+            R.id.setting_ig_right7,R.id.setting_tv_bangke,
+            R.id.setting_ig_right8,R.id.setting_tv_payback})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.setting_ig_sex:
@@ -196,6 +211,11 @@ public class SettingFragment extends Fragment implements ISettingView {
                 String phone = UserInfo.getInstance(getContext()).getUserInfo(UserInfo.PHONE);
                 bangke.putExtra("phone", phone);
                 startActivity(bangke);
+                break;
+            case R.id.setting_ig_right8:
+            case R.id.setting_tv_payback:
+                Intent toPayBackActivity = new Intent(getActivity(),PayBackActivity.class);
+                startActivity(toPayBackActivity);
                 break;
             case R.id.setting_ig_right3:
             case R.id.setting_tv_fixLoginPwd:
@@ -226,6 +246,17 @@ public class SettingFragment extends Fragment implements ISettingView {
     @Override
     public void relogin() {
 
+    }
+
+    @Override
+    public void saveUserInfo(UserInfoResponse.Data data){
+        String schedule_flag = data.getSchedule_flag();
+
+        UserInfo.getInstance(getContext()).setUserInfo(UserInfo.SCHEDULEFLAG,schedule_flag);
+
+        if ("1".equals(schedule_flag) && rlPayBack != null){
+            rlPayBack.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

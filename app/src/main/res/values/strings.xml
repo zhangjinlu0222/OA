@@ -182,4 +182,22 @@
     <string name="project_tv_provider">车励享</string>
     <string name="bangke">车励享帮客</string>
     <string name="share_to_friend">分享给好友</string>
+    <string name="paybackmark">还款录入</string>
+    <string name="st_name">姓名:</string>
+    <string name="st_name_hint">请输入姓名</string>
+    <string name="carType">车型:</string>
+    <string name="st_car_type_hint">请选择车型</string>
+    <string name="st_need_payback">应还款:</string>
+    <string name="st_need_payback_hint">请输入应还款</string>
+    <string name="st_has_payback">已还款:</string>
+    <string name="st_has_payback_hint">请输入已还款</string>
+    <string name="st_actual_payback">实际:</string>
+    <string name="st_actual_payback_hint">请输入实际还款</string>
+    <string name="st_payback_periods">期数:</string>
+    <string name="st_payback_periods_hint">请输入期数</string>
+    <string name="st_search">查找</string>
+    <string name="st_actual_payback_date">日期：</string>
+    <string name="st_actual_payback_date_hint">请选择实际还款日期</string>
+    <string name="st_renewloan_completation">续贷结束</string>
+    <string name="st_contract_detail">合同详情</string>
 </resources>

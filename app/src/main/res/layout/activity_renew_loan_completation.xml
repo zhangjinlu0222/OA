@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eeeeee"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".RenewLoanCompletation.View.RenewLoanCompletationActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#74a9ed">
+
+        <ImageView
+            android:id="@+id/ig_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="4dp"
+            android:contentDescription="@null"
+            android:src="@mipmap/visitor_return" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical"
+            android:text="@string/st_renewloan_completation"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y200"
+        android:layout_marginTop="@dimen/y15"
+        android:background="@drawable/item_select_bg">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y50"
+            android:layout_marginBottom="@dimen/y50"
+            android:layout_marginTop="@dimen/y70"
+            android:gravity="center"
+            android:text="在车励享线上签约小程序中完成签约"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/y100"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btnRenewLoanFinish"
+            android:layout_width="240dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:background="@mipmap/info_bg_next"
+            android:text="@string/st_renewloan_completation"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+    </RelativeLayout>
+</LinearLayout>

@@ -16,6 +16,7 @@ import zjl.com.oa.Base.ModelImpl;
 import zjl.com.oa.Base.ResponseWithNoData;
 import zjl.com.oa.InformationCheck.Presenter.IInfoCheck;
 import zjl.com.oa.Response.GetWorkFlowResponse;
+import zjl.com.oa.Response.LookContractResponse;
 import zjl.com.oa.Response.PhotoVideoDetailResponse;
 import zjl.com.oa.WorkFlow.Presenter.IWorkFlow;
 import zjl.com.oa.WorkFlow.Presenter.IWorkFlowListener;
@@ -28,6 +29,46 @@ import zjl.com.oa.WorkFlow.Presenter.IWorkFlowModel;
 public class WorkFlowModelImpl extends ModelImpl implements IWorkFlowModel{
     private static final String TAG = "WorkFlowModelImpl";
 
+    @Override
+    public void LookRefinanceContract(String token, String w_con_id,String contract_type,IWorkFlowListener listener) {
+
+        IWorkFlow service = retrofit.create(IWorkFlow.class);
+
+        HashMap<String,String> map = new HashMap<>();
+        map.put("token",token);
+        map.put("w_con_id",w_con_id);
+        map.put("type",contract_type);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"),new Gson().toJson(map));
+
+        Call<LookContractResponse> call = service.LookRefinanceContract(body);
+        call.enqueue(new Callback<LookContractResponse>() {
+            @Override
+            public void onResponse(Call<LookContractResponse> call, Response<LookContractResponse> response) {
+                if (response.isSuccessful()){
+                    LookContractResponse result = response.body();
+                    if (result != null){
+                        if (result.getCode() == Constant.Succeed){
+                            listener.onSucceed(result.getResult());
+                        }else if (result.getCode() == Constant.LoginAnotherPhone){
+                            listener.relogin();
+                        }else{
+                            listener.onFail(result.getMessage());
+                        }
+                    }
+                }else{
+                    listener.onFail();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LookContractResponse> call, Throwable t) {
+//                listListener.onFail(t.getMessage());
+                Log.e(TAG,"网络异常");
+                t.printStackTrace();
+                listener.onFail();
+            }
+        });
+    }
     @Override
     public void getWorkFlow(String token, String w_con_id,String proc_type_id,IWorkFlowListener listener) {
 //        Retrofit retrofit = new Retrofit.Builder()

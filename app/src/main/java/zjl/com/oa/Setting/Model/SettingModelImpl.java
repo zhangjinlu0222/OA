@@ -15,6 +15,7 @@ import zjl.com.oa.ApplicationConfig.Constant;
 import zjl.com.oa.Base.ModelImpl;
 import zjl.com.oa.Response.LogoutResponse;
 import zjl.com.oa.Response.ModifyPwdResponse;
+import zjl.com.oa.Response.UserInfoResponse;
 import zjl.com.oa.Setting.Presenter.ISetting;
 import zjl.com.oa.Setting.Presenter.ISettingListener;
 import zjl.com.oa.Setting.Presenter.ISettingModel;
@@ -48,6 +49,37 @@ public class SettingModelImpl extends ModelImpl implements ISettingModel {
                 Log.e(TAG,"网络异常");
                 t.printStackTrace();
                 listener.onFail();
+            }
+        });
+    }
+    @Override
+    public void getUserInfo(String token,ISettingListener listener) {
+
+        ISetting service = retrofit.create(ISetting.class);
+
+        HashMap<String,String> map = new HashMap<>();
+        map.put("token",token);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), new Gson().toJson(map));
+        Call<UserInfoResponse> call = service.GetUserInfo(body);
+        call.enqueue(new Callback<UserInfoResponse>() {
+            @Override
+            public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
+                if (response.isSuccessful()){
+                    UserInfoResponse result = response.body();
+                    if (result != null){
+                        if (result.getCode() == Constant.Succeed){
+                            listener.onSucceed(result.Result);
+                        }else if (result.getCode() == Constant.LoginAnotherPhone){
+                            listener.relogin();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserInfoResponse> call, Throwable t) {
+                Log.e(TAG,"网络异常");
+                t.printStackTrace();
             }
         });
     }

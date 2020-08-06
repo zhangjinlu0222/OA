@@ -25,6 +25,16 @@ public class GetWorkFlowResponse extends BaseResponse {
 
         public String proc_type_id;
 
+        public String refuse_flag;
+
+        public String getRefuse_flag() {
+            return refuse_flag;
+        }
+
+        public void setRefuse_flag(String refuse_flag) {
+            this.refuse_flag = refuse_flag;
+        }
+
         public String getProc_type_id() {
             return proc_type_id;
         }

@@ -22,9 +22,9 @@ public class Constant {
 //    public static final String BASE_URL = "http://192.168.1.144:8200/";
 //    public static final String BASE_URL = "http://192.168.1.200:9000/";
 //   测试环境
-    public static final String BASE_URL = "https://api.clxchina.cn:8200/";
+//    public static final String BASE_URL = "https://api.clxchina.cn:8200/";
 //   正式环境
-//    public static final String BASE_URL = "https://api.clxchina.cn:8100/";
+    public static final String BASE_URL = "https://api.clxchina.cn:8100/";
 
     public static final int MAXCOUNT = 50;
     public static final int MINCOUNT = 1;
@@ -45,6 +45,7 @@ public class Constant {
     public static final String Login = "WebApi/V1/User/Login";
     public static final String LoginOut = "WebApi/V1/User/LoginOut";
     public static final String ModifyPwd  = "WebApi/V1/User/ModifyPwd";
+    public static final String GetUserInfo  = "WebApi/V1//User/GetUserInfo ";
     public static final String UpgradeVersion = "WebApi/V1/Base/UpgradeVersion";
 
     public static final String Coming = "WebApi/V1/Workflow/Coming";
@@ -130,6 +131,8 @@ public class Constant {
     public static final String AuditRefinance  = "WebApi/V1/Refinance/AuditRefinance";
     public static final String ContractDetail  = "WebApi/V1/Refinance/ContractDetail";
     public static final String ContractDetailTwo  = "WebApi/V1/Refinance/ContractDetailTwo";
+    public static final String RefinanceFinishFlow  = "WebApi/V1/Refinance/RefinanceFinishFlow";
+    public static final String LookRefinanceContract  = "WebApi/V1//Refinance/LookRefinanceContract";
 
 //    public static final String Form  = "WebApi/V1/FormControl/Form";
     public static final String Form  = "WebApi/V1/FormControl/Form_V2";
@@ -141,8 +144,10 @@ public class Constant {
     public static final String ApplyforRefinance  = "WebApi/V1/Refinance/ApplyforRefinance";
     public static final String FinishFlow  = "WebApi/V1/Workflow/FinishFlow";
 
-    //新增上传文件接口，2020.3.31
     public static final String UploadPhoto  = "WebApi/V1/HRCreditBus/UploadPhoto";
-    //新增流程查看接口, 2020.4.3
     public static final String FlowProcess  = "WebApi/V1/HRCreditBus/FlowProcess";
+
+    public static final String SearchName  = "WebApi/V1/Schedule/SearchName";
+    public static final String SearchCarType  = "WebApi/V1/Schedule/SearchCarType";
+    public static final String UpdateReturnSchedule  = "WebApi/V1/Schedule/UpdateReturnSchedule";
 }

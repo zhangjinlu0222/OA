@@ -7,6 +7,7 @@ import retrofit2.http.POST;
 import zjl.com.oa.ApplicationConfig.Constant;
 import zjl.com.oa.Base.ResponseWithNoData;
 import zjl.com.oa.Response.GetWorkFlowResponse;
+import zjl.com.oa.Response.LookContractResponse;
 import zjl.com.oa.Response.PhotoVideoDetailResponse;
 
 /**
@@ -26,4 +27,6 @@ public interface IWorkFlow {
     Call<ResponseWithNoData> endWorkFlow(@Body RequestBody body);
     @POST(Constant.HRRecoverProject)
     Call<ResponseWithNoData> recoverWorkflow(@Body RequestBody body);
+    @POST(Constant.LookRefinanceContract)
+    Call<LookContractResponse> LookRefinanceContract(@Body RequestBody body);
 }
