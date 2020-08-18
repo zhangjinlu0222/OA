@@ -410,14 +410,13 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
 
         viewHolder.content.setHint(formLists.get(pos).getPlace_holder().trim());
         String data = formLists.get(pos).getData_con();
-        if (data != null && data.length() >0){
-            viewHolder.content.setText(data);
-        }
+        viewHolder.content.setText(data);
 
         boolean isReadOnly = formLists.get(pos).isRead_only();
         if (isReadOnly){
             viewHolder.content.setEnabled(false);
-            viewHolder.content.setBackground(null);
+        }else{
+            viewHolder.content.setEnabled(true);
         }
     }
 
@@ -525,26 +524,30 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
         viewHolder.datasource = units;
         viewHolder.nsSelector.attachDataSource(viewHolder.datasource);
 
-        //初始值如果为空，即没有选择的情况下,设置选中第一个
+        //初始值在units中不存在，1是没有值，2是给的下标
         String value = formLists.get(pos).getData_con();
-        if (units.indexOf(value) < 0){
+        int index = units.indexOf(value);
 
-            formLists.get(pos).setData_con(units.get(0));
-//        }
-//
-//        if (formLists.get(pos).getData_con().equals("")){
-//            formLists.get(pos).setData_con(units.get(0));
-//            viewHolder.nsSelector.setSelectedIndex(1);
+        if (index < 0){
+            //2给的是下标
+            if (value != null && value.length() == 1){
+                int value_index = Integer.parseInt(value);
+                formLists.get(pos).setData_con(units.get(value_index - 1));
+            }else{
+                //1没有值
+                formLists.get(pos).setData_con(units.get(0));
+            }
         }else{
-        //初始值不为空，则显示初始值内容
-            int index =  units.indexOf(value);
-            viewHolder.nsSelector.setSelectedIndex(index > 0 ? index:0);
+            //初始值在units中存在
+            viewHolder.nsSelector.setSelectedIndex(index);
         }
 
         viewHolder.nsSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                formLists.get(pos).setData_con(formLists.get(pos).getUnit().split(",")[position] +"");
+                String value = formLists.get(pos).getUnit().split(",")[position] + "";
+                formLists.get(pos).setData_con(value);
+                context.disableColleaguePhone(value);
             }
 
             @Override

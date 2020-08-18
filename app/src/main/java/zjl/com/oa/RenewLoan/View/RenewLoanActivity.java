@@ -286,7 +286,34 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
     @Override
     public void loadForms(FormResponse.Result result) {
         formLists.clear();
-        formLists.addAll(result.getFormList());
+        //这里对来访做判断，如果来访中的客户来源是自有客户，或者业务类型是抵押或华融信贷则不让输入同行手机号
+        List<FormResponse.Result.Form> forms = result.getFormList();
+        if (workflow_name.contains("来访")){
+            boolean flag = false;
+            for (FormResponse.Result.Form form:forms){
+                if (form.getControl_title().equals("客户来源")){
+                    if (form.getData_con().equals("1") || form.getData_con().equals("")){
+                        flag = true;
+                    }
+                }else if (form.getControl_title().equals("业务类型")){
+                    if (form.getData_con().equals("") || form.getData_con().equals("抵押") || form.getData_con().equals("华融信贷")){
+                        flag = true;
+                    }
+                }
+            }
+            for (FormResponse.Result.Form form:forms){
+                if (form.getControl_title().equals("同行手机号")){
+                    if (flag){
+                        form.setRead_only(true);
+                        form.setPlace_holder("无");
+                    }else{
+                        form.setRead_only(false);
+                        form.setPlace_holder("请输入手机号");
+                    }
+                }
+            }
+        }
+        formLists.addAll(forms);
         formListsAdapter.notifyDataSetChanged();
     }
 
@@ -1504,4 +1531,42 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
         }
     }
 
+    public void disableColleaguePhone(String value) {
+        if (!workflow_name.contains("来访")) {
+            return;
+        }
+
+        boolean flag1 = false;
+        boolean flag2 = false;
+
+        for (FormResponse.Result.Form form : formLists) {
+
+            String title = form.getControl_title();
+
+            if (title != null && title.equals("客户来源") && form.getData_con().equals("自有客户")) {
+                flag1 = true;
+            }
+
+            if (title != null && title.equals("业务类型") && (form.getData_con().equals("抵押") || form.getData_con().equals("华融信贷"))){
+                flag2 = true;
+            }
+        }
+
+        for (FormResponse.Result.Form form : formLists) {
+            String title = form.getControl_title();
+
+            if (title != null && title.equals("同行手机号")) {
+                if (flag1 || flag2) {
+                    form.setRead_only(true);
+                    form.setPlace_holder("无");
+                    form.setData_con("");
+                } else{
+                    form.setRead_only(false);
+                    form.setPlace_holder("请输入手机号");
+                }
+                formListsAdapter.notifyDataSetChanged();
+                return;
+            }
+        }
+    }
 }
