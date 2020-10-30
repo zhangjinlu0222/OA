@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@mipmap/login_background"
     android:orientation="vertical"
-    tools:context="zjl.com.oa.Login.View.LoginActivity">
+    tools:context="zjl.com.oa2.Login.View.LoginActivity">
 
     <ImageView
         android:id="@+id/login_logo"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical"
-    tools:context="zjl.com.oa.QuestAndSetting.View.SearchActivity">
+    tools:context="zjl.com.oa2.QuestAndSetting.View.SearchActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

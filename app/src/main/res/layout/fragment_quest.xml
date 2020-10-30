@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#eeeeee"
     android:orientation="vertical"
-    tools:context="zjl.com.oa.Quest.View.QuestFragment">
+    tools:context="zjl.com.oa2.Quest.View.QuestFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

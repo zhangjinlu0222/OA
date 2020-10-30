@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="zjl.com.oa.WorkFlow.View.WorkDetailActivity">
+    tools:context="zjl.com.oa2.WorkFlow.View.WorkDetailActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -96,7 +96,7 @@
                     android:textSize="14sp" />
             </RelativeLayout>
 
-            <zjl.com.oa.CustomView.MyExpandableListview
+            <zjl.com.oa2.CustomView.MyExpandableListview
                 android:id="@+id/workdetail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

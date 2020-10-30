@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="zjl.com.oa.WorkFlow.View.VideoPlay2Activity"
+    tools:context="zjl.com.oa2.WorkFlow.View.VideoPlay2Activity"
     android:orientation="vertical">
 
     <!--<RelativeLayout-->
@@ -35,11 +35,11 @@
         <!--android:id="@+id/player"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent" />-->
-    <zjl.com.oa.WorkFlow.View.SampleVideo
+    <zjl.com.oa2.WorkFlow.View.SampleVideo
         android:id="@+id/video"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </zjl.com.oa.WorkFlow.View.SampleVideo>
+    </zjl.com.oa2.WorkFlow.View.SampleVideo>
 
 
     <!--<include-->

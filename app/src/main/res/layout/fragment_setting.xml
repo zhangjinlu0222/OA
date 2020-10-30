@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#eeeeee"
-    tools:context="zjl.com.oa.Setting.View.SettingFragment">
+    tools:context="zjl.com.oa2.Setting.View.SettingFragment">
 
     <TextView
         android:layout_width="match_parent"

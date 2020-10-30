@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="zjl.com.oa.QuestAndSetting.View.QuestAndSetting">
+    tools:context="zjl.com.oa2.QuestAndSetting.View.QuestAndSetting">
 
     <FrameLayout
         android:layout_above="@+id/nav"

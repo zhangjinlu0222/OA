@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#FFFFFF"
-    tools:context="zjl.com.oa.Visit.View.Visitor">
+    tools:context="zjl.com.oa2.Visit.View.Visitor">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
             android:focusableInTouchMode="true"
             android:orientation="vertical">
 
-            <zjl.com.oa.CustomView.MyListView
+            <zjl.com.oa2.CustomView.MyListView
                 android:id="@+id/listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#eeeeee"
-    tools:context="zjl.com.oa.Evaluation.View.Evaluation">
+    tools:context="zjl.com.oa2.Evaluation.View.Evaluation">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

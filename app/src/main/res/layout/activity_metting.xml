@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#eeeeee"
     android:orientation="vertical"
-    tools:context="zjl.com.oa.Meeting.View.MettingActivity">
+    tools:context="zjl.com.oa2.Meeting.View.MettingActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

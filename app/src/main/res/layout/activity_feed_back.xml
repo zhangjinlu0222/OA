@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#eeeeee"
-    tools:context="zjl.com.oa.FeedBack.View.FeedBackActivity">
+    tools:context="zjl.com.oa2.FeedBack.View.FeedBackActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
