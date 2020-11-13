@@ -197,4 +197,6 @@
     <string name="st_actual_payback_date_hint">请选择实际还款日期</string>
     <string name="st_renewloan_completation">续贷结束</string>
     <string name="st_contract_detail">合同详情</string>
+    <string name="look_loan_detail">贷款详情：</string>
+    <string name="look">查看</string>
 </resources>
