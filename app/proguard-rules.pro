@@ -388,4 +388,9 @@
 	-dontwarn cn.sharesdk.**
 	-dontwarn **.R$*
 
+#Baidu Map
+-keep class com.baidu.** {*;}
+-keep class vi.com.** {*;}
+-keep class com.baidu.vi.** {*;}
+-dontwarn com.baidu.**
 ####混淆引用的第三方库和SDK 完成####
