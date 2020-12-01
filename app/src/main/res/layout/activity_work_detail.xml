@@ -75,6 +75,21 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/tv_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toEndOf="@+id/tv_time"
+                    android:layout_toStartOf="@+id/tv_manager_title"
+                    android:gravity="center"
+                    android:text="定位"
+                    android:textAlignment="center"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_manager_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"

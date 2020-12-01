@@ -393,25 +393,29 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
 
         this.wk_point_id = wk_point_id;
 
+        String is_litigation = map.get("is_litigation").toString();
+        if (is_litigation != null && is_litigation.equals("0")){
+            for (String key :map.keySet()){
+                //对备注不做强制检查，可提交空字符串
+                if (key.equals("remark")){
+                    continue;
+                }
 
-        for (String key :map.keySet()){
-            //对备注不做强制检查，可提交空字符串
-            if (key.equals("remark")){
-                continue;
+                if (map.get(key) == null || map.get(key).toString().length() <=0){
+                    irlView.showFailureMsg("请确认信息填写完整");
+                    return;
+                }
             }
 
-            if (map.get(key) == null || map.get(key).toString().length() <=0){
-                irlView.showFailureMsg("请确认信息填写完整");
+            if (files.size() <= 0 && !irlView.isUploadTypeAdd()){
+                if (irlView != null){
+                    irlView.showFailureMsg("请选择上传文件");
+                }
                 return;
             }
         }
 
-        if (files.size() <= 0 && !irlView.isUploadTypeAdd()){
-            if (irlView != null){
-                irlView.showFailureMsg("请选择上传文件");
-            }
-            return;
-        }
+
 
         if (irlView != null){
             irlView.showProgress();

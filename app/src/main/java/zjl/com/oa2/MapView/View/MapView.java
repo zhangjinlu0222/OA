@@ -1,16 +1,14 @@
 package zjl.com.oa2.MapView.View;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -20,7 +18,6 @@ import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
-import com.baidu.mapapi.map.LogoPosition;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.Marker;
@@ -30,27 +27,16 @@ import com.baidu.mapapi.model.LatLng;
 import com.dou361.dialogui.DialogUIUtils;
 import com.dou361.dialogui.bean.BuildBean;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import zjl.com.oa2.Adapter.LoanInfoAdapter;
 import zjl.com.oa2.Base.BaseActivity;
-import zjl.com.oa2.Bean.LoanTop;
 import zjl.com.oa2.Bean.UserInfo;
 import zjl.com.oa2.MapView.Model.MapViewPresenterImpl;
-import zjl.com.oa2.MapView.Presenter.IMapView;
 import zjl.com.oa2.MapView.Presenter.IMapViewPresenter;
 import zjl.com.oa2.MapView.Presenter.IMapViewView;
 import zjl.com.oa2.R;
 import zjl.com.oa2.Response.GPSResponse;
-import zjl.com.oa2.Response.LoanDetailResponse;
-import zjl.com.oa2.Utils.BitmapUtils;
-import zjl.com.oa2.Utils.PermissionUtils;
 import zjl.com.oa2.Utils.TitleBarUtil;
 
-import static zjl.com.oa2.Utils.ButtonUtils.isFastDoubleClick;
-
-public class MapView extends BaseActivity implements IMapViewView{
+public class MapView extends BaseActivity implements IMapViewView {
     private IMapViewPresenter mapViewPresenter;
 
     private BuildBean dialog;
@@ -62,6 +48,7 @@ public class MapView extends BaseActivity implements IMapViewView{
     // 是否首次定位
     boolean isFirstLoc = true;
     private BitmapDescriptor bitmapA = BitmapDescriptorFactory.fromResource(R.drawable.icon_marka);
+    private BitmapDescriptor bitmapB = BitmapDescriptorFactory.fromResource(R.drawable.icon_marka_grey);
     private Marker mMarker;
 
     private String w_con_id;
@@ -139,7 +126,7 @@ public class MapView extends BaseActivity implements IMapViewView{
             MapStatus.Builder builder = new MapStatus.Builder();
             builder.target(latLng).zoom(20.0f);
             mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
-            addMarker(latLng);
+            addMarker(latLng,result.getIs_online(),result.getGps_time());
         }
         if (mMarker != null){
             mMarker.setPosition(new LatLng(Double.parseDouble(result.getLat()), Double.parseDouble(result.getLon())));
@@ -175,6 +162,7 @@ public class MapView extends BaseActivity implements IMapViewView{
     protected void onDestroy() {
         super.onDestroy();
         bitmapA.recycle();
+        bitmapB.recycle();
         // 退出时销毁定位
         mLocClient.stop();
         // 关闭定位图层
@@ -188,12 +176,23 @@ public class MapView extends BaseActivity implements IMapViewView{
      *
      * @param latLng 经纬度
      */
-    public void addMarker(LatLng latLng){
+    public void addMarker(LatLng latLng,String isOnline,String gpsTime){
         if (latLng.latitude == 0.0 || latLng.longitude == 0.0){
             return;
         }
-        MarkerOptions markerOptionsA = new MarkerOptions().position(latLng).yOffset(30).icon(bitmapA).draggable(true);
-        mMarker = (Marker) mBaiduMap.addOverlay(markerOptionsA);
+
+        View view = LayoutInflater.from(this).inflate(R.layout.marker,null );
+        TextView tvMarker = view.findViewById(R.id.tv_marker);
+        tvMarker.setText(gpsTime);
+        ImageView ivMarker = view.findViewById(R.id.ig_marker);
+        if (isOnline != null && isOnline.equals("1")){
+            ivMarker.setBackgroundResource(R.drawable.icon_marka);
+        }else{
+            ivMarker.setBackgroundResource(R.drawable.icon_marka_grey);
+        }
+        BitmapDescriptor bd = BitmapDescriptorFactory.fromView(view);
+        MarkerOptions markerOptionsB = new MarkerOptions().position(latLng).yOffset(30).icon(bd).draggable(true);
+        mMarker = (Marker) mBaiduMap.addOverlay(markerOptionsB);
     }
 
     public class MyLocationListener extends BDAbstractLocationListener {
@@ -218,7 +217,7 @@ public class MapView extends BaseActivity implements IMapViewView{
                 MapStatus.Builder builder = new MapStatus.Builder();
                 builder.target(latLng).zoom(20.0f);
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
-                addMarker(latLng);
+                addMarker(latLng,"1","");
             }
             if (mMarker != null){
                 mMarker.setPosition(new LatLng(location.getLatitude(),location.getLongitude()));

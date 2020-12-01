@@ -676,7 +676,7 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
             public void onClick(View v) {
                 if (viewHolder.title.getText().toString().contains("大数据")){
 //                大数据查询
-                    context.searchRisks();
+                    context.toRisksSearch();
                 }else{
                     //查看还款详情
                     context.lookLoanDetail();

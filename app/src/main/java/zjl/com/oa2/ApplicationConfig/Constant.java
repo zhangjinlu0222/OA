@@ -160,4 +160,8 @@ public class Constant {
 
     //2020.11.23
     public static final String GetCarGps = "WebApi/V1/Base/GetCarGps";
+    //2020.11.26
+    public static final String GetBigDatas = "WebApi/V1/Base/GetBigDatas";
+    //2020.12.1
+    public static final String LookBigDatas = "WebApi/V1/Base/LookBigDatas";
 }

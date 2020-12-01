@@ -46,6 +46,8 @@ public class WorkDetailActivity extends BaseActivity implements IWorkFlowView {
     ImageView timeIcon;
     @Bind(R.id.tv_time)
     TextView tvTime;
+    @Bind(R.id.tv_location)
+    TextView tvLocation;
     @Bind(R.id.tv_manager)
     TextView tvManager;
     @Bind(R.id.workdetail)
@@ -93,7 +95,7 @@ public class WorkDetailActivity extends BaseActivity implements IWorkFlowView {
     }
 
 
-    @OnClick({R.id.ig_back, R.id.btn_workdetail_share})
+    @OnClick({R.id.ig_back, R.id.btn_workdetail_share,R.id.tv_location})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ig_back:
@@ -101,6 +103,9 @@ public class WorkDetailActivity extends BaseActivity implements IWorkFlowView {
                 break;
             case R.id.btn_workdetail_share:
                 WXShare(wx_share_content);
+                break;
+            case R.id.tv_location:
+                toMapView();
                 break;
         }
     }

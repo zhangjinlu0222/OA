@@ -236,7 +236,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RiskSearch.View.RiskSearch"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

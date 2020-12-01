@@ -1,9 +1,5 @@
 package zjl.com.oa2.MapView.Model;
 
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
-
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -15,17 +11,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import zjl.com.oa2.ApplicationConfig.Constant;
 import zjl.com.oa2.Base.ModelImpl;
-import zjl.com.oa2.Base.ResponseWithNoData;
-import zjl.com.oa2.Login.Presenter.ILogin;
 import zjl.com.oa2.MapView.Presenter.IMapView;
 import zjl.com.oa2.MapView.Presenter.IMapViewListener;
 import zjl.com.oa2.MapView.Presenter.IMapViewModel;
-import zjl.com.oa2.Quest.Presenter.IQuestList;
-import zjl.com.oa2.Quest.Presenter.IQuestListListener;
-import zjl.com.oa2.Quest.Presenter.IQuestListModel;
 import zjl.com.oa2.Response.GPSResponse;
-import zjl.com.oa2.Response.LoginResponse;
-import zjl.com.oa2.Response.QuestListResponse;
 
 /**
  * Created by Administrator on 2018/3/2.

@@ -1679,8 +1679,43 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
     }
 
 
-    public void searchRisks(){
+    public void toRisksSearch(){
+        String name = "";
+        String phone = "";
+        String identity_id = "";
+        for (int i=0;i<formLists.size();i++){
+            if (formLists.get(i).getControl_title().contains("姓名")){
+                name = formLists.get(i).getData_con();
+            }
+            if (formLists.get(i).getControl_title().contains("手机")){
+                phone = formLists.get(i).getData_con();
+            }
+            if (formLists.get(i).getControl_title().contains("身份证")){
+                identity_id = formLists.get(i).getData_con();
+            }
+        }
+
+        if (name.equals("")){
+            showFailureMsg("请输入姓名后进行查看");
+            return;
+        }
+
+        if (phone.equals("")){
+            showFailureMsg("请输入手机号后进行查看");
+            return;
+        }
+
+        if (identity_id.equals("")){
+            showFailureMsg("请输入身份证号后进行查看");
+            return;
+        }
+
         Intent intent = new Intent(this, RiskSearch.class);
+        intent.putExtra("token",UserInfo.getInstance(context).getUserInfo("token"));
+        intent.putExtra("w_con_id",workflow_content_id+"");
+        intent.putExtra("name",name);
+        intent.putExtra("phone",phone);
+        intent.putExtra("identity_id",identity_id);
         context.startActivity(intent);
     }
 }

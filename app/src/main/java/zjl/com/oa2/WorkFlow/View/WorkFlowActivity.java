@@ -40,6 +40,7 @@ import zjl.com.oa2.R;
 import zjl.com.oa2.Response.GetWorkFlowResponse;
 import zjl.com.oa2.Response.LoanDetailResponse;
 import zjl.com.oa2.Response.PhotoVideoDetailResponse;
+import zjl.com.oa2.RiskSearch.View.RiskSearch;
 import zjl.com.oa2.Utils.PhotoUtil;
 import zjl.com.oa2.Utils.TitleBarUtil;
 import zjl.com.oa2.Utils.VideoUtil;
@@ -172,6 +173,8 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
                         if (workFlowPresenter != null){
                             workFlowPresenter.LookRefinanceContract(token,workflow_content_id,key);
                         }
+                    } else if (key.contains("大数据") && value.contains("点击查看")){
+                            toRiskSearch();
                     } else if (value.contains("点击查看")) {
                         if (workFlowPresenter != null) {
                             workFlowPresenter.getPhotoVideoDetail(token, workflow_content_id, w_pot_id,proc_type_id);
@@ -506,5 +509,12 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
     @Override
     public void toLoanDetail(LoanDetailResponse.Result result) {
 
+    }
+
+    public void toRiskSearch(){
+        Intent intent = new Intent(this, RiskSearch.class);
+        intent.putExtra("w_con_id",workflow_content_id );
+        intent.putExtra("token",UserInfo.getInstance(context).getUserInfo("token"));
+        startActivity(intent);
     }
 }
