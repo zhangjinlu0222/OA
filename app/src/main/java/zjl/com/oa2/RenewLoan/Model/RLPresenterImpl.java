@@ -16,6 +16,7 @@ import zjl.com.oa2.RenewLoan.Presenter.IRLView;
 import zjl.com.oa2.RenewLoan.View.RenewLoanActivity;
 import zjl.com.oa2.Response.FormResponse;
 import zjl.com.oa2.Response.LoanDetailResponse;
+import zjl.com.oa2.Response.ManagersResponse;
 import zjl.com.oa2.Response.SearchResponse;
 import zjl.com.oa2.Utils.IDCardUtil;
 import zjl.com.oa2.Utils.PhoneUtils;
@@ -107,12 +108,29 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
             irlView.hideProgress();
         }
     }
+    @Override
+    public void onSucceed(ManagersResponse.Result result) {
+        if (irlView != null){
+            irlView.saveManagers(result);
+            irlView.hideProgress();
+        }
+    }
 
 
     @Override
     public void AdvanceSecInfo() {
         if (irlModel != null){
             irlModel.AdvanceSecInfo(this);
+        }
+        if (irlView != null){
+            irlView.showProgress();
+        }
+    }
+
+    @Override
+    public void ManagerList(HashMap<String ,Object > map) {
+        if (irlModel != null){
+            irlModel.ManagerList(map,this);
         }
         if (irlView != null){
             irlView.showProgress();
@@ -909,18 +927,17 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
             return;
         }
 
-        //录入资料不对信息做检查
-//        for (String key :map.keySet()){
-//            //对备注不做强制检查，可提交空字符串
-//            if (key.equals("remark")){
-//                continue;
-//            }
-//
-//            if (map.get(key) == null || map.get(key).toString().length() <=0){
-//                irlView.showFailureMsg("请确认信息填写完整");
-//                return;
-//            }
-//        }
+        for (String key :map.keySet()){
+            //对备注不做强制检查，可提交空字符串
+            if (key.equals("remark")){
+                continue;
+            }
+
+            if (map.get(key) == null || map.get(key).toString().length() <=0){
+                irlView.showFailureMsg("请确认信息填写完整");
+                return;
+            }
+        }
 
         if (irlView != null){
             irlView.showProgress();

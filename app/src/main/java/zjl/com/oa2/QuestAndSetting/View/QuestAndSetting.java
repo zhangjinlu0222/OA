@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import zjl.com.oa2.Appraisal.View.AppraisalFragment;
 import zjl.com.oa2.Base.BaseActivity;
+import zjl.com.oa2.LoanInfoList.View.LoanInfosFragment;
 import zjl.com.oa2.Quest.View.QuestFragment;
 import zjl.com.oa2.R;
 import zjl.com.oa2.Setting.View.SettingFragment;
@@ -57,7 +58,7 @@ public class QuestAndSetting extends BaseActivity {
     private FrameLayout content;
     private QuestFragment Quest;
     private SettingFragment Setting;
-    private AppraisalFragment Appraisal;
+    private LoanInfosFragment LoanInfos;
     public int currentIndex;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -106,11 +107,11 @@ public class QuestAndSetting extends BaseActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         switch (index) {
             case 0:
-                if (Quest != null) {
-                    fragmentTransaction.show(Quest);
+                if (LoanInfos != null) {
+                    fragmentTransaction.show(LoanInfos);
                 } else {
-                    Quest = QuestFragment.newInstance("1", "2");
-                    fragmentTransaction.add(R.id.content, Quest);
+                    LoanInfos = LoanInfosFragment.newInstance("1", "2");
+                    fragmentTransaction.add(R.id.content, LoanInfos);
                 }
                 break;
             case 1:
@@ -122,11 +123,11 @@ public class QuestAndSetting extends BaseActivity {
                 }
                 break;
             case 2:
-                if (Appraisal != null) {
-                    fragmentTransaction.show(Appraisal);
+                if (Quest != null) {
+                    fragmentTransaction.show(Quest);
                 } else {
-                    Appraisal = AppraisalFragment.newInstance("1", "2");
-                    fragmentTransaction.add(R.id.content, Appraisal);
+                    Quest = QuestFragment.newInstance("1", "2");
+                    fragmentTransaction.add(R.id.content, Quest);
                 }
                 break;
 
@@ -142,11 +143,11 @@ public class QuestAndSetting extends BaseActivity {
      * @param fragmentTransaction
      */
     private void hideFragments(FragmentTransaction fragmentTransaction) {
-        if (currentIndex != 2 && Appraisal != null) {
-            fragmentTransaction.remove(Appraisal);
-            Appraisal = null;
+        if (currentIndex != 0 && LoanInfos != null) {
+            fragmentTransaction.remove(LoanInfos);
+            LoanInfos = null;
         }
-        if (currentIndex != 0 && Quest != null) {
+        if (currentIndex != 2 && Quest != null) {
             fragmentTransaction.remove(Quest);
             Quest = null;
         }
@@ -159,8 +160,8 @@ public class QuestAndSetting extends BaseActivity {
 
     @Override
     public void onAttachFragment(Fragment fragment) {
-        if (Appraisal == null && fragment instanceof AppraisalFragment) {
-            Appraisal = (AppraisalFragment) fragment;
+        if (LoanInfos == null && fragment instanceof LoanInfosFragment) {
+            LoanInfos = (LoanInfosFragment) fragment;
         }
         if (Quest == null && fragment instanceof QuestFragment) {
             Quest = (QuestFragment) fragment;
@@ -183,7 +184,7 @@ public class QuestAndSetting extends BaseActivity {
             case R.id.ig_project_list:
             case R.id.tv_project_list:
             case R.id.quests:
-                currentIndex = 0;
+                currentIndex = 2;
                 setNav(currentIndex);
                 updateView(currentIndex);
                 break;
@@ -197,7 +198,7 @@ public class QuestAndSetting extends BaseActivity {
             case R.id.ig_appraisal_list:
             case R.id.tv_appraisal_list:
             case R.id.appraisal:
-                currentIndex = 2;
+                currentIndex = 0;
                 setNav(currentIndex);
                 updateView(currentIndex);
                 break;
@@ -205,7 +206,7 @@ public class QuestAndSetting extends BaseActivity {
     }
 
     private void updateView(int flag) {
-        if (flag == 0) {
+        if (flag == 2) {
             Glide.with(QuestAndSetting.this).load(R.mipmap.project_list_selected).into(igProjectList);
             Glide.with(QuestAndSetting.this).load(R.mipmap.project_setting_unselected).into(igSetting);
             Glide.with(QuestAndSetting.this).load(R.mipmap.appraisal_unselected).into(igAppraisalList);
@@ -219,7 +220,7 @@ public class QuestAndSetting extends BaseActivity {
             tvProjectList.setTextColor(Color.parseColor("#666666"));
             tvAppraisalList.setTextColor(Color.parseColor("#666666"));
             tvSetting.setTextColor(Color.parseColor("#74a9ed"));
-        } else if (flag == 2) {
+        } else if (flag == 0) {
             Glide.with(QuestAndSetting.this).load(R.mipmap.project_list_unselected).into(igProjectList);
             Glide.with(QuestAndSetting.this).load(R.mipmap.project_setting_unselected).into(igSetting);
             Glide.with(QuestAndSetting.this).load(R.mipmap.appraisal_selected).into(igAppraisalList);

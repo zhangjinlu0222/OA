@@ -17,8 +17,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import zjl.com.oa2.Adapter.AppraisalListAdapter;
-import zjl.com.oa2.Adapter.QuestListAdapter;
 import zjl.com.oa2.Appraisal.Model.AppraisalPresenterImpl;
+import zjl.com.oa2.Appraisal.Presenter.IAppraisalPresenter;
 import zjl.com.oa2.Appraisal.Presenter.IAppraisalView;
 import zjl.com.oa2.Base.BaseActivity;
 import zjl.com.oa2.Bean.UserInfo;
@@ -42,7 +42,7 @@ public class AppraisalActivity extends BaseActivity implements IAppraisalView, P
     * */
     private int order = 1;
 
-    private AppraisalPresenterImpl appraisalPresenter;
+    private IAppraisalPresenter appraisalPresenter;
 
     private String token;
     private List<AppraisalResponse.Result.Data> data = new ArrayList<>();

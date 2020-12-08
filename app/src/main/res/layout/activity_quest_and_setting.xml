@@ -22,32 +22,6 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:id="@+id/quests"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"            >
-
-            <ImageView
-                android:id="@+id/ig_project_list"
-                android:layout_width="23dp"
-                android:layout_height="23dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="3dp"
-                android:src="@mipmap/project_list_selected" />
-
-            <TextView
-                android:id="@+id/tv_project_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ig_project_list"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="3dp"
-                android:gravity="center_horizontal"
-                android:text="@string/project_list"
-                android:textColor="#74a9ed"/>
-
-        </RelativeLayout>
-        <RelativeLayout
             android:id="@+id/appraisal"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -69,9 +43,60 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="3dp"
                 android:gravity="center_horizontal"
-                android:text="@string/appraisal"/>
+                android:text="主页"/>
 
         </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/quests"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/ig_project_list"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="3dp"
+                android:src="@mipmap/project_list_selected" />
+
+            <TextView
+                android:id="@+id/tv_project_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ig_project_list"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="3dp"
+                android:gravity="center_horizontal"
+                android:text="@string/project_list"
+                android:textColor="#74a9ed"/>
+
+        </RelativeLayout>
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/appraisal"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"            >-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/ig_appraisal_list"-->
+                <!--android:layout_width="23dp"-->
+                <!--android:layout_height="23dp"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_marginTop="3dp"-->
+                <!--android:src="@mipmap/appraisal_unselected" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_appraisal_list"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@+id/ig_appraisal_list"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_marginTop="3dp"-->
+                <!--android:gravity="center_horizontal"-->
+                <!--android:text="@string/appraisal"/>-->
+
+        <!--</RelativeLayout>-->
         <RelativeLayout
             android:id="@+id/setting"
             android:layout_width="0dp"

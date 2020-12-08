@@ -28,6 +28,7 @@ import zjl.com.oa2.RenewLoan.Presenter.IRLListener;
 import zjl.com.oa2.RenewLoan.Presenter.IRLModel;
 import zjl.com.oa2.Response.FormResponse;
 import zjl.com.oa2.Response.LoanDetailResponse;
+import zjl.com.oa2.Response.ManagersResponse;
 import zjl.com.oa2.Response.SearchResponse;
 import zjl.com.oa2.Sign.Presenter.IInformSign;
 
@@ -39,6 +40,39 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
     private static final String TAG = "RLEvaluationModelImpl";
 
 
+    @Override
+    public void ManagerList(HashMap<String ,Object> map,IRLListener listener) {
+
+        IRL service = retrofit.create(IRL.class);
+
+        RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), new Gson().toJson(map));
+
+        Call<ManagersResponse> call = service.ManagerList(body);
+
+        call.enqueue(new Callback<ManagersResponse>() {
+            @Override
+            public void onResponse(Call<ManagersResponse> call, Response<ManagersResponse> response) {
+                if (response.isSuccessful()) {
+                    ManagersResponse result = response.body();
+                    if (result != null && result.getCode() == Constant.Succeed){
+                        listener.onSucceed(result.getResult());
+                        return;
+                    }
+                    if (result != null && result.getCode() == Constant.LoginAnotherPhone){
+                        listener.relogin();
+                    }
+                }else{
+                    listener.onFail();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ManagersResponse> call, Throwable t) {
+                t.printStackTrace();
+                listener.onFail();
+            }
+        });
+    }
     @Override
     public void AdvanceSecInfo(IRLListener listener) {
 

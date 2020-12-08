@@ -94,7 +94,7 @@ public class MapView extends BaseActivity implements IMapViewView {
      */
     public void initLocation(){
         // 开启定位图层
-        mBaiduMap.setMyLocationEnabled(true);
+        mBaiduMap.setMyLocationEnabled(false);
         // 定位初始化
         mLocClient = new LocationClient(this);
         MyLocationListener myListener = new MyLocationListener();
@@ -107,13 +107,17 @@ public class MapView extends BaseActivity implements IMapViewView {
         option.setScanSpan(1000);
         mLocClient.setLocOption(option);
         mLocClient.start();
+//
+//        mMapView.showZoomControls(false);
+//        mMapView.showScaleControl(false);
+
     }
 
     @Override
     public void loadCarGps(GPSResponse.Result result) {
         Log.e("TAG",result.getLat() + result.getLon() );
         MyLocationData locData = new MyLocationData.Builder()
-//                .accuracy(location.getRadius())// 设置定位数据的精度信息，单位：米
+//                .accuracy(100)// 设置定位数据的精度信息，单位：米
 //                .direction(location.getDirection()) // 此处设置开发者获取到的方向信息，顺时针0-360
                 .latitude(Double.parseDouble(result.getLat()))
                 .longitude(Double.parseDouble(result.getLon()))
@@ -124,7 +128,7 @@ public class MapView extends BaseActivity implements IMapViewView {
             isFirstLoc = false;
             LatLng latLng = new LatLng(Double.parseDouble(result.getLat()), Double.parseDouble(result.getLon()));
             MapStatus.Builder builder = new MapStatus.Builder();
-            builder.target(latLng).zoom(20.0f);
+            builder.target(latLng).zoom(14);
             mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
             addMarker(latLng,result.getIs_online(),result.getGps_time());
         }
@@ -215,7 +219,7 @@ public class MapView extends BaseActivity implements IMapViewView {
                 isFirstLoc = false;
                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                 MapStatus.Builder builder = new MapStatus.Builder();
-                builder.target(latLng).zoom(20.0f);
+                builder.target(latLng).zoom(14);
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
                 addMarker(latLng,"1","");
             }

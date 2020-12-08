@@ -1,18 +1,14 @@
 package zjl.com.oa2.Appraisal.Model;
 
-import android.content.Intent;
-
 import com.google.gson.Gson;
 
 import java.util.HashMap;
 
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Multipart;
 import zjl.com.oa2.ApplicationConfig.Constant;
 import zjl.com.oa2.Appraisal.Presenter.IAppraisal;
 import zjl.com.oa2.Appraisal.Presenter.IAppraisalListener;

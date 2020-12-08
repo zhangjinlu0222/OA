@@ -58,6 +58,7 @@ import zjl.com.oa2.RenewLoan.Presenter.IRLPresenter;
 import zjl.com.oa2.RenewLoan.Presenter.IRLView;
 import zjl.com.oa2.Response.FormResponse;
 import zjl.com.oa2.Response.LoanDetailResponse;
+import zjl.com.oa2.Response.ManagersResponse;
 import zjl.com.oa2.Response.SearchResponse;
 import zjl.com.oa2.RiskSearch.View.RiskSearch;
 import zjl.com.oa2.Utils.LocalMediaUtil;
@@ -113,7 +114,7 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
 
 
     private String sellerNames = "";
-    private List<SearchResponse.Result.Seller> sellers = new ArrayList<>();
+    private List<ManagersResponse.Result.Seller> sellers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -330,7 +331,8 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
 
         //加载form表单数据成功后，如果进入的是来访则去获取经理人信息
         if (wk_point_id == 1){
-            iRLPresenter.AdvanceSecInfo();
+            HashMap<String ,Object> map = new HashMap<>();
+            iRLPresenter.ManagerList(map);
         }
     }
 
@@ -1631,7 +1633,7 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
         context.startActivity(intent);
     }
 
-    public void saveAdvSecInfo(SearchResponse.Result result){
+    public void saveManagers(ManagersResponse.Result result){
         if (result.getSeller_list() == null || result.getSeller_list().size() <= 0){
             return;
         }
@@ -1657,9 +1659,12 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
         formListsAdapter.notifyDataSetChanged();
 
     }
+    public void saveAdvSecInfo(SearchResponse.Result result){
+//        接口暂时空置不用
+    }
 
     public String getSellerId(String name){
-        for (SearchResponse.Result.Seller seller:sellers){
+        for (ManagersResponse.Result.Seller seller:sellers){
             if (seller.getName().equals(name)){
                 return seller.getUser_id();
             }

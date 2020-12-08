@@ -15,8 +15,6 @@ import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import zjl.com.oa2.Appraisal.Model.AppraisalPresenterImpl;
-import zjl.com.oa2.Bean.UserInfo;
 import zjl.com.oa2.R;
 
 public class AppraisalFragment extends Fragment {

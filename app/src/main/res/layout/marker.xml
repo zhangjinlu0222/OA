@@ -8,15 +8,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/text_black"
-        android:text="@string/workflow" />
+        android:textColor="@color/text_black" />
 
     <ImageView
         android:id="@+id/ig_marker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="@null"
         android:layout_below="@+id/tv_marker"
-        android:src="@mipmap/visitor_return" />
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@null" />
 </RelativeLayout>

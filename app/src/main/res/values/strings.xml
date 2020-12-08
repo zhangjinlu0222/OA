@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">车励享OA系统</string>
+    <string name="app_name">华融OA系统</string>
     <string name="account">账号</string>
     <string name="password">密码</string>
     <string name="login">登录</string>
@@ -12,7 +12,7 @@
     <string name="title_home">项目表</string>
     <string name="title_dashboard">设置</string>
     <string name="title_notifications">Notifications</string>
-    <string name="project_list">任务列表</string>
+    <string name="project_list">任务</string>
     <string name="project_new">新建</string>
     <string name="project_all">全部</string>
     <string name="project_finished">已办事项</string>

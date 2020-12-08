@@ -16,6 +16,7 @@ import zjl.com.oa2.Base.ResponseWithNoData;
 import zjl.com.oa2.InformationCheck.Presenter.IInfoCheck;
 import zjl.com.oa2.Response.FormResponse;
 import zjl.com.oa2.Response.LoanDetailResponse;
+import zjl.com.oa2.Response.ManagersResponse;
 import zjl.com.oa2.Response.SearchResponse;
 
 /**
@@ -24,6 +25,9 @@ import zjl.com.oa2.Response.SearchResponse;
 
 public interface IRL {
 
+
+    @POST(Constant.ManagerList)
+    Call<ManagersResponse> ManagerList(@Body RequestBody body);
 
     @POST(Constant.AdvanceSecInfo)
     Call<SearchResponse> AdvanceSecInfo();

@@ -15,14 +15,10 @@ import android.widget.Toast;
 
 import com.kyleduo.switchbutton.SwitchButton;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import zjl.com.oa2.Appraisal.View.AppraisalCarActivity;
 import zjl.com.oa2.Bean.UserInfo;
 import zjl.com.oa2.QuestAndSetting.View.QuestAndSetting;
 import zjl.com.oa2.R;
@@ -79,6 +75,12 @@ public class SettingFragment extends Fragment implements ISettingView {
     Button button2;
     @Bind(R.id.sb_update)
     SwitchButton sbUpdate;
+    @Bind(R.id.setting_tv_appraisal)
+    TextView settingTvAppraisal;
+    @Bind(R.id.setting_ig_appraisal)
+    ImageView settingIgAppraisal;
+    @Bind(R.id.setting_ig_right8)
+    ImageView settingIgRight8;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -134,12 +136,12 @@ public class SettingFragment extends Fragment implements ISettingView {
         sbUpdate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    UserInfo.getInstance(getContext()).setUserInfo(UserInfo.AUTOUPDATE,"1");
-                }else{
-                    UserInfo.getInstance(getContext()).setUserInfo(UserInfo.AUTOUPDATE,"0");
-                    UserInfo.getInstance(getContext()).setUserInfo(UserInfo.OPERATION,"");
-                    UserInfo.getInstance(getContext()).setUserInfo(UserInfo.OPERATIONSTATE,"");
+                if (isChecked) {
+                    UserInfo.getInstance(getContext()).setUserInfo(UserInfo.AUTOUPDATE, "1");
+                } else {
+                    UserInfo.getInstance(getContext()).setUserInfo(UserInfo.AUTOUPDATE, "0");
+                    UserInfo.getInstance(getContext()).setUserInfo(UserInfo.OPERATION, "");
+                    UserInfo.getInstance(getContext()).setUserInfo(UserInfo.OPERATIONSTATE, "");
                 }
             }
         });
@@ -159,9 +161,9 @@ public class SettingFragment extends Fragment implements ISettingView {
         settingDepartment.setText(dep_name);
         settingPhone.setText(phone);
 
-        if (isAutoUpdate != null && isAutoUpdate.equals("1")){
+        if (isAutoUpdate != null && isAutoUpdate.equals("1")) {
             sbUpdate.setChecked(true);
-        }else{
+        } else {
             sbUpdate.setChecked(false);
         }
 
@@ -183,8 +185,8 @@ public class SettingFragment extends Fragment implements ISettingView {
             R.id.setting_tv_department, R.id.setting_department, R.id.setting_ig_right2,
             R.id.setting_tv_phone, R.id.setting_phone, R.id.setting_ig_right3,
             R.id.setting_tv_fixLoginPwd, R.id.setting_ig_right4, R.id.button2,
-            R.id.setting_ig_right7,R.id.setting_tv_bangke,
-            R.id.setting_ig_right8,R.id.setting_tv_payback})
+            R.id.setting_ig_right7, R.id.setting_tv_bangke,
+            R.id.setting_ig_right8, R.id.setting_tv_payback,R.id.setting_tv_appraisal})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.setting_ig_sex:
@@ -207,19 +209,19 @@ public class SettingFragment extends Fragment implements ISettingView {
                 break;
             case R.id.setting_ig_right7:
             case R.id.setting_tv_bangke:
-                Intent bangke = new Intent(getActivity(),BangkeActivity.class);
+                Intent bangke = new Intent(getActivity(), BangkeActivity.class);
                 String phone = UserInfo.getInstance(getContext()).getUserInfo(UserInfo.PHONE);
                 bangke.putExtra("phone", phone);
                 startActivity(bangke);
                 break;
             case R.id.setting_ig_right8:
             case R.id.setting_tv_payback:
-                Intent toPayBackActivity = new Intent(getActivity(),PayBackActivity.class);
+                Intent toPayBackActivity = new Intent(getActivity(), PayBackActivity.class);
                 startActivity(toPayBackActivity);
                 break;
             case R.id.setting_ig_right3:
             case R.id.setting_tv_fixLoginPwd:
-                Intent intent = new Intent(getActivity(),ModifyPwdActivity.class);
+                Intent intent = new Intent(getActivity(), ModifyPwdActivity.class);
                 startActivity(intent);
                 break;
             case R.id.setting_ig_right4:
@@ -229,6 +231,9 @@ public class SettingFragment extends Fragment implements ISettingView {
                 UserInfo.getInstance(getActivity()).cleanUserInfo();
                 //发送退出登录请求后，主动返回，不管是否得到反馈信息
                 this.toMainActivity();
+                break;
+            case R.id.setting_tv_appraisal:
+                toAppraisal();
                 break;
         }
     }
@@ -249,12 +254,12 @@ public class SettingFragment extends Fragment implements ISettingView {
     }
 
     @Override
-    public void saveUserInfo(UserInfoResponse.Data data){
+    public void saveUserInfo(UserInfoResponse.Data data) {
         String schedule_flag = data.getSchedule_flag();
 
-        UserInfo.getInstance(getContext()).setUserInfo(UserInfo.SCHEDULEFLAG,schedule_flag);
+        UserInfo.getInstance(getContext()).setUserInfo(UserInfo.SCHEDULEFLAG, schedule_flag);
 
-        if ("1".equals(schedule_flag) && rlPayBack != null){
+        if ("1".equals(schedule_flag) && rlPayBack != null) {
             rlPayBack.setVisibility(View.VISIBLE);
         }
     }
@@ -262,7 +267,7 @@ public class SettingFragment extends Fragment implements ISettingView {
     @Override
     public void toMainActivity() {
         QuestAndSetting Activity = (QuestAndSetting) getActivity();
-        if (Activity != null){
+        if (Activity != null) {
             Activity.finish();
         }
     }
@@ -274,7 +279,7 @@ public class SettingFragment extends Fragment implements ISettingView {
 
     @Override
     public void showFailureMsg(String msg) {
-        Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -290,5 +295,10 @@ public class SettingFragment extends Fragment implements ISettingView {
     @Override
     public void refreshToken(String arg) {
 
+    }
+
+    void toAppraisal(){
+        Intent intent = new Intent(getActivity(), AppraisalCarActivity.class);
+        startActivity(intent);
     }
 }

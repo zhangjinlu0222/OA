@@ -3,6 +3,7 @@ package zjl.com.oa2.RenewLoan.Presenter;
 import zjl.com.oa2.Base.IBaseListener;
 import zjl.com.oa2.Response.FormResponse;
 import zjl.com.oa2.Response.LoanDetailResponse;
+import zjl.com.oa2.Response.ManagersResponse;
 import zjl.com.oa2.Response.SearchResponse;
 
 /**
@@ -13,4 +14,5 @@ public interface IRLListener extends IBaseListener{
     void onSucceed(FormResponse.Result result);
     void onSucceed(LoanDetailResponse.Result result);
     void onSucceed(SearchResponse.Result result);
+    void onSucceed(ManagersResponse.Result result);
 }

@@ -45,12 +45,12 @@
             android:name=".VersionControl.VersionService"
             android:enabled="true"
             android:exported="true" />
-
-
         //baidu地图服务
-        <service android:name="com.baidu.location.f"
+        <service
+            android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"/>
+            android:process=":remote" />
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="VSZIcHKEAda2txoU2h1P0fGmGGiCeB9V" />
@@ -222,22 +222,35 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".WorkFlow.View.Contract"
+        <activity
+            android:name=".WorkFlow.View.Contract"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".LoanDetail.View.LoanDetail"
+        <activity
+            android:name=".LoanDetail.View.LoanDetail"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MapView.View.MapView"
+        <activity
+            android:name=".MapView.View.MapView"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RiskSearch.View.RiskSearch"
+        <activity
+            android:name=".RiskSearch.View.RiskSearch"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Appraisal.View.AppraisalCarActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".QuestAndSetting.View.SearchLoanInfoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

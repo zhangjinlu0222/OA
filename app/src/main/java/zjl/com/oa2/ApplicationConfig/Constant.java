@@ -164,4 +164,8 @@ public class Constant {
     public static final String GetBigDatas = "WebApi/V1/Base/GetBigDatas";
     //2020.12.1
     public static final String LookBigDatas = "WebApi/V1/Base/LookBigDatas";
+    //2020.12.8
+    public static final String ManagerList = "WebApi/V1/Base/ManagerList";
+    //2020.12.2
+    public static final String LoanInfoList = "WebApi/V1/index/CustomerLoanInfosList";
 }

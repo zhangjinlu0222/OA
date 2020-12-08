@@ -25,6 +25,7 @@ import zjl.com.oa2.RenewLoan.Presenter.IRLPresenter;
 import zjl.com.oa2.RenewLoan.Presenter.IRLView;
 import zjl.com.oa2.Response.FormResponse;
 import zjl.com.oa2.Response.LoanDetailResponse;
+import zjl.com.oa2.Response.ManagersResponse;
 import zjl.com.oa2.Response.SearchResponse;
 import zjl.com.oa2.Utils.TitleBarUtil;
 
@@ -119,6 +120,11 @@ public class RenewLoanWaitSign extends BaseActivity implements IRLView {
 
     @Override
     public void saveAdvSecInfo(SearchResponse.Result result) {
+
+    }
+
+    @Override
+    public void saveManagers(ManagersResponse.Result result) {
 
     }
 }

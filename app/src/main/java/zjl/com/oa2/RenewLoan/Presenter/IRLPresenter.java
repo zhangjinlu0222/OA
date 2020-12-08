@@ -16,6 +16,8 @@ import zjl.com.oa2.Meeting.Presenter.IMettingListener;
 
 public interface IRLPresenter{
 
+    //查看销售经理列表
+    void ManagerList(HashMap<String ,Object> map);
     //查看高级数据
     void AdvanceSecInfo();
 

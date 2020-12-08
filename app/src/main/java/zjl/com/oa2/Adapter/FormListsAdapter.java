@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.kyleduo.switchbutton.SwitchButton;
@@ -710,16 +711,49 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
             title = convertView.findViewById(R.id.title);
             img = convertView.findViewById(R.id.title_img);
             content.addTextChangedListener(new TextWatcher() {
+                private int num = 5;
+                private CharSequence temp;
+                private int selectionStart;
+                private int selectionEnd;
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 }
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    temp = s;
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) {
+                    if (formLists.get(position).getKeyboard_style() == 3 && formLists.get(position).getControl_title().contains("折扣")){
+                        selectionStart = content.getSelectionStart();
+                        selectionEnd = content.getSelectionEnd();
+
+                        //当长度超出时进行截取
+//                        1.对首字母进行截取
+                        if (s.toString().startsWith("0") && temp.length() >= 2){
+                            content.setText(s.toString().substring(1));
+                            return;
+                        }
+//                        2.对内容进行截取
+                        if (!s.toString().contains(".")){
+                            if (!s.toString().equals("") && Integer.parseInt(s.toString()) >= 100){
+                                s.delete(selectionStart - 1, selectionEnd);
+                                content.setText(s);
+                                Toast.makeText(context,"超出取值范围" ,Toast.LENGTH_SHORT ).show();
+                            }
+                        }else{
+                            if (s.toString().length() > num){
+                                s.delete(selectionStart - 1, selectionEnd);
+                                Toast.makeText(context,"超出长度范围" ,Toast.LENGTH_SHORT ).show();
+                                content.setText(s);
+                            }
+                        }
+
+                        //设置光标在最后
+                        content.setSelection(s.length());
+                    }
 
                     formLists.get(position).setData_con(s.toString());
 

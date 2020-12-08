@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="#ffffff"
+        android:baselineAligned="false">
+
+        <TextView
+            android:id="@+id/index"
+            android:layout_width="32dp"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:text="1"
+            android:textAlignment="center"
+            android:textColor="#222222"
+            android:textSize="16sp" />
+
+    <LinearLayout
+        android:id="@+id/rl_container"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@+id/index"
+        android:orientation="horizontal">
+
+
+        <RelativeLayout
+            android:id="@+id/rlName"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_centerHorizontal="false"
+                android:gravity="center"
+                android:text="姓名"
+                android:textColor="#222222"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlCarModel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/carModel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="false"
+                android:gravity="center_vertical|center"
+                android:text="车型"
+                android:textColor="#222222"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlPrice"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/carPrice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="false"
+                android:gravity="center_vertical|center"
+                android:text="车价"
+                android:textColor="#222222"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlDate"
+            android:layout_width="84dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="false">
+
+
+            <TextView
+                android:id="@+id/startDate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="false"
+                android:gravity="center_vertical|center"
+                android:text="起租日期"
+                android:textColor="#222222"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+    </RelativeLayout>
+
