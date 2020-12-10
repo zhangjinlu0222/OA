@@ -211,6 +211,13 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
 
     @Override
     public void refreshData(GetWorkFlowResponse.Result result) {
+        /**
+         * 管理员登录则显示拒件按钮*/
+        if ( result != null && "1".equals(result.getRefuse_flag())){
+            igRefuse.setVisibility(View.VISIBLE);
+        }else{
+            igRefuse.setVisibility(View.GONE);
+        }
 
         if (result != null && result.getList().size() > 0) {
 
@@ -247,22 +254,6 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
             }
 
             workFlowAdapter.notifyDataSetChanged();
-
-            for (int i = 0; i < workFlowAdapter.getGroupCount(); i++) {
-                if (workFlowAdapter.getChildrenCount(i) > 0) {
-                    workflow.expandGroup(i);
-                } else {
-                    workflow.collapseGroup(i);
-                }
-            }
-
-            /**
-             * 管理员登录则显示拒件按钮*/
-            if ("1".equals(result.getRefuse_flag())){
-                igRefuse.setVisibility(View.VISIBLE);
-            }else{
-                igRefuse.setVisibility(View.GONE);
-            }
         } else {
             this.showFailureMsg("工作流程数据异常");
         }

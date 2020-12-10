@@ -207,7 +207,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="显示续贷单子"
+            android:text="显示续贷"
             android:textColor="#000000"
             android:textSize="14sp" />
 

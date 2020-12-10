@@ -66,6 +66,8 @@ public class QuestListModelImpl extends ModelImpl implements IQuestListModel{
                     }
 
                     listener.onFail(result.getMessage());
+                }else{
+                    listener.onFail("请求失败");
                 }
             }
 

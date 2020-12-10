@@ -328,7 +328,6 @@ public class FormListsAdapter extends BaseAdapter implements View.OnClickListene
             viewHolder.content.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         }else if(keyboardInputStyle == 2 && !isReadOnly){
             viewHolder.content.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
-
         }else{
             viewHolder.content.setInputType(InputType.TYPE_CLASS_TEXT);
         }

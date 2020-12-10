@@ -34,7 +34,6 @@ public class PhotosActivity extends BaseActivity {
     private List<LocalMedia> selectList = new ArrayList<>();
     private GridImageAdapter adapter;
     private int mediaType;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
