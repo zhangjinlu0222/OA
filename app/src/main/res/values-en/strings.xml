@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">华融OA系统</string>
+    <string name="app_name">华兆OA</string>
     <string name="account">账号</string>
     <string name="password">密码</string>
     <string name="login">登录</string>

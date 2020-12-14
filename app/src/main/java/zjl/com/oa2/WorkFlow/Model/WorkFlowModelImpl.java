@@ -140,7 +140,7 @@ public class WorkFlowModelImpl extends ModelImpl implements IWorkFlowModel{
                         }
                     }
                 }else{
-                    listener.onFail();
+                    listener.onFail("暂无数据");
                 }
             }
 

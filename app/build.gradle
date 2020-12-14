@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.mob.sdk'
 
 MobSDK {
-    appKey "27ebc50f43115"
-    appSecret "88deb9058f4e5db152e2eaa4d23c1b7a"
+    appKey "31b7b4f1a3640"
+    appSecret "a3333b82ac39dce05547d22c1c930dab"
     ShareSDK {
         devInfo {
             Wechat {

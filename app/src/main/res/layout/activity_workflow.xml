@@ -36,7 +36,8 @@
             android:layout_marginEnd="10dp"
             android:background="@mipmap/info_bg_next"
             android:text="@string/refuse"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:visibility="gone" />
     </RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"

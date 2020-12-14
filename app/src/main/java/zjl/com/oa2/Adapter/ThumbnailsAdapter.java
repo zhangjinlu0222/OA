@@ -8,6 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 
 import java.util.List;
 
@@ -57,7 +61,11 @@ public class ThumbnailsAdapter extends BaseAdapter {
             viewholder = (ViewHolder) convertView.getTag();
         }
 
-        Glide.with(context).load(thumbnails.get(position)).into(viewholder.img);
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
+                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)//关键代码，加载原始大小
+                .format(DecodeFormat.PREFER_RGB_565);//设置为这种格式去掉透明度通道，可以减少内存占有
+        Glide.with(context).setDefaultRequestOptions(requestOptions).load(thumbnails.get(position)).into(viewholder.img);
         return convertView;
     }
 }

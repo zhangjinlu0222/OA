@@ -216,6 +216,15 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
     @Override
     public void refreshData(GetWorkFlowResponse.Result result) {
 
+
+        /**
+         * 管理员登录则显示拒件按钮*/
+        if (result != null && "1".equals(result.getRefuse_flag())){
+            igRefuse.setVisibility(View.VISIBLE);
+        }else{
+            igRefuse.setVisibility(View.GONE);
+        }
+
         if (result != null && result.getList().size() > 0) {
 
             groupData.clear();
@@ -260,13 +269,6 @@ public class WorkFlowActivity extends BaseActivity implements IWorkFlowView {
 //                }
 //            }
 
-            /**
-             * 管理员登录则显示拒件按钮*/
-            if ("1".equals(result.getRefuse_flag())){
-                igRefuse.setVisibility(View.VISIBLE);
-            }else{
-                igRefuse.setVisibility(View.GONE);
-            }
         } else {
             this.showFailureMsg("工作流程数据异常");
         }

@@ -50,7 +50,7 @@ public class RiskSearch extends BaseActivity implements IRiskSearchView{
         mRiskSearchPresenter = new RiskSearchPresenterImpl(this);
 
         if (name == null || name.equals("")){
-            mRiskSearchPresenter.GetBigDatas(token,w_con_id,name,phone,identity_id);
+            mRiskSearchPresenter.LookBigDatas(token,w_con_id);
         }else{
             mRiskSearchPresenter.GetBigDatas(token,w_con_id,name,phone,identity_id);
         }

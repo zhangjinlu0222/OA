@@ -844,7 +844,6 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
                 }
                 break;
             case 31:
-
                 map.clear();
                 map.put("token",token );
                 map.put("w_con_id", workflow_content_id);

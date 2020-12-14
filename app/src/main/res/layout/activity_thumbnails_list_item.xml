@@ -11,5 +11,6 @@
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="false"
         android:contentDescription="@null"
+        android:scaleType="matrix"
         android:src="@mipmap/ic_launcher" />
 </RelativeLayout>

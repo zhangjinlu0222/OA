@@ -614,6 +614,10 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
             if (key.equals("remark")){
                 continue;
             }
+            //对减额原因不做强制检查，可提交空字符串
+            if (key.equals("discount_reason")){
+                continue;
+            }
 
             if (map.get(key) == null || map.get(key).toString().length() <=0){
                 irlView.showFailureMsg("请确认信息填写完整");

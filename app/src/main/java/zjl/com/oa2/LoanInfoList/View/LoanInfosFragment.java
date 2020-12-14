@@ -226,6 +226,10 @@ public class LoanInfosFragment extends Fragment implements ILoanInfoListView, Pu
     @Override
     public void loadLoanInfos(LoanInfosResponse.Result result) {
 
+        if(page_count == 1){
+            this.data.clear();
+        }
+
         if(result == null){
             showFailureMsg("暂无数据");
             return;
@@ -248,7 +252,6 @@ public class LoanInfosFragment extends Fragment implements ILoanInfoListView, Pu
 
         rlCarType.requestLayout();
 
-        this.data.clear();
         this.data.addAll(loanInfos);
         this.adapter.notifyDataSetChanged();
     }

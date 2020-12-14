@@ -21,7 +21,7 @@
             android:layout_height="44dp"
             android:layout_centerHorizontal="true"
             android:gravity="center_vertical|center"
-            android:text="还款明细"
+            android:text="应缴租金明细"
             android:textColor="#171717"
             android:textSize="13sp" />
 

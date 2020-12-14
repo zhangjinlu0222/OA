@@ -69,7 +69,7 @@ public class RiskSearchModelImpl extends ModelImpl implements IRiskSearchModel {
         map.put("w_con_id",w_con_id);
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), new Gson().toJson(map));
 
-        Call<BigDataResponse> call = service.GetBigDatas(body);
+        Call<BigDataResponse> call = service.LookBigDatas(body);
 
         call.enqueue(new Callback<BigDataResponse>() {
             @Override

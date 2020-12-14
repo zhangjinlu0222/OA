@@ -51,13 +51,14 @@ public class Thumbnails extends BaseActivity implements AdapterView.OnItemClickL
         thumbnails.addAll(getIntent().getStringArrayListExtra("thumbnails"));
 
         for (String str :getIntent().getStringArrayListExtra("normalMedias")) {
-                    LocalMedia media = new LocalMedia();
-                    media.setPath(str);
-                    if (VideoUtil.isVideo(str)){
-                        media.setPictureType("video/mp4");
-                    }
+            LocalMedia media = new LocalMedia();
+            media.setCompressed(false);
+            media.setPath("https://api.clxchina.cn:8100/DataImgs/thumbnail/20201214/5027/assess/91607911782124.jpg");
+            if (VideoUtil.isVideo(str)){
+                media.setPictureType("video/mp4");
+            }
             normalMedias.add(media);
-                }
+        }
         thumbnailsAdapter = new ThumbnailsAdapter(context,thumbnails);
         gvThumbnails.setAdapter(thumbnailsAdapter);
         gvThumbnails.setOnItemClickListener(this);

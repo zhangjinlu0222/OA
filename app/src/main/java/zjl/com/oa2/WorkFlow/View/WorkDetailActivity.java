@@ -117,7 +117,7 @@ public class WorkDetailActivity extends BaseActivity implements IWorkFlowView {
     private void WXShare(String content) {
         OnekeyShare oks = new OnekeyShare();
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-        oks.setTitle("车励享OA系统");
+        oks.setTitle("华融OA系统");
         // text是分享文本，所有平台都需要这个字段
         oks.setText(content);
 

@@ -144,14 +144,10 @@ public class LoanInfoAdapter extends BaseAdapter {
         LoanTop loanTop = (LoanTop) repayments.get(position);
         holder1.tvAmount.setText(loanTop.getData().get(0).getName());
         holder1.tvAmountValue.setText(loanTop.getData().get(0).getName_value());
-        holder1.tvPay.setText(loanTop.getData().get(1).getName());
-        holder1.tvPayValue.setText(loanTop.getData().get(1).getName_value());
-        holder1.tvMonthInterest.setText(loanTop.getData().get(2).getName());
-        holder1.tvMonthInterestValue.setText(loanTop.getData().get(2).getName_value());
-        holder1.tvDuration.setText(loanTop.getData().get(3).getName());
-        holder1.tvDurationValue.setText(loanTop.getData().get(3).getName_value());
-        holder1.tvActualMoney.setText(loanTop.getData().get(4).getName());
-        holder1.tvActualMoneyValue.setText(loanTop.getData().get(4).getName_value());
+        holder1.tvMonthInterest.setText(loanTop.getData().get(1).getName());
+        holder1.tvMonthInterestValue.setText(loanTop.getData().get(1).getName_value());
+        holder1.tvActualMoney.setText(loanTop.getData().get(2).getName());
+        holder1.tvActualMoneyValue.setText(loanTop.getData().get(2).getName_value());
     }
 
     static class ViewHolder1 {
@@ -159,18 +155,10 @@ public class LoanInfoAdapter extends BaseAdapter {
         TextView tvAmount;
         @Bind(R.id.tv_amount_value)
         TextView tvAmountValue;
-        @Bind(R.id.tv_pay)
-        TextView tvPay;
-        @Bind(R.id.tv_pay_value)
-        TextView tvPayValue;
         @Bind(R.id.tv_month_interest)
         TextView tvMonthInterest;
         @Bind(R.id.tv_month_interest_value)
         TextView tvMonthInterestValue;
-        @Bind(R.id.tv_duration)
-        TextView tvDuration;
-        @Bind(R.id.tv_duration_value)
-        TextView tvDurationValue;
         @Bind(R.id.tv_actual_money)
         TextView tvActualMoney;
         @Bind(R.id.tv_actual_money_value)
