@@ -50,6 +50,8 @@ public class WorkDetailActivity extends BaseActivity implements IWorkFlowView {
     TextView tvLocation;
     @Bind(R.id.tv_manager)
     TextView tvManager;
+    @Bind(R.id.tv_loan_detail)
+    TextView tvLoanDetail;
     @Bind(R.id.workdetail)
     MyExpandableListview workdetail;
     @Bind(R.id.btn_workdetail_share)
@@ -61,6 +63,8 @@ public class WorkDetailActivity extends BaseActivity implements IWorkFlowView {
     private List<List<GetWorkFlowResponse.Result.Section.dict>> childData = new ArrayList<>();
     private String workflow_content_id, token, date, manager,proc_type_id;
     private String wx_share_content;
+
+    private boolean loanDetailValid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +99,7 @@ public class WorkDetailActivity extends BaseActivity implements IWorkFlowView {
     }
 
 
-    @OnClick({R.id.ig_back, R.id.btn_workdetail_share,R.id.tv_location})
+    @OnClick({R.id.ig_back, R.id.btn_workdetail_share,R.id.tv_location,R.id.tv_loan_detail})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ig_back:
@@ -106,6 +110,13 @@ public class WorkDetailActivity extends BaseActivity implements IWorkFlowView {
                 break;
             case R.id.tv_location:
                 toMapView();
+                break;
+            case R.id.tv_loan_detail:
+                if (loanDetailValid){
+                    lookLoanDetail();
+                }else{
+                    showFailureMsg("暂不可查");
+                }
                 break;
         }
     }
@@ -152,7 +163,22 @@ public class WorkDetailActivity extends BaseActivity implements IWorkFlowView {
 
     @Override
     public void refreshData(GetWorkFlowResponse.Result result) {
-        if (result != null && result.getList().size() > 0) {
+
+        if (result != null && result.getEdit() == 1){
+            btnWorkdetailShare.setVisibility(View.VISIBLE);
+        }else{
+            btnWorkdetailShare.setVisibility(View.GONE);
+        }
+
+        if (result != null && result.getLook_loan_detail_flag() == 1){
+            loanDetailValid = true;
+        }else{
+            loanDetailValid = false;
+        }
+
+        wx_share_content = result.getWx_share_content();
+
+        if (result.getList() != null && result.getList().size() > 0) {
             groupData.clear();
             childData.clear();
 
@@ -179,14 +205,6 @@ public class WorkDetailActivity extends BaseActivity implements IWorkFlowView {
                     workdetail.collapseGroup(i);
                 }
             }
-
-            if (result.getEdit() == 1){
-                btnWorkdetailShare.setVisibility(View.VISIBLE);
-            }else{
-                btnWorkdetailShare.setVisibility(View.GONE);
-            }
-
-            wx_share_content = result.getWx_share_content();
 
         } else {
             this.showFailureMsg("工作流程数据异常");
@@ -228,11 +246,9 @@ public class WorkDetailActivity extends BaseActivity implements IWorkFlowView {
     }
 
     public void lookLoanDetail(){
-
         HashMap<String,Object> map = new HashMap<>();
         map.put("token",token );
         map.put("w_con_id",workflow_content_id );
-
         workFlowPresenter.LookLoanDetail(map);
     }
 

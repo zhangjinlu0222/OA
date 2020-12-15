@@ -134,21 +134,7 @@ public class WorkDetailAdapter extends BaseExpandableListAdapter {
                 return false;
             }
         });
-        childViewHolder.itemWorkDetailChildValue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String key = childData.get(groupPosition).get(childPosition).getL_key().trim();
-                String value = childData.get(groupPosition).get(childPosition).getL_value().trim();
 
-                if (key.contains("计划表") && value.contains("查看")){
-                    context.lookLoanDetail();
-                }
-                if (key.contains("位置") && value.contains("查看")){
-                    context.toMapView();
-                }
-
-            }
-        });
         String value = childData.get(groupPosition).get(childPosition).getL_value().trim();
 
         if (value.contains("备注")){

@@ -78,9 +78,10 @@
                     android:id="@+id/tv_location"
                     android:layout_width="64dp"
                     android:layout_height="24dp"
-                    android:layout_centerInParent="true"
-                    android:layout_centerVertical="false"
-                    android:layout_marginLeft="10dp"
+                    android:layout_centerInParent="false"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="25dp"
+                    android:layout_toRightOf="@+id/tv_time"
                     android:background="@drawable/border_grey_eeeeee"
                     android:gravity="center"
                     android:text="定位"
@@ -89,14 +90,18 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_manager_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
+                    android:id="@+id/tv_loan_detail"
+                    android:layout_width="64dp"
+                    android:layout_height="24dp"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="false"
+                    android:layout_marginRight="25dp"
                     android:layout_toStartOf="@+id/tv_manager"
-                    android:text="@string/project_manager"
-                    android:textColor="#ffffff"
+                    android:background="@drawable/border_grey_eeeeee"
+                    android:gravity="center"
+                    android:text="还款计划"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
                     android:textSize="14sp" />
 
                 <TextView

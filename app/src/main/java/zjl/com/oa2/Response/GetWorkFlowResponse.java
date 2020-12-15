@@ -27,6 +27,12 @@ public class GetWorkFlowResponse extends BaseResponse {
 
         public String refuse_flag;
 
+        public int look_loan_detail_flag;
+
+        public int getLook_loan_detail_flag() {
+            return look_loan_detail_flag;
+        }
+
         public String getRefuse_flag() {
             return refuse_flag;
         }

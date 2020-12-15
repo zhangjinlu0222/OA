@@ -115,7 +115,10 @@ public class MapView extends BaseActivity implements IMapViewView {
 
     @Override
     public void loadCarGps(GPSResponse.Result result) {
-        Log.e("TAG",result.getLat() + result.getLon() );
+        if (result == null || result.getLon() == null ||result.getLat() == null){
+            showFailureMsg("GPS数据异常");
+            return;
+        }
         MyLocationData locData = new MyLocationData.Builder()
 //                .accuracy(100)// 设置定位数据的精度信息，单位：米
 //                .direction(location.getDirection()) // 此处设置开发者获取到的方向信息，顺时针0-360
