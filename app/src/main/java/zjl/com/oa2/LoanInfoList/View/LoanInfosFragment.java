@@ -432,8 +432,8 @@ public class LoanInfosFragment extends Fragment implements ILoanInfoListView, Pu
         if (requestCode == SearchAction && resultCode == RESULT_OK){
             filter = true;
             search_name = data.getStringExtra("name");
-            search_start_date = data.getStringExtra("start_date");
-            search_end_date = data.getStringExtra("end_date");
+            search_start_date = data.getStringExtra("startdate");
+            search_end_date = data.getStringExtra("enddate");
 
             this.data.clear();
             this.adapter.notifyDataSetChanged();

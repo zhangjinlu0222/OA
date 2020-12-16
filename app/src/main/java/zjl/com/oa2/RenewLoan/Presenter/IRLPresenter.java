@@ -2,13 +2,8 @@ package zjl.com.oa2.RenewLoan.Presenter;
 
 import com.luck.picture.lib.entity.LocalMedia;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
-
-import zjl.com.oa2.BusinessFeedBack.Presenter.IBusFeedBackListener;
-import zjl.com.oa2.InformationCheck.Presenter.IInfoCheck;
-import zjl.com.oa2.Meeting.Presenter.IMettingListener;
 
 /**
  * Created by Administrator on 2018/3/5.

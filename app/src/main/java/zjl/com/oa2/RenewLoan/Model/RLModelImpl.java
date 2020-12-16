@@ -16,13 +16,9 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Part;
 import zjl.com.oa2.ApplicationConfig.Constant;
 import zjl.com.oa2.Base.ModelImpl;
 import zjl.com.oa2.Base.ResponseWithNoData;
-import zjl.com.oa2.InformationCheck.Presenter.IInfoCheck;
-import zjl.com.oa2.QuestAndSetting.Presenter.ISearch;
-import zjl.com.oa2.QuestAndSetting.Presenter.ISearchListener;
 import zjl.com.oa2.RenewLoan.Presenter.IRL;
 import zjl.com.oa2.RenewLoan.Presenter.IRLListener;
 import zjl.com.oa2.RenewLoan.Presenter.IRLModel;
@@ -115,21 +111,9 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
         RequestBody tokenbody = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("token").toString());
         RequestBody workflow_content_id = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("w_con_id").toString());
         RequestBody wk_point_id = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("w_pot_id").toString());
-        RequestBody customer_name = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("customer_name").toString());
-        RequestBody identity = RequestBody.create(MediaType.parse("multipart/form-data"),map.get("identity").toString());
-        RequestBody customer_phone = RequestBody.create(MediaType.parse("multipart/form-data"),map.get("customer_phone").toString());
-        RequestBody address = RequestBody.create(MediaType.parse("multipart/form-data"),map.get("address").toString());
-        RequestBody bank_code = RequestBody.create(MediaType.parse("multipart/form-data"),map.get("bank_code").toString());
-        RequestBody bank_name = RequestBody.create(MediaType.parse("multipart/form-data"),map.get("bank_name").toString());
-        RequestBody purpose = RequestBody.create(MediaType.parse("multipart/form-data"),map.get("purpose").toString());
-        RequestBody car_license = RequestBody.create(MediaType.parse("multipart/form-data"),map.get("car_license").toString());
-        RequestBody car_registration = RequestBody.create(MediaType.parse("multipart/form-data"),map.get("car_registration").toString());
-        RequestBody car_engine_no = RequestBody.create(MediaType.parse("multipart/form-data"),map.get("car_engine_no").toString());
-        RequestBody car_vin = RequestBody.create(MediaType.parse("multipart/form-data"),map.get("car_vin").toString());
         RequestBody type = RequestBody.create(MediaType.parse("multipart/form-data"),uploadType);
         RequestBody remark = RequestBody.create(MediaType.parse("multipart/form-data"),map.get("remark").toString());
         RequestBody loan_length = RequestBody.create(MediaType.parse("multipart/form-data"),  map.get("loan_length").toString());
-        RequestBody contract_date = RequestBody.create(MediaType.parse("multipart/form-data"), map.get("contract_date").toString());
 
         List<MultipartBody.Part> filesBody = new ArrayList<>();
 
@@ -161,9 +145,8 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
 
         }
 
-        Call<ResponseWithNoData> call = service.Sign( request_end_flag,tokenbody,workflow_content_id,wk_point_id,customer_name,identity,customer_phone,address,
-                bank_code,bank_name,purpose,car_license,car_registration,car_engine_no,car_vin,
-                remark,type,loan_length,contract_date,filesBody);
+        Call<ResponseWithNoData> call = service.Sign( request_end_flag,tokenbody,workflow_content_id,wk_point_id,
+                remark,type,loan_length,filesBody);
 
         call.enqueue(new Callback<ResponseWithNoData>() {
             @Override
@@ -300,7 +283,7 @@ public class RLModelImpl extends ModelImpl implements IRLModel {
     @Override
     public void endWorkFlow(String token, int workflow_content_id, int wk_point_id, String remark,String  proc_type_id,IRLListener listener) {
 
-        IInfoCheck service = retrofit.create(IInfoCheck.class);
+        IRL service = retrofit.create(IRL.class);
 
         HashMap<String,Object> map = new HashMap<>();
         map.put("token",token);

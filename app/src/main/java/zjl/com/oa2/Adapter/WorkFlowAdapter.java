@@ -116,9 +116,7 @@ public class WorkFlowAdapter extends BaseExpandableListAdapter implements View.O
             groupViewHolder.itemLoanRequestGroupTitle = convertView.findViewById(R.id.item_loan_request_group_title);
             groupViewHolder.itemLoanRequestGroupDate = convertView.findViewById(R.id.date);
             groupViewHolder.itemLoanRequestGroupReEdit = convertView.findViewById(R.id.reedit);
-//            groupViewHolder.itemLoanRequestGroupRefuse = convertView.findViewById(R.id.refuse);
             groupViewHolder.itemLoanRequestGroupReEdit.setTag(groupPosition);
-//            groupViewHolder.itemLoanRequestGroupRefuse.setTag(groupPosition);
             groupViewHolder.relativeLayout = convertView.findViewById(R.id.relativelayout);
             convertView.setTag(groupViewHolder);
         } else {
@@ -151,11 +149,8 @@ public class WorkFlowAdapter extends BaseExpandableListAdapter implements View.O
         if (edit_flag == 1 && "2".equals(groupData.get(groupPosition).getState())){
             groupViewHolder.itemLoanRequestGroupReEdit.setVisibility(View.VISIBLE);
             groupViewHolder.itemLoanRequestGroupReEdit.setOnClickListener(this);
-//            groupViewHolder.itemLoanRequestGroupRefuse.setVisibility(View.VISIBLE);
-//            groupViewHolder.itemLoanRequestGroupRefuse.setOnClickListener(this);
         }else{
             groupViewHolder.itemLoanRequestGroupReEdit.setVisibility(View.GONE);
-//            groupViewHolder.itemLoanRequestGroupRefuse.setVisibility(View.GONE);
         }
         return convertView;
     }

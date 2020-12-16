@@ -8,11 +8,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,7 +17,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSONPObject;
 import com.dou361.dialogui.DialogUIUtils;
 import com.dou361.dialogui.bean.BuildBean;
 import com.dou361.dialogui.listener.DialogUIDateTimeSaveListener;
@@ -32,9 +28,7 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -48,10 +42,8 @@ import zjl.com.oa2.Bean.UploadCarPhotosType;
 import zjl.com.oa2.Bean.UserInfo;
 import zjl.com.oa2.CustomView.ActionSheetDialog;
 import zjl.com.oa2.CustomView.MyListView;
-import zjl.com.oa2.InformationCheck.View.InformationCheck;
 import zjl.com.oa2.LoanDetail.View.LoanDetail;
 import zjl.com.oa2.Login.View.LoginActivity;
-import zjl.com.oa2.MapView.View.MapView;
 import zjl.com.oa2.R;
 import zjl.com.oa2.RenewLoan.Model.RLPresenterImpl;
 import zjl.com.oa2.RenewLoan.Presenter.IRLPresenter;
@@ -256,7 +248,7 @@ public class RenewLoanActivity extends BaseActivity implements IRLView {
 
         if (!netConnected){
             showNetError();
-        }else if (isFastDoubleClick(R.id.evaluationBtnRefuse)){
+        }else if (isFastDoubleClick()){
             return;
         }else {
 

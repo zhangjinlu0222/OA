@@ -68,6 +68,9 @@ public class RLPresenterImpl implements IRLPresenter,IRLListener {
                             map,files.subList(files.size() / 2,files.size()),this);
                     break;
                 case "15"://签约
+                    irlModel.Sign( request_end_flag, UPLOAD_TYPE_ADD,
+                            map,files.subList(files.size() / 2,files.size()),this);
+                    break;
                 case "8"://实地考察
                 case "17"://GPS/钥匙
                 case "18"://抵押登记

@@ -2,7 +2,6 @@ package zjl.com.oa2.RenewLoan.Presenter;
 
 import java.util.List;
 
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -13,7 +12,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import zjl.com.oa2.ApplicationConfig.Constant;
 import zjl.com.oa2.Base.ResponseWithNoData;
-import zjl.com.oa2.InformationCheck.Presenter.IInfoCheck;
 import zjl.com.oa2.Response.FormResponse;
 import zjl.com.oa2.Response.LoanDetailResponse;
 import zjl.com.oa2.Response.ManagersResponse;
@@ -39,21 +37,9 @@ public interface IRL {
             @Part("token") RequestBody token,
             @Part("workflow_content_id") RequestBody w_con_id,
             @Part("wk_point_id") RequestBody w_pot_id,
-            @Part("customer_name") RequestBody customer_name,
-            @Part("identity") RequestBody identity,
-            @Part("customer_phone") RequestBody customer_phone,
-            @Part("address") RequestBody address,
-            @Part("bank_code") RequestBody bank_code,
-            @Part("bank_name") RequestBody bank_name,
-            @Part("purpose") RequestBody purpose,
-            @Part("car_license") RequestBody car_license,
-            @Part("car_registration") RequestBody car_registration,
-            @Part("car_engine_no") RequestBody car_engine_no,
-            @Part("car_vin") RequestBody car_vin,
             @Part("remark") RequestBody remark,
             @Part("type") RequestBody type,
             @Part("loan_length") RequestBody loan_length,
-            @Part("contract_date") RequestBody contract_date,
             @Part List<MultipartBody.Part> filesBody);
 
     @POST(Constant.LookLoanDetail)
